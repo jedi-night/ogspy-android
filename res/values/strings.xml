@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Ma première app</string>
+
+    <string name="app_name">OGSpy</string>
     <string name="settings">Réglages</string>
+    
     <string name="hello_world">Bonjour le monde !</string>
-    
-    <string name="button_send">Envoyer</string>    
-    
+    <string name="button_send">Envoyer</string>
+
     <!-- Settings -->
     <string name="settings_ogspy_title">Paramètres du compte OGSPY</string>
-    <string name="ogspy_user_title">Utilisateur : </string>    
+    <string name="ogspy_user_title">Utilisateur : </string>
     <string name="ogspy_password_title">Mot de passe : </string>
     <string name="ogspy_server_url_title">URL du serveur : </string>
     <string name="save_button">Sauvegarder</string>
-    
+
 </resources>

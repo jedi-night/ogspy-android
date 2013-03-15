@@ -25,9 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/ogspy_user_title"
         android:layout_alignBottom="@+id/ogspy_user_title"
+        android:layout_alignLeft="@+id/save_button"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/ogspy_user_title"
-        android:layout_marginLeft="30dp"
         android:ems="10"
         android:inputType="text" >
 
@@ -50,11 +49,11 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/ogspy_password_title"
         android:layout_alignBottom="@+id/ogspy_password_title"
+        android:layout_alignLeft="@+id/ogspy_user"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/ogspy_password_title"
         android:ems="10"
         android:inputType="textPassword" >
+
     </EditText>
     
     
@@ -74,11 +73,11 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/ogspy_server_url_title"
         android:layout_alignBottom="@+id/ogspy_server_url_title"
+        android:layout_alignLeft="@+id/ogspy_password"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/ogspy_server_url_title"
-        android:layout_marginLeft="5dp"
         android:ems="10"
         android:inputType="textUri" >
+
     </EditText>
     
     <!-- SAVE -->
@@ -89,6 +88,7 @@
         android:text="@string/save_button"
         android:layout_below="@+id/ogspy_server_url_title"
         android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" 
+        android:onClick="saveSettings"/>
     
 </RelativeLayout>
