@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/settings_ogspy_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_ogspy_title" />
+
+    <!-- USER -->
+    <TextView
+        android:id="@+id/ogspy_user_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/settings_ogspy_title"
+        android:layout_marginTop="25dp"
+        android:text="@string/ogspy_user_title" />
+
+    <EditText
+        android:id="@+id/ogspy_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ogspy_user_title"
+        android:layout_alignBottom="@+id/ogspy_user_title"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/ogspy_user_title"
+        android:layout_marginLeft="30dp"
+        android:ems="10"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+    
+    <!-- PASSWORD -->
+    <TextView
+        android:id="@+id/ogspy_password_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ogspy_user_title"
+        android:layout_marginTop="25dp"
+        android:text="@string/ogspy_password_title" />
+
+    <EditText
+        android:id="@+id/ogspy_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ogspy_password_title"
+        android:layout_alignBottom="@+id/ogspy_password_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/ogspy_password_title"
+        android:ems="10"
+        android:inputType="textPassword" >
+    </EditText>
+    
+    
+    <!-- URL SERVER -->
+    <TextView
+        android:id="@+id/ogspy_server_url_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ogspy_password_title"
+        android:layout_marginTop="25dp"
+        android:text="@string/ogspy_server_url_title" />
+
+    <EditText
+        android:id="@+id/ogspy_server_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ogspy_server_url_title"
+        android:layout_alignBottom="@+id/ogspy_server_url_title"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/ogspy_server_url_title"
+        android:layout_marginLeft="5dp"
+        android:ems="10"
+        android:inputType="textUri" >
+    </EditText>
+    
+    <!-- SAVE -->
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:text="@string/save_button"
+        android:layout_below="@+id/ogspy_server_url_title"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"/>
+    
+</RelativeLayout>
