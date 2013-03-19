@@ -3,6 +3,8 @@
 
     <string name="app_name">OGSpy</string>
     <string name="settings">Réglages</string>
+    <string name="details">Détails</string>
+    <string name="quit">Quitter</string>
     
     <string name="hello_world">Bonjour le monde !</string>
     <string name="button_send">Envoyer</string>
@@ -13,5 +15,11 @@
     <string name="ogspy_password_title">Mot de passe : </string>
     <string name="ogspy_server_url_title">URL du serveur : </string>
     <string name="save_button">Sauvegarder</string>
-
+    
+    <string name="save_settings_username_ko">Le nom d\'utilisateur est obligatoire</string>
+    <string name="save_settings_password_ko">Le mot de passe est obligatoire</string>
+    <string name="save_settings_server_url_ko">L\'URL saisie n\'est pas une URL</string>
+    
+    <string name="save_settings_ok">Sauvegarde des réglages effectuée</string>
+    <string name="save_settings_ko">Echec de la sauvegarde des réglages</string>
 </resources>
