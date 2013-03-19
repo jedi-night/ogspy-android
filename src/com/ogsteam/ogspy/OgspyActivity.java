@@ -49,11 +49,13 @@ public class OgspyActivity extends Activity {
 	/** Display the settings windows */
 	public void showSettings() {		
 		setContentView(R.layout.settings);
-		Account account = handler.getAccountById(0); 
-		if(account != null){
-			((EditText) findViewById(R.id.ogspy_user)).setText(account.getUsername());
-			((EditText) findViewById(R.id.ogspy_password)).setText(account.getPassword());
-			((EditText) findViewById(R.id.ogspy_server_url)).setText(account.getServerUrl());
+		if(!handler.getAllAccounts().isEmpty()){
+			Account account = handler.getAccountById(0); 
+			if(account != null){
+				((EditText) findViewById(R.id.ogspy_user)).setText(account.getUsername());
+				((EditText) findViewById(R.id.ogspy_password)).setText(account.getPassword());
+				((EditText) findViewById(R.id.ogspy_server_url)).setText(account.getServerUrl());
+			}
 		}
 	}
 	
