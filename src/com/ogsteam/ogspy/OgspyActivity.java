@@ -1,12 +1,7 @@
 package com.ogsteam.ogspy;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -21,11 +16,19 @@ import android.widget.Toast;
 import com.ogsteam.ogspy.data.DatabaseAccountHandler;
 import com.ogsteam.ogspy.data.models.Account;
 import com.ogsteam.ogspy.utils.Constants;
+import com.ogsteam.ogspy.utils.HttpUtils;
 import com.ogsteam.ogspy.utils.StringUtils;
+import com.ogsteam.ogspy.utils.MD5;
+import com.ogsteam.ogspy.utils.SHA1;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class OgspyActivity extends Activity {
-	private static final String DEBUG_TAG = "OgspyActivity";
-	
+	private static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();;
+	private static final int timer = 5 * 60 * 1000; // MIN * 60 * 1000 : minutes in seconds then milliseconds
+    private Timer autoUpdate;
+
 	// Variables
 	private DatabaseAccountHandler handler;
 	protected static String dataFromAsyncTask; 
@@ -60,16 +63,51 @@ public class OgspyActivity extends Activity {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
-	
+
+	 @Override
+	 public void onResume() {
+	  super.onResume();
+	  autoUpdate = new Timer();
+	  autoUpdate.schedule(new TimerTask() {
+	   @Override
+	   public void run() {
+	    runOnUiThread(new Runnable() {
+	     public void run() {
+	    	 updateOgspyDatas();
+	     }
+	    });
+	   }
+	  }, 0, timer); // updates each timer secs
+	 }
+
+	 @Override
+	 public void onPause() {
+	  autoUpdate.cancel();
+	  super.onPause();
+	 }
+	 
+	 private void updateOgspyDatas(){
+		 new DownloadTask(this).execute(new String[] { "do"});
+	 }
+	 
 	/** Display the settings windows */
 	public void showSettings() {		
 		setContentView(R.layout.settings);
 		if(!handler.getAllAccounts().isEmpty()){
 			Account account = handler.getAccountById(0); 
 			if(account != null){
-				((EditText) findViewById(R.id.ogspy_user)).setText(account.getUsername());
-				((EditText) findViewById(R.id.ogspy_password)).setText(account.getPassword());
-				((EditText) findViewById(R.id.ogspy_server_url)).setText(account.getServerUrl());
+				if(account.getUsername()!=null && account.getUsername().length() > 0){
+					((EditText) findViewById(R.id.ogspy_user)).setText(account.getUsername());
+				}
+				if(account.getPassword()!=null && account.getPassword().length() > 0){
+					((EditText) findViewById(R.id.ogspy_password)).setText(account.getPassword());
+				}
+				if(account.getServerUrl()!=null && account.getServerUrl().length() > 0){
+					((EditText) findViewById(R.id.ogspy_server_url)).setText(account.getServerUrl());
+				}
+				if(account.getServerUnivers()!=null && account.getServerUnivers().length() > 0){
+					((EditText) findViewById(R.id.ogspy_server_universe)).setText(account.getServerUnivers());
+				}
 			}
 		}
 	}
@@ -79,29 +117,21 @@ public class OgspyActivity extends Activity {
 		String username = ((EditText) findViewById(R.id.ogspy_user)).getText().toString();
 		String password = ((EditText) findViewById(R.id.ogspy_password)).getText().toString();
 		String serverUrl = ((EditText) findViewById(R.id.ogspy_server_url)).getText().toString();
+		String serverUnivers = ((EditText) findViewById(R.id.ogspy_server_universe)).getText().toString();
 		
-		if(checkSettings(username, password, serverUrl)) {
+		if(checkSettings(username, password, serverUrl, serverUnivers)) {
 			if(handler.getAccountsCount() > 0){
 				handler.deleteAllAccounts();
 			}
-			if(handler.addAccount(new Account(0,username, password, serverUrl)) != -1){
+			if(handler.addAccount(new Account(0,username, password, serverUrl, serverUnivers)) != -1){
 				Toast.makeText(this, this.getString(R.string.save_settings_ok), Toast.LENGTH_SHORT).show();	
 			} else {
 				Toast.makeText(this, this.getString(R.string.save_settings_ko), Toast.LENGTH_SHORT).show();
 			}
 		}
-		
-		
-		/*List<Account> accounts = handler.getAllAccounts();
-		for (Account account : accounts) {
-            String log = "Id: "+account.getId()+" ,Username: " + account.getUsername() + " ,Password: " + account.getPassword() + " ,Server: " + account.getServerUrl();
-            // Writing Accounts to log
-            Log.d("Account: ", log);
-		}*/
-		//Log.i(this.getLocalClassName(), new StringBuilder().append(userOgspy).append(";").append(password).append(";").append(serverUrl).toString());
 	}
 
-	private boolean checkSettings(String username, String password, String serverUrl) {
+	private boolean checkSettings(String username, String password, String serverUrl, String serverUnivers) {
 		boolean status = true;
 		StringBuilder sb = new StringBuilder();
 		
@@ -123,59 +153,46 @@ public class OgspyActivity extends Activity {
 			}
 			sb.append(this.getString(R.string.save_settings_server_url_ko));
 		}
+		// Check server univers
+		if(!serverUnivers.matches("http://.*")){
+			status = false;
+			if(sb.toString().length() > 0) {
+				sb.append("\n");	
+			}
+			sb.append(this.getString(R.string.save_settings_server_univers_ko));
+		}
 		if(sb.toString().length() > 0){
 			Toast.makeText(this, sb.toString(), Toast.LENGTH_SHORT).show();
 		}
 		return status;
 	}
-	
-	// Given a URL, establishes an HttpUrlConnection and retrieves
-	// the web page content as a InputStream, which it returns as
-	// a string.
-	private String downloadUrl(String myurl) throws IOException {
-	    InputStream is = null;
-	    // Only display the first 500 characters of the retrieved
-	    // web page content.
-	    int len = 500;
-	        
-	    try {
-	        URL url = new URL(myurl);
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setReadTimeout(10000 /* milliseconds */);
-	        conn.setConnectTimeout(15000 /* milliseconds */);
-	        conn.setRequestMethod("GET");
-	        conn.setDoInput(true);
-	        // Starts the query
-	        conn.connect();
-	        int response = conn.getResponseCode();
-	        Log.d(DEBUG_TAG, "The response is: " + response);
-	        is = conn.getInputStream();
 
-	        // Convert the InputStream into a string
-	        String contentAsString = readIt(is, len);
-	        return contentAsString;
-	    // Makes sure that the InputStream is closed after the app is
-	    // finished using it.
-	    } finally {
-	        if (is != null) {
-	            is.close();
-	        } 
-	    }
+	private static String enryptPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+		return MD5.toMD5(SHA1.toSHA1(password));
 	}
 	
-	// Reads an InputStream and converts it to a String.
-	public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-	    Reader reader = null;
-	    reader = new InputStreamReader(stream, "UTF-8");        
-	    char[] buffer = new char[len];
-	    reader.read(buffer);
-	    return new String(buffer);
+	private String traiterReponseHostiles(String data){
+		// ({"new_messages": 0,"type": "checkhostiles","check": 0,"user": "","execution": 14.19})
+		String donnees = data.trim().substring(2, (data.trim().length()-3)); // suppress ({ and })
+		String[] strArray = donnees.split(",");
+		for(int i = 0; i < strArray.length; i++){
+			String[] tabData = strArray[i].split(":");
+			if(tabData[0].replaceAll("\"","").equals("check")){
+				if(tabData[1].trim().equals("1")){
+					return "Flottes hostiles en approche !";
+				} else {
+					return "Aucune flotte hostiles en approche.";
+				}
+			}
+			//Log.i(DEBUG_TAG, tabData[0]+"="+tabData[1]);
+		}
+		return "Aucune information n'a pu être récupérée";
 	}
 	
-	private class MyAsyncTask extends AsyncTask<String, Integer, String> {
+	private class DownloadTask extends AsyncTask<String, Integer, String> {
 	    private Activity activity;
 
-	    public MyAsyncTask(Activity activity) {
+	    public DownloadTask(Activity activity) {
 	        this.activity = activity;
 	    }
 
@@ -184,11 +201,13 @@ public class OgspyActivity extends Activity {
 			try {
 				if(!handler.getAllAccounts().isEmpty()){
 					Account account = handler.getAccountById(0);
-					String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getUsername(), account.getPassword());
-					dataFromAsyncTask = downloadUrl(url);
+					String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), enryptPassword(account.getPassword()), account.getServerUnivers());
+					dataFromAsyncTask = traiterReponseHostiles(HttpUtils.downloadUrl(url));
+					//traiterReponseHostiles(dataFromAsyncTask);
+							//.match(/\(\{.*\}\)/)));
 				}
 			} catch (Exception e) {
-				Log.e(DEBUG_TAG, "Prioblème lors du telechargement");
+				Log.e(DEBUG_TAG, "Problème lors du telechargement !",e);
 			}
 			return null;
 		}
@@ -202,4 +221,5 @@ public class OgspyActivity extends Activity {
 		}
 
 	}
+	
 }

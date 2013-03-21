@@ -80,13 +80,36 @@
 
     </EditText>
     
+    <!-- URL UNIVERSE -->
+    <TextView
+        android:id="@+id/ogspy_server_univers_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ogspy_server_url_title"
+        android:layout_marginTop="25dp"
+        android:text="@string/ogspy_server_univers_title" />
+
+    <EditText
+        android:id="@+id/ogspy_server_universe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ogspy_server_univers_title"
+        android:layout_alignBottom="@+id/ogspy_server_univers_title"
+        android:layout_alignLeft="@+id/ogspy_server_url"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:inputType="textUri" >
+
+    </EditText>
+    
     <!-- SAVE -->
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         android:text="@string/save_button"
-        android:layout_below="@+id/ogspy_server_url_title"
+        android:layout_below="@+id/ogspy_server_univers_title"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true" 
         android:onClick="saveSettings"/>

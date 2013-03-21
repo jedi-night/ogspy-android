@@ -14,11 +14,13 @@
     <string name="ogspy_user_title">User : </string>
     <string name="ogspy_password_title">Password : </string>
     <string name="ogspy_server_url_title">Server URL : </string>
+    <string name="ogspy_server_univers_title">Universe URL : </string>
     <string name="save_button">Save</string>
 	
 	<string name="save_settings_username_ko">Username is required</string>
     <string name="save_settings_password_ko">Password is required</string>
-    <string name="save_settings_server_url_ko">Wrong URL, may be malformed</string>
+    <string name="save_settings_server_url_ko">Wrong Server URL, may be malformed</string>
+    <string name="save_settings_server_univers_ko">Wrong Universe URL, may be malformed</string>
     
     <string name="save_settings_ok">Settings saved</string>
     <string name="save_settings_ko">Save of settings failed</string>

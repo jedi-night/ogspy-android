@@ -29,6 +29,7 @@ public class DatabaseAccountHandler extends DatabaseHandler {
 		values.put(KEY_USERNAME, account.getUsername());
 		values.put(KEY_PASSWORD, account.getPassword());
 		values.put(KEY_SERVER_URL, account.getServerUrl());
+		values.put(KEY_SERVER_UNIVERS, account.getServerUnivers());
 		
 		// Inserting Row
 		long result = db.insert(TABLE_ACCOUNTS, null, values);
@@ -45,6 +46,7 @@ public class DatabaseAccountHandler extends DatabaseHandler {
 	    values.put(KEY_USERNAME, account.getUsername());
 		values.put(KEY_PASSWORD, account.getPassword());
 		values.put(KEY_SERVER_URL, account.getServerUrl());
+		values.put(KEY_SERVER_UNIVERS, account.getServerUnivers());
 		
 	    // updating row
 	    int result = db.update(TABLE_ACCOUNTS, values, KEY_ID + " = ?", new String[] { String.valueOf(account.getId()) });	    
@@ -76,13 +78,13 @@ public class DatabaseAccountHandler extends DatabaseHandler {
 	public Account getAccountById(int id) {
 	    SQLiteDatabase db = this.getReadableDatabase();
 	 
-	    Cursor cursor = db.query(TABLE_ACCOUNTS, new String[] { KEY_ID, KEY_USERNAME, KEY_PASSWORD, KEY_SERVER_URL }, KEY_ID + "=?",
+	    Cursor cursor = db.query(TABLE_ACCOUNTS, new String[] { KEY_ID, KEY_USERNAME, KEY_PASSWORD, KEY_SERVER_URL, KEY_SERVER_UNIVERS }, KEY_ID + "=?",
 	            new String[] { String.valueOf(id) }, null, null, null, null);
 	    if (cursor != null) {
 	        cursor.moveToFirst();
 	    }
 	 
-	    Account account = new Account(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+	    Account account = new Account(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
 	    return account;
 	}
 	
@@ -107,6 +109,7 @@ public class DatabaseAccountHandler extends DatabaseHandler {
 	            contact.setUsername(cursor.getString(1));
 	            contact.setPassword(cursor.getString(2));
 	            contact.setServerUrl(cursor.getString(3));
+	            contact.setServerUnivers(cursor.getString(4));
 	            // Adding account to list
 	            contactList.add(contact);
 	        } while (cursor.moveToNext());
