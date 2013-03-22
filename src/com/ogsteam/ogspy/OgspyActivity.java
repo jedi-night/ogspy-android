@@ -4,8 +4,14 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,17 +27,22 @@ import com.ogsteam.ogspy.utils.StringUtils;
 import com.ogsteam.ogspy.utils.MD5;
 import com.ogsteam.ogspy.utils.SHA1;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class OgspyActivity extends Activity {
 	private static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();;
-	private static final int timer = 5 * 60 * 1000; // MIN * 60 * 1000 : minutes in seconds then milliseconds
+	private static final int timer = 10 * 60 * 1000; // MIN * 60 * 1000 : minutes in seconds then milliseconds
     private Timer autoUpdate;
 
 	// Variables
 	private DatabaseAccountHandler handler;
 	protected static String dataFromAsyncTask; 
+	private boolean notifHostilesAlreadyDone = false; 
+	
+	private int NOTIFICATION_ID_HOSTILES = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +78,7 @@ public class OgspyActivity extends Activity {
 	 @Override
 	 public void onResume() {
 	  super.onResume();
+	  deleteNotificationHostile();
 	  autoUpdate = new Timer();
 	  autoUpdate.schedule(new TimerTask() {
 	   @Override
@@ -82,7 +94,7 @@ public class OgspyActivity extends Activity {
 
 	 @Override
 	 public void onPause() {
-	  autoUpdate.cancel();
+	  //autoUpdate.cancel();
 	  super.onPause();
 	 }
 	 
@@ -124,9 +136,9 @@ public class OgspyActivity extends Activity {
 				handler.deleteAllAccounts();
 			}
 			if(handler.addAccount(new Account(0,username, password, serverUrl, serverUnivers)) != -1){
-				Toast.makeText(this, this.getString(R.string.save_settings_ok), Toast.LENGTH_SHORT).show();	
+				Toast.makeText(this, this.getString(R.string.save_settings_ok), Toast.LENGTH_LONG).show();	
 			} else {
-				Toast.makeText(this, this.getString(R.string.save_settings_ko), Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, this.getString(R.string.save_settings_ko), Toast.LENGTH_LONG).show();
 			}
 		}
 	}
@@ -162,7 +174,7 @@ public class OgspyActivity extends Activity {
 			sb.append(this.getString(R.string.save_settings_server_univers_ko));
 		}
 		if(sb.toString().length() > 0){
-			Toast.makeText(this, sb.toString(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, sb.toString(), Toast.LENGTH_LONG).show();
 		}
 		return status;
 	}
@@ -175,19 +187,76 @@ public class OgspyActivity extends Activity {
 		// ({"new_messages": 0,"type": "checkhostiles","check": 0,"user": "","execution": 14.19})
 		String donnees = data.trim().substring(2, (data.trim().length()-3)); // suppress ({ and })
 		String[] strArray = donnees.split(",");
+		HashMap<String, ArrayList<String>> hashResponse = new HashMap<String, ArrayList<String>>();
+		
 		for(int i = 0; i < strArray.length; i++){
 			String[] tabData = strArray[i].split(":");
-			if(tabData[0].replaceAll("\"","").equals("check")){
-				if(tabData[1].trim().equals("1")){
-					return "Flottes hostiles en approche !";
-				} else {
-					return "Aucune flotte hostiles en approche.";
+			
+			String value = tabData[1].replaceAll("\"","").trim();
+			ArrayList<String> arrayValue = new ArrayList<String>();
+			if(value.contains(";")){
+				String[] tabValues = value.split(";");
+				for(int j = 0; j < tabValues.length; j++){
+					arrayValue.add(tabValues[j]);	
+				}
+			} else {
+				arrayValue.add(value);
+			}
+						
+			hashResponse.put(tabData[0].replaceAll("\"",""), arrayValue);
+		}
+		if(hashResponse.get("check").get(0).equals("1")){
+			ArrayList<String> cibles = hashResponse.get("user");
+			StringBuilder retour = new StringBuilder("Flottes hostiles en approche sur le(s) joueur(s) : ");
+			StringBuilder notifHostile = new StringBuilder("");
+			int cibleCount=0;
+			for(String cible:cibles){
+				cibleCount++;
+				retour.append("\n\t- ").append(cible);
+				notifHostile.append(cible);
+				if(cibleCount < cibles.size()){
+					notifHostile.append(", ");
 				}
 			}
-			//Log.i(DEBUG_TAG, tabData[0]+"="+tabData[1]);
+			if(!notifHostilesAlreadyDone){
+				notifHostilesAlreadyDone=true;
+				createNotificationHostile(notifHostile.toString());
+			}
+			return retour.toString();
+		} else {
+			if(notifHostilesAlreadyDone){
+				notifHostilesAlreadyDone=false;
+			}
+			deleteNotificationHostile();
+			return "Aucune flotte hostiles en approche.";
 		}
-		return "Aucune information n'a pu être récupérée";
+		//return "Aucune information n'a pu être récupérée";
 	}
+	
+	private final void createNotificationHostile(String details){
+		final NotificationManager mNotification = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+	    final Intent launchNotifiactionIntent = new Intent(this, OgspyActivity.class);
+		final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, launchNotifiactionIntent, PendingIntent.FLAG_ONE_SHOT);
+
+		
+		Notification notif = new NotificationCompat.Builder(this)
+			//.setWhen(System.currentTimeMillis())
+			.setTicker("OGSPY")
+			.setSmallIcon(R.drawable.notification)
+			.setContentTitle(getResources().getString(R.string.notification_title))
+			.setContentText(StringUtils.formatPattern(getResources().getString(R.string.notification_desc),details))
+			.setContentIntent(pendingIntent)
+			.build();
+
+		mNotification.notify(NOTIFICATION_ID_HOSTILES, notif);
+	}
+	
+	private void deleteNotificationHostile(){
+    	final NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+    	//la suppression de la notification se fait grâce a son ID
+    	notificationManager.cancel(NOTIFICATION_ID_HOSTILES);
+    }
 	
 	private class DownloadTask extends AsyncTask<String, Integer, String> {
 	    private Activity activity;

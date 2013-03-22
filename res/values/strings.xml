@@ -24,4 +24,10 @@
     
     <string name="save_settings_ok">Sauvegarde des réglages effectuée</string>
     <string name="save_settings_ko">Echec de la sauvegarde des réglages</string>
+   
+    <!-- Notifs -->
+    <string name="notification">Notification OGSPY</string>
+	<string name="notification_title">Flottes hostiles</string>
+	<string name="notification_desc">{0}</string>
+	
 </resources>
