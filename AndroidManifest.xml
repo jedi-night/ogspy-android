@@ -28,6 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+		<activity android:name="com.ogsteam.ogspy.ResultActivity" android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+    		<meta-data android:name="android.support.PARENT_ACTIVITY" android:value="com.ogsteam.ogspy.OgspyActivity"/>
+</activity>
     </application>
 
 </manifest>
