@@ -2,32 +2,45 @@
 <resources>
 
     <string name="app_name">OGSpy</string>
-    <string name="settings">Settings</string>
+    <string name="account">OGSpy Account</string>
+    <string name="prefs">Preferences</string>
     <string name="details">Details</string>
     <string name="quit">Leave</string>
     
     <string name="hello_world">Hello World !</string>
     <string name="button_send">Send</string>
 
-    <!-- Settings -->
-    <string name="settings_ogspy_title">Parameters of OGSPY account</string>
+    <!-- Account -->
+    <string name="account_ogspy_title">Parameters of OGSPY account</string>
     <string name="ogspy_user_title">User : </string>
     <string name="ogspy_password_title">Password : </string>
     <string name="ogspy_server_url_title">Server URL : </string>
     <string name="ogspy_server_univers_title">Universe URL : </string>
     <string name="save_button">Save</string>
 	
-	<string name="save_settings_username_ko">Username is required</string>
-    <string name="save_settings_password_ko">Password is required</string>
-    <string name="save_settings_server_url_ko">Wrong Server URL, may be malformed</string>
-    <string name="save_settings_server_univers_ko">Wrong Universe URL, may be malformed</string>
+	<string name="save_account_username_ko">Username is required</string>
+    <string name="save_account_password_ko">Password is required</string>
+    <string name="save_account_server_url_ko">Wrong Server URL, may be malformed</string>
+    <string name="save_account_server_univers_ko">Wrong Universe URL, may be malformed</string>
     
-    <string name="save_settings_ok">Settings saved</string>
-    <string name="save_settings_ko">Save of settings failed</string>
+    <string name="save_account_ok">Account saved</string>
+    <string name="save_account_ko">Save of account failed</string>
     
+    <!-- Pref -->
+    <string name="prefs_title">Preferences</string>
+    <string name="prefs_timer_hostiles_title">Refresh hostiles (in minutes) : </string>
+    <string name="save_button_prefs">Save</string>
+        
     <!-- Notifs -->
     <string name="notification">Notification OGSPY</string>
 	<string name="notification_title">Flottes hostiles</string>
 	<string name="notification_desc">{0}</string>
 	
+	<string-array name="prefs_timer_hostiles">	    
+        <item>None</item>
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
 </resources>

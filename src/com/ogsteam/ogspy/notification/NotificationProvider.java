@@ -16,7 +16,7 @@ import com.ogsteam.ogspy.utils.StringUtils;
 
 public class NotificationProvider {
 
-	protected boolean notifHostilesAlreadyDone = false; 
+	public static boolean notifHostilesAlreadyDone = false; 
 	private int NOTIFICATION_ID_HOSTILES = 0;
 	private Activity activity;
 	
@@ -46,8 +46,8 @@ public class NotificationProvider {
 			.setContentTitle(notificationContent)
 			.setContentText(getTextNotificationHostiles(details))
 			.setContentIntent(pendingIntent)
+			.setAutoCancel(true)
 			.build();
-
 		mNotification.notify(NOTIFICATION_ID_HOSTILES, notif);
 	}
 	
@@ -60,14 +60,4 @@ public class NotificationProvider {
 	private String getTextNotificationHostiles(String details){
 		return StringUtils.formatPattern(activity.getResources().getString(R.string.notification_desc),details);
 	}
-
-	public boolean isNotifHostilesAlreadyDone() {
-		return notifHostilesAlreadyDone;
-	}
-
-	public void setNotifHostilesAlreadyDone(boolean notifHostilesAlreadyDone) {
-		this.notifHostilesAlreadyDone = notifHostilesAlreadyDone;
-	}
-	
-	
 }

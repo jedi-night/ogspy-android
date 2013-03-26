@@ -2,32 +2,48 @@
 <resources>
 
     <string name="app_name">OGSpy</string>
-    <string name="settings">Réglages</string>
-    <string name="details">Détails</string>
+    <string name="account">Compte OGSpy</string>
+    <string name="details">Détails</string>    
+    <string name="prefs">Préférences</string>
     <string name="quit">Quitter</string>
     
     <string name="hello_world">Bonjour le monde !</string>
     <string name="button_send">Envoyer</string>
 
-    <!-- Settings -->
-    <string name="settings_ogspy_title">Paramètres du compte OGSPY</string>
+    <!-- Account -->
+    <string name="account_ogspy_title">Paramètres du compte OGSPY</string>
     <string name="ogspy_user_title">Utilisateur : </string>
     <string name="ogspy_password_title">Mot de passe : </string>
     <string name="ogspy_server_url_title">URL du serveur : </string>
     <string name="ogspy_server_univers_title">URL de l\'univers : </string>
     <string name="save_button">Sauvegarder</string>
     
-    <string name="save_settings_username_ko">Le nom d\'utilisateur est obligatoire</string>
-    <string name="save_settings_password_ko">Le mot de passe est obligatoire</string>
-    <string name="save_settings_server_url_ko">L\'URL du serveur n\'est pas une URL</string>
-    <string name="save_settings_server_univers_ko">L\'URL de l\'univers n\'est pas une URL</string>
+    <string name="save_account_username_ko">Le nom d\'utilisateur est obligatoire</string>
+    <string name="save_account_password_ko">Le mot de passe est obligatoire</string>
+    <string name="save_account_server_url_ko">L\'URL du serveur n\'est pas une URL</string>
+    <string name="save_account_server_univers_ko">L\'URL de l\'univers n\'est pas une URL</string>
     
-    <string name="save_settings_ok">Sauvegarde des réglages effectuée</string>
-    <string name="save_settings_ko">Echec de la sauvegarde des réglages</string>
+    <string name="save_account_ok">Sauvegarde du compte effectué</string>
+    <string name="save_account_ko">Echec de la sauvegarde du compte</string>
    
+    <!-- Pref -->
+    <string name="prefs_title">Préférences</string>
+    <string name="prefs_timer_hostiles_title">Rafraichissement hostiles (en minutes) : </string>
+    <string name="save_button_prefs">Sauvegarder</string>
+        
+    <string name="save_prefs_ok">Sauvegarde des préférences effectuée</string>
+    <string name="save_prefs_ko">Echec de la sauvegarde des préférences</string>
+    
     <!-- Notifs -->
     <string name="notification">Notification OGSPY</string>
 	<string name="notification_title">Flottes hostiles</string>
 	<string name="notification_desc">{0}</string>
-	
+		
+	<string-array name="prefs_timer_hostiles">	    
+        <item>Aucun</item>
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
 </resources>

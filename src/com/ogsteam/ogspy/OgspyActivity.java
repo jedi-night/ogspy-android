@@ -10,26 +10,34 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ogsteam.ogspy.data.DatabaseAccountHandler;
+import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.network.DownloadTask;
 import com.ogsteam.ogspy.notification.NotificationProvider;
-import com.ogsteam.ogspy.preferences.Settings;
+import com.ogsteam.ogspy.preferences.Accounts;
+import com.ogsteam.ogspy.preferences.Preferences;
+import com.ogsteam.ogspy.utils.OgspyUtils;
 
 public class OgspyActivity extends Activity {
 	public static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();;
-	private static final int timer = 10 * 60 * 1000; // MIN * 60 * 1000 : minutes in seconds then milliseconds
-    private Timer autoUpdate;
+	public static int timer; // MIN * 60 * 1000 : minutes in seconds then milliseconds
+	public Timer autoUpdateHostiles;
 
 	// Variables
-	public DatabaseAccountHandler handler;
+	public DatabaseAccountHandler handlerAccount;
+	public DatabasePreferencesHandler handlerPrefs;
 	public NotificationProvider notifProvider;
-	//protected static String dataFromAsyncTask;
-	
+	public DownloadTask downloadTask;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		handler = new DatabaseAccountHandler(this);
-		notifProvider=new NotificationProvider(this);
+		handlerAccount = new DatabaseAccountHandler(this);
+		handlerPrefs = new DatabasePreferencesHandler(this);
+		notifProvider = new NotificationProvider(this);
+		downloadTask = new DownloadTask(this);
+		timer=OgspyUtils.getTimerHostiles(this, handlerPrefs);
+		setAutomaticCheckHostiles();
 	}
 
 	@Override
@@ -38,60 +46,83 @@ public class OgspyActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	        case R.id.ogspy_activity:
-	        	setContentView(R.layout.activity_main);
-	            return true;
-	        case R.id.settings:
-	            Settings.showSettings(this);
-	            return true;
-	        case R.id.quit:
-	        	this.finish();
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.ogspy_activity:
+			setContentView(R.layout.activity_main);
+			return true;
+		case R.id.account:
+			Accounts.showAccount(this);
+			return true;
+		case R.id.prefs:
+			Preferences.showPrefs(this);
+			return true;
+		case R.id.quit:
+			this.finish();
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
-	 @Override
-	 public void onResume() {
-	  super.onResume();
-	  notifProvider.deleteNotificationHostile();
-	  autoUpdate = new Timer();
-	  autoUpdate.schedule(new TimerTask() {
-	   @Override
-	   public void run() {
-	    runOnUiThread(new Runnable() {
-	     public void run() {
-	    	 updateOgspyDatas();
-	     }
-	    });
-	   }
-	  }, 0, timer); // updates each timer secs
-	 }
+	@Override
+	public void onResume() {
+		super.onResume();
+		//notifProvider.deleteNotificationHostile();
+		updateOgspyDatas();
+	}
 
-	 @Override
-	 public void onPause() {
-	  //autoUpdate.cancel();
-	  super.onPause();
-	 }
-	 
-	 private void updateOgspyDatas(){
-		 new DownloadTask(this).execute(new String[] { "do"});
-	 }
-	 
-	 public void saveSettings(View view){
-		 Settings.saveSettings(view, this);
-	 }
-	 
-	public DatabaseAccountHandler getHandler() {
-		return handler;
+	@Override
+	public void onPause() {
+		//autoUpdate.cancel(); cancel the  
+		super.onPause();
+	}
+
+	public void setAutomaticCheckHostiles(){
+		if(timer > 0){
+			autoUpdateHostiles = new Timer();
+			autoUpdateHostiles.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							updateOgspyDatas();
+						}
+					});
+				}
+			}, 0, timer); // updates each timer secs
+		}
+	}
+
+	private void updateOgspyDatas(){
+		downloadTask = new DownloadTask(this);
+		downloadTask.execute(new String[] { "do"});
+	}
+
+	public void saveAccount(View view){
+		Accounts.saveAccount(view, this);
+	}
+
+	public void savePrefs(View view){
+		Preferences.savePrefs(view, this);
+	}
+
+
+	public DatabaseAccountHandler getHandlerAccount() {
+		return handlerAccount;
+	}
+
+	public DatabasePreferencesHandler getHandlerPrefs() {
+		return handlerPrefs;
 	}
 
 	public NotificationProvider getNotifProvider() {
 		return notifProvider;
 	}
+
+	public static void setTimer(int timer) {
+		OgspyActivity.timer = timer;
+	}	
 }

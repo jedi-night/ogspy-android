@@ -5,7 +5,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Activity;
+import android.widget.ArrayAdapter;
+
+import com.ogsteam.ogspy.R;
+import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.notification.NotificationProvider;
+import com.ogsteam.ogspy.utils.security.MD5;
+import com.ogsteam.ogspy.utils.security.SHA1;
 
 public class OgspyUtils {
 
@@ -48,17 +55,31 @@ public class OgspyUtils {
 					notifHostile.append(", ");
 				}
 			}
-			if(!notifProvider.isNotifHostilesAlreadyDone()){
-				notifProvider.setNotifHostilesAlreadyDone(true);
+			if(!NotificationProvider.notifHostilesAlreadyDone){
+				NotificationProvider.notifHostilesAlreadyDone = true;
 				notifProvider.createNotificationHostile(notifHostile.toString());
 			}
 			return retour.toString();
 		} else {
-			notifProvider.setNotifHostilesAlreadyDone(false);
+			NotificationProvider.notifHostilesAlreadyDone = false;
 			notifProvider.deleteNotificationHostile();
 			return "Aucune flotte hostiles en approche.";
 		}
 		//return "Aucune information n'a pu être récupérée";
 	}
 	
+	public static int getTimerHostiles(Activity activity, DatabasePreferencesHandler handlerPrefs){
+		int timer = (Constants.TIMER_DEFAULT_VALUE * 60 * 1000);
+		if(handlerPrefs.getPrefsCount() > 0){
+			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.prefs_timer_hostiles, android.R.layout.simple_spinner_item);
+			int timeSet;
+			try {
+				timeSet = Integer.parseInt(adapter.getItem(handlerPrefs.getPrefsById(0).getRefreshHostiles()).toString());
+			} catch (Exception e){
+				timeSet = 0;
+			}
+			timer = (timeSet * 60 * 1000);
+		}
+		return timer;
+	}
 }

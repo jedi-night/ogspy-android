@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/prefs_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prefs_title" />
+
+    <!-- TIMER Hostiles -->
+    <TextView
+        android:id="@+id/prefs_timer_hostiles_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/prefs_title"
+        android:layout_marginTop="25dp"
+        android:text="@string/prefs_timer_hostiles_title" />
+
+    <!-- EditText
+        android:id="@+id/prefs_timer_hostiles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText/-->
+    
+    <!-- SAVE -->
+    <Spinner
+        android:id="@+id/prefs_timer_hostiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/prefs_timer_hostiles_title"
+        
+        />
+    <Button
+        android:id="@+id/save_button_prefs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prefs_timer_hostiles"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:onClick="savePrefs"
+        android:text="@string/save_button_prefs" />
+    
+</RelativeLayout>

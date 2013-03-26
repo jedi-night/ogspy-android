@@ -7,20 +7,25 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
  
     // Database Name
     private static final String DATABASE_NAME = "ogspy";
  
-    // Acounts table name
+    // Accounts table name
     protected static final String TABLE_ACCOUNTS = "accounts";
- 
+
     // Account Table Columns names
-    protected static final String KEY_ID = "id";
-    protected static final String KEY_USERNAME = "username";
-    protected static final String KEY_PASSWORD = "password";
-    protected static final String KEY_SERVER_URL = "server_url";
-    protected static final String KEY_SERVER_UNIVERS = "server_univers";    
+    protected static final String KEY_ACCOUNT_ID = "id";
+    protected static final String KEY_ACCOUNT_USERNAME = "username";
+    protected static final String KEY_ACCOUNT_PASSWORD = "password";
+    protected static final String KEY_ACCOUNT_SERVER_URL = "server_url";
+    protected static final String KEY_ACCOUNT_SERVER_UNIVERS = "server_univers";    
+    
+    // Prefs table name
+    protected static final String TABLE_PREFS = "preferences";
+    protected static final String KEY_PREFS_ID = "id";
+    protected static final String KEY_PREFS_REFRESH_HOSTILES_TIME = "refresh_hostiles_time";
  
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,14 +34,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_ACCOUNTS_TABLE = "CREATE TABLE " + TABLE_ACCOUNTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," 
-        		+ KEY_USERNAME + " TEXT,"
-                + KEY_PASSWORD + " TEXT," 
-                + KEY_SERVER_URL + " TEXT,"
-                + KEY_SERVER_UNIVERS + " TEXT"
+        createAccountTable(db);
+        createPreferencesTable(db);
+    }
+ 
+    private void createAccountTable(SQLiteDatabase db){
+    	String CREATE_ACCOUNTS_TABLE = "CREATE TABLE " + TABLE_ACCOUNTS + "("
+                + KEY_ACCOUNT_ID + " INTEGER PRIMARY KEY," 
+        		+ KEY_ACCOUNT_USERNAME + " TEXT,"
+                + KEY_ACCOUNT_PASSWORD + " TEXT," 
+                + KEY_ACCOUNT_SERVER_URL + " TEXT,"
+                + KEY_ACCOUNT_SERVER_UNIVERS + " TEXT"
         		+ ")";
         db.execSQL(CREATE_ACCOUNTS_TABLE);
+    }
+ 
+    private void createPreferencesTable(SQLiteDatabase db){
+    	String CREATE_PREFS_TABLE = "CREATE TABLE " + TABLE_PREFS + "("
+                + KEY_PREFS_ID + " INTEGER PRIMARY KEY," 
+        		+ KEY_PREFS_REFRESH_HOSTILES_TIME + " INTEGER"
+        		+ ")";
+        db.execSQL(CREATE_PREFS_TABLE);
     }
  
     // Upgrading database
@@ -44,10 +62,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         //db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACCOUNTS);
-		 if(oldVersion == 1){
-			 db.execSQL("ALTER TABLE " + TABLE_ACCOUNTS + " ADD "+ KEY_SERVER_UNIVERS + " TEXT");
-		 }
-    	
+		if(oldVersion == 1){
+			 db.execSQL("ALTER TABLE " + TABLE_ACCOUNTS + " ADD "+ KEY_ACCOUNT_SERVER_UNIVERS + " TEXT");
+		} else if(oldVersion == 2){
+			createPreferencesTable(db);
+		}    	
     	
         // Create tables again
         //onCreate(db);

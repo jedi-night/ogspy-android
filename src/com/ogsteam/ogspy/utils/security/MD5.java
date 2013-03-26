@@ -1,4 +1,4 @@
-package com.ogsteam.ogspy.utils;
+package com.ogsteam.ogspy.utils.security;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

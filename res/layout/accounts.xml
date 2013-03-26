@@ -4,10 +4,10 @@
     android:layout_height="fill_parent" >
 
     <TextView
-        android:id="@+id/settings_ogspy_title"
+        android:id="@+id/account_ogspy_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/settings_ogspy_title" />
+        android:text="@string/account_ogspy_title" />
 
     <!-- USER -->
     <TextView
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/settings_ogspy_title"
+        android:layout_below="@+id/account_ogspy_title"
         android:layout_marginTop="25dp"
         android:text="@string/ogspy_user_title" />
 
@@ -112,6 +112,6 @@
         android:layout_below="@+id/ogspy_server_univers_title"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true" 
-        android:onClick="saveSettings"/>
+        android:onClick="saveAccount"/>
     
 </RelativeLayout>

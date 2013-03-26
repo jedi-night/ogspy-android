@@ -24,8 +24,8 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
     @Override
 	protected String doInBackground(String... params) {
 		try {
-			if(!activity.getHandler().getAllAccounts().isEmpty()){
-				Account account = activity.getHandler().getAccountById(0);
+			if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
+				Account account = activity.getHandlerAccount().getAccountById(0);
 				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers());
 				dataFromAsyncTask = OgspyUtils.traiterReponseHostiles(HttpUtils.downloadUrl(url), activity.getNotifProvider());
 			}

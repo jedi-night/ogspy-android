@@ -45,8 +45,8 @@ public class HttpUtils {
 	        if (is != null) {
 	            is.close();
 	        }
-	        return contentAsString;
 	    }
+        return contentAsString;
 	}
 	
 	// Reads an InputStream and converts it to a String.
