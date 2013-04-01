@@ -27,7 +27,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
 			if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
 				Account account = activity.getHandlerAccount().getAccountById(0);
 				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers());
-				dataFromAsyncTask = OgspyUtils.traiterReponseHostiles(HttpUtils.downloadUrl(url), activity.getNotifProvider());
+				dataFromAsyncTask = OgspyUtils.traiterReponseHostiles(HttpUtils.downloadUrl(url), activity);
 			}
 		} catch (Exception e) {
 			Log.e(OgspyActivity.DEBUG_TAG, "Problème lors du telechargement !",e);
@@ -40,7 +40,9 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
      }
 
 	protected void onPostExecute(String result) {
-    	((EditText) activity.findViewById(R.id.response_ogspy)).setText(dataFromAsyncTask);    	
+		if(activity.findViewById(R.id.response_ogspy) != null){
+			((EditText) activity.findViewById(R.id.response_ogspy)).setText(dataFromAsyncTask);
+		}
 	}
 
     public static String getDataFromAsyncTask() {

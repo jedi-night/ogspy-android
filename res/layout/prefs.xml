@@ -3,19 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/prefs_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/prefs_title" />
-
     <!-- TIMER Hostiles -->
-    <TextView
+    <TextView
         android:id="@+id/prefs_timer_hostiles_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/prefs_title"
         android:layout_marginTop="25dp"
         android:text="@string/prefs_timer_hostiles_title" />
 

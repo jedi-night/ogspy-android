@@ -8,6 +8,7 @@ import java.util.HashMap;
 import android.app.Activity;
 import android.widget.ArrayAdapter;
 
+import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.notification.NotificationProvider;
@@ -20,8 +21,9 @@ public class OgspyUtils {
 		return MD5.toMD5(SHA1.toSHA1(password));
 	}
 	
-	public static String traiterReponseHostiles(String data, NotificationProvider notifProvider){
+	public static String traiterReponseHostiles(String data, OgspyActivity activity){
 		// ({"new_messages": 0,"type": "checkhostiles","check": 0,"user": "","execution": 14.19})
+		NotificationProvider notifProvider = activity.getNotifProvider();
 		String donnees = data.trim().substring(2, (data.trim().length()-3)); // suppress ({ and })
 		String[] strArray = donnees.split(",");
 		HashMap<String, ArrayList<String>> hashResponse = new HashMap<String, ArrayList<String>>();
@@ -44,7 +46,7 @@ public class OgspyUtils {
 		}
 		if(hashResponse.get("check").get(0).equals("1")){
 			ArrayList<String> cibles = hashResponse.get("user");
-			StringBuilder retour = new StringBuilder("Flottes hostiles en approche sur le(s) joueur(s) : ");
+			StringBuilder retour = new StringBuilder(activity.getString(R.string.hostiles_attack));
 			StringBuilder notifHostile = new StringBuilder("");
 			int cibleCount=0;
 			for(String cible:cibles){
@@ -63,15 +65,15 @@ public class OgspyUtils {
 		} else {
 			NotificationProvider.notifHostilesAlreadyDone = false;
 			notifProvider.deleteNotificationHostile();
-			return "Aucune flotte hostiles en approche.";
+			return activity.getString(R.string.hostiles_none);
 		}
 		//return "Aucune information n'a pu être récupérée";
 	}
 	
 	public static int getTimerHostiles(Activity activity, DatabasePreferencesHandler handlerPrefs){
 		int timer = (Constants.TIMER_DEFAULT_VALUE * 60 * 1000);
-		if(handlerPrefs.getPrefsCount() > 0){
-			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.prefs_timer_hostiles, android.R.layout.simple_spinner_item);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.prefs_timer_hostiles, android.R.layout.simple_spinner_item);
+		if(handlerPrefs.getPrefsCount() > 0){			
 			int timeSet;
 			try {
 				timeSet = Integer.parseInt(adapter.getItem(handlerPrefs.getPrefsById(0).getRefreshHostiles()).toString());

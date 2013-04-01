@@ -1,7 +1,8 @@
 <resources>
 	<!-- Application theme. -->
     <style name="OgspyTheme" parent="android:Theme.Holo">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->        
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->      
+         
     </style>
     
     <style name="ButtonText" parent="@android:style/TextAppearance">
@@ -25,5 +26,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:focusable">true</item>  
         <item name="android:clickable">true</item>  
-    </style>  
+    </style>
+    
+    <style name="TabWidgetText" parent="@android:style/TextAppearance.Widget.TabWidget">
+    	<item name="android:textSize">10sp</item>
+    	<item name="android:textStyle">bold</item>
+	</style>
 </resources>

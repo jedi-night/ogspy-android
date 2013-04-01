@@ -12,7 +12,7 @@ public class Accounts {
 
 	/** Display the account windows */
 	public static void showAccount(OgspyActivity activity) {		
-		activity.setContentView(R.layout.accounts);
+		//activity.setContentView(R.layout.accounts);
 		if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
 			Account account = activity.getHandlerAccount().getAccountById(0); 
 			if(account != null){

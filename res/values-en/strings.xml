@@ -2,14 +2,18 @@
 <resources>
 
     <string name="app_name">OGSpy</string>
-    <string name="account">OGSpy Account</string>
+    <string name="account">Account</string>
     <string name="prefs">Preferences</string>
-    <string name="details">Details</string>
+    <string name="hostiles">Hostiles</string>
     <string name="quit">Leave</string>
     
     <string name="hello_world">Hello World !</string>
     <string name="button_send">Send</string>
 
+    <!-- Hostiles -->
+    <string name="hostiles_none">No member of community is attack</string>
+    <string name="hostiles_attack">Hostile fleet detect on member(s) : </string>
+        
     <!-- Account -->
     <string name="account_ogspy_title">Parameters of OGSPY account</string>
     <string name="ogspy_user_title">User : </string>
@@ -35,6 +39,7 @@
     <string name="notification">Notification OGSPY</string>
 	<string name="notification_title">Flottes hostiles</string>
 	<string name="notification_desc">{0}</string>
+	
 	
 	<string-array name="prefs_timer_hostiles">	    
         <item>None</item>

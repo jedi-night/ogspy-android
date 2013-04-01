@@ -14,7 +14,7 @@ public class Preferences {
 
 	/** Display the account windows */
 	public static void showPrefs(OgspyActivity activity) {		
-		activity.setContentView(R.layout.prefs);
+		//activity.setContentView(R.layout.prefs);
 		Spinner spinner = (Spinner) activity.findViewById(R.id.prefs_timer_hostiles);
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.prefs_timer_hostiles, android.R.layout.simple_spinner_item);
