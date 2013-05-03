@@ -1,0 +1,48 @@
+package com.ogsteam.ogspy.permission;
+import android.content.Context;
+import android.content.Intent;
+
+import com.ogsteam.ogspy.OgspyActivity;
+import com.ogsteam.ogspy.data.models.Account;
+ 
+public final class CommonUtilities {
+     
+    // give your server registration url here
+    //static final String SERVER_URL = "http://10.0.2.2/gcm_server_php/register.php";
+	static String SERVER_URL = "gcm/register.php";
+ 
+    // Google project id
+    static final public String SENDER_ID = "990785741190";
+ 
+    /**
+     * Tag used on log messages.
+     */
+    static final String TAG = "OGSpy";
+ 
+    static final public String DISPLAY_MESSAGE_ACTION = "com.ogsteam.ogspy.permission.DISPLAY_MESSAGE";
+ 
+    static final public String EXTRA_MESSAGE = "message";
+ 
+    
+    public CommonUtilities(OgspyActivity activity) {
+    	if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
+			Account account = activity.getHandlerAccount().getAccountById(0);
+			SERVER_URL = account.getServerUrl() + "/" + SERVER_URL;
+    	}
+	}
+    
+    /**
+     * Notifies UI to display a message.
+     * <p>
+     * This method is defined in the common helper because it's used both by
+     * the UI and the background service.
+     *
+     * @param context application's context.
+     * @param message message to be displayed.
+     */
+    public static void displayMessage(Context context, String message) {
+        Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);
+        intent.putExtra(EXTRA_MESSAGE, message);
+        context.sendBroadcast(intent);
+    }
+}

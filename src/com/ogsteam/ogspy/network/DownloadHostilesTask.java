@@ -13,11 +13,11 @@ import com.ogsteam.ogspy.utils.OgspyUtils;
 import com.ogsteam.ogspy.utils.StringUtils;
 
 
-public class DownloadTask extends AsyncTask<String, Integer, String> {
+public class DownloadHostilesTask extends AsyncTask<String, Integer, String> {
     private OgspyActivity activity;
 	protected static String dataFromAsyncTask; 
     
-	public DownloadTask(OgspyActivity activity) {
+	public DownloadHostilesTask(OgspyActivity activity) {
         this.activity = activity;
     }
 
@@ -50,7 +50,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
 	}
 
 	public static void setDataFromAsyncTask(String dataFromAsyncTask) {
-		DownloadTask.dataFromAsyncTask = dataFromAsyncTask;
+		DownloadHostilesTask.dataFromAsyncTask = dataFromAsyncTask;
 	}
 
 }

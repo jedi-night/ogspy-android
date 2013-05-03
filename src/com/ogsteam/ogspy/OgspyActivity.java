@@ -1,19 +1,36 @@
 package com.ogsteam.ogspy;
 
+import static com.ogsteam.ogspy.permission.CommonUtilities.DISPLAY_MESSAGE_ACTION;
+import static com.ogsteam.ogspy.permission.CommonUtilities.EXTRA_MESSAGE;
+import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
+import com.google.android.gcm.GCMRegistrar;
 import com.ogsteam.ogspy.data.DatabaseAccountHandler;
 import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
+import com.ogsteam.ogspy.data.models.Account;
 import com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity;
-import com.ogsteam.ogspy.network.DownloadTask;
+import com.ogsteam.ogspy.network.ConnectionDetector;
+import com.ogsteam.ogspy.network.DownloadHostilesTask;
 import com.ogsteam.ogspy.notification.NotificationProvider;
+import com.ogsteam.ogspy.permission.CommonUtilities;
+import com.ogsteam.ogspy.permission.ServerUtilities;
 import com.ogsteam.ogspy.preferences.Accounts;
 import com.ogsteam.ogspy.preferences.Preferences;
 import com.ogsteam.ogspy.utils.OgspyUtils;
@@ -24,11 +41,18 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public Timer autoUpdateHostiles;
 
 	// Variables
-	public DatabaseAccountHandler handlerAccount;
+	public static DatabaseAccountHandler handlerAccount;
 	public DatabasePreferencesHandler handlerPrefs;
-	public NotificationProvider notifProvider;
-	public DownloadTask downloadTask;
+	public static NotificationProvider notifProvider;
+	public DownloadHostilesTask downloadHostilesTask;
+	public static CommonUtilities commonUtilities;
 
+	// Connection detector
+    public static ConnectionDetector connection;
+    
+    // Asyntask
+    AsyncTask<Void, Void, Void> mRegisterTask;
+     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,12 +64,73 @@ public class OgspyActivity extends TabsFragmentActivity {
         if (savedInstanceState != null) {
             mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab")); //set the tab as per the saved state
         }
+                
+        connection = new ConnectionDetector(getApplicationContext());
+ 
+        // Check if Internet present
+        if (!connection.isConnectingToInternet()) {
+        	Toast.makeText(this, "Connexion internet inexistante", Toast.LENGTH_LONG).show();	
+            // stop executing code by return
+            return;
+        }
+         
 		handlerAccount = new DatabaseAccountHandler(this);
 		handlerPrefs = new DatabasePreferencesHandler(this);
+		commonUtilities = new CommonUtilities(this);
 		notifProvider = new NotificationProvider(this);
-		downloadTask = new DownloadTask(this);
+		downloadHostilesTask = new DownloadHostilesTask(this);
 		timer=OgspyUtils.getTimerHostiles(this, handlerPrefs);
 		setAutomaticCheckHostiles();
+		
+        // Make sure the device has the proper dependencies.
+		try {
+			GCMRegistrar.checkDevice(this);
+		} catch (Exception e) {
+			Log.e(DEBUG_TAG, "Probleme lors du checkdevice de GCM !");
+		}
+			
+        // Make sure the manifest was properly set - comment out this line
+        // while developing the app, then uncomment it when it's ready.
+        GCMRegistrar.checkManifest(this);
+ 
+        registerReceiver(mHandleMessageReceiver, new IntentFilter(DISPLAY_MESSAGE_ACTION));
+        
+        // Get GCM registration id
+        final String regId = GCMRegistrar.getRegistrationId(this);
+ 
+        // Check if regid already presents
+        if (regId.equals("")) {
+            // Registration is not present, register now with GCM          
+            GCMRegistrar.register(this, SENDER_ID);
+        } else {
+            // Device is already registered on GCM
+            if (GCMRegistrar.isRegisteredOnServer(this)) {
+                // Skips registration.             
+                Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
+            } else {
+                // Try to register again, but not in the UI thread.
+                // It's also necessary to cancel the thread onDestroy(),
+                // hence the use of AsyncTask instead of a raw thread.
+                final Context context = this;
+                mRegisterTask = new AsyncTask<Void, Void, Void>() {
+ 
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        // Register on our server
+                        // On server creates a new user
+                        ServerUtilities.register(context, getFirstAccount().getUsername(), null, regId);
+                        return null;
+                    }
+ 
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        mRegisterTask = null;
+                    }
+ 
+                };
+                mRegisterTask.execute(null, null, null);
+            }
+        }        
 	}
 
 	@Override
@@ -82,7 +167,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public void onResume() {
 		super.onResume();
 		//notifProvider.deleteNotificationHostile();
-		updateOgspyDatas();
+		//updateOgspyDatas();
 	}
 
 	@Override
@@ -108,8 +193,8 @@ public class OgspyActivity extends TabsFragmentActivity {
 	}
 
 	private void updateOgspyDatas(){
-		downloadTask = new DownloadTask(this);
-		downloadTask.execute(new String[] { "do"});
+		downloadHostilesTask = new DownloadHostilesTask(this);
+		downloadHostilesTask.execute(new String[] { "do"});
 	}
 
 	public void saveAccount(View view){
@@ -125,6 +210,10 @@ public class OgspyActivity extends TabsFragmentActivity {
 		return handlerAccount;
 	}
 
+	public static Account getFirstAccount() {
+		return handlerAccount.getAllAccounts().get(0);
+	}
+	
 	public DatabasePreferencesHandler getHandlerPrefs() {
 		return handlerPrefs;
 	}
@@ -136,4 +225,48 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public static void setTimer(int timer) {
 		OgspyActivity.timer = timer;
 	}	
+	
+    /**
+     * Receiving push messages
+     * */
+    private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
+            // Waking up mobile if it is sleeping
+            //WakeLocker.acquire(getApplicationContext());
+            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "My wakelook");
+            // This will make the screen and power stay on
+            // This will release the wakelook after 2000 ms
+            wakeLock.acquire(2000);
+            
+            /**
+             * Take appropriate action on this message
+             * depending upon your app requirement
+             * For now i am just displaying it on the screen
+             * */
+             
+            // Showing received message
+            //lblMessage.append(newMessage + "\n");          
+            Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
+             
+            // Releasing wake lock
+            wakeLock.release();
+        }
+    };
+     
+    @Override
+    protected void onDestroy() {
+        if (mRegisterTask != null) {
+            mRegisterTask.cancel(true);
+        }
+        try {
+            unregisterReceiver(mHandleMessageReceiver);
+            GCMRegistrar.onDestroy(this);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+        }
+        super.onDestroy();
+    }
 }
