@@ -27,7 +27,7 @@ import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.data.models.Account;
 import com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity;
 import com.ogsteam.ogspy.network.ConnectionDetector;
-import com.ogsteam.ogspy.network.DownloadHostilesTask;
+import com.ogsteam.ogspy.network.DownloadTask;
 import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
@@ -44,7 +44,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public static DatabaseAccountHandler handlerAccount;
 	public DatabasePreferencesHandler handlerPrefs;
 	public static NotificationProvider notifProvider;
-	public DownloadHostilesTask downloadHostilesTask;
+	public DownloadTask downloadHostilesTask;
 	public static CommonUtilities commonUtilities;
 
 	// Connection detector
@@ -78,7 +78,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 		handlerPrefs = new DatabasePreferencesHandler(this);
 		commonUtilities = new CommonUtilities(this);
 		notifProvider = new NotificationProvider(this);
-		downloadHostilesTask = new DownloadHostilesTask(this);
+		downloadHostilesTask = new DownloadTask(this);
 		timer=OgspyUtils.getTimerHostiles(this, handlerPrefs);
 		setAutomaticCheckHostiles();
 		
@@ -97,12 +97,13 @@ public class OgspyActivity extends TabsFragmentActivity {
         
         // Get GCM registration id
         final String regId = GCMRegistrar.getRegistrationId(this);
- 
+                        
         // Check if regid already presents
         if (regId.equals("")) {
             // Registration is not present, register now with GCM          
             GCMRegistrar.register(this, SENDER_ID);
         } else {
+        	//GCMRegistrar.unregister(this);
             // Device is already registered on GCM
             if (GCMRegistrar.isRegisteredOnServer(this)) {
                 // Skips registration.             
@@ -118,7 +119,7 @@ public class OgspyActivity extends TabsFragmentActivity {
                     protected Void doInBackground(Void... params) {
                         // Register on our server
                         // On server creates a new user
-                        ServerUtilities.register(context, getFirstAccount().getUsername(), null, regId);
+                        ServerUtilities.register(context, getFirstAccount().getUsername(), regId);
                         return null;
                     }
  
@@ -193,7 +194,13 @@ public class OgspyActivity extends TabsFragmentActivity {
 	}
 
 	private void updateOgspyDatas(){
-		downloadHostilesTask = new DownloadHostilesTask(this);
+        // Check if Internet present
+        if (!connection.isConnectingToInternet()) {
+        	Toast.makeText(this, "Connexion internet inexistante", Toast.LENGTH_LONG).show();	
+            // stop executing code by return
+            return;
+        }         
+		downloadHostilesTask = new DownloadTask(this);
 		downloadHostilesTask.execute(new String[] { "do"});
 	}
 

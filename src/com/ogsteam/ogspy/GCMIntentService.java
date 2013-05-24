@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
-import com.ogsteam.ogspy.OgspyActivity;
-import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
  
@@ -26,7 +24,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onRegistered(Context context, String registrationId) {
         Log.i(TAG, "Device registered: regId = " + registrationId);
         CommonUtilities.displayMessage(context, "Your device registred with GCM");        
-        ServerUtilities.register(context, OgspyActivity.getFirstAccount().getUsername(), null, registrationId);
+        ServerUtilities.register(context, OgspyActivity.getFirstAccount().getUsername(), registrationId);
     }
  
     /**

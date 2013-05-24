@@ -2,10 +2,13 @@ package com.ogsteam.ogspy.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.ogsteam.ogspy.OgspyActivity;
@@ -21,52 +24,38 @@ public class OgspyUtils {
 		return MD5.toMD5(SHA1.toSHA1(password));
 	}
 	
-	public static String traiterReponseHostiles(String data, OgspyActivity activity){
-		// ({"new_messages": 0,"type": "checkhostiles","check": 0,"user": "","execution": 14.19})
+	public static String traiterReponseHostiles(JSONObject data, OgspyActivity activity){
 		NotificationProvider notifProvider = activity.getNotifProvider();
-		String donnees = data.trim().substring(2, (data.trim().length()-3)); // suppress ({ and })
-		String[] strArray = donnees.split(",");
-		HashMap<String, ArrayList<String>> hashResponse = new HashMap<String, ArrayList<String>>();
 		
-		for(int i = 0; i < strArray.length; i++){
-			String[] tabData = strArray[i].split(":");
-			
-			String value = tabData[1].replaceAll("\"","").trim();
-			ArrayList<String> arrayValue = new ArrayList<String>();
-			if(value.contains(";")){
-				String[] tabValues = value.split(";");
-				for(int j = 0; j < tabValues.length; j++){
-					arrayValue.add(tabValues[j]);	
+		try {
+			JSONObject json = data.getJSONObject("hostile");
+			if(json.length() > 0 && json.getString("isAttack").equals("1")){
+				JSONArray cibles = json.getJSONArray("user");
+				
+				StringBuilder retour = new StringBuilder(activity.getString(R.string.hostiles_attack));
+				StringBuilder notifHostile = new StringBuilder("");
+				for(int i=0;i < cibles.length(); i++){
+					String cible = cibles.getString(i);
+					retour.append("\n\t- ").append(cible);
+					notifHostile.append(cible);
+					if(i < cibles.length()){
+						notifHostile.append(", ");
+					}
 				}
+				if(!NotificationProvider.notifHostilesAlreadyDone){
+					NotificationProvider.notifHostilesAlreadyDone = true;
+					notifProvider.createNotificationHostile(notifHostile.toString());
+				}
+				return retour.toString();
 			} else {
-				arrayValue.add(value);
+				NotificationProvider.notifHostilesAlreadyDone = false;
+				notifProvider.deleteNotificationHostile();
+				return activity.getString(R.string.hostiles_none);
 			}
-						
-			hashResponse.put(tabData[0].replaceAll("\"",""), arrayValue);
+		} catch (JSONException jsone) {
+			Log.e("OgspyUtils", "Problème d'interprétation des données récupérées !");
 		}
-		if(hashResponse.get("check").get(0).equals("1")){
-			ArrayList<String> cibles = hashResponse.get("user");
-			StringBuilder retour = new StringBuilder(activity.getString(R.string.hostiles_attack));
-			StringBuilder notifHostile = new StringBuilder("");
-			int cibleCount=0;
-			for(String cible:cibles){
-				cibleCount++;
-				retour.append("\n\t- ").append(cible);
-				notifHostile.append(cible);
-				if(cibleCount < cibles.size()){
-					notifHostile.append(", ");
-				}
-			}
-			if(!NotificationProvider.notifHostilesAlreadyDone){
-				NotificationProvider.notifHostilesAlreadyDone = true;
-				notifProvider.createNotificationHostile(notifHostile.toString());
-			}
-			return retour.toString();
-		} else {
-			NotificationProvider.notifHostilesAlreadyDone = false;
-			notifProvider.deleteNotificationHostile();
-			return activity.getString(R.string.hostiles_none);
-		}
+		return null;
 		//return "Aucune information n'a pu Ãªtre rÃ©cupÃ©rÃ©e";
 	}
 	

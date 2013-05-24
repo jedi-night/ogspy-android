@@ -1,5 +1,7 @@
 package com.ogsteam.ogspy.network;
 
+import org.json.JSONObject;
+
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
@@ -12,12 +14,12 @@ import com.ogsteam.ogspy.utils.HttpUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
 import com.ogsteam.ogspy.utils.StringUtils;
 
-
-public class DownloadHostilesTask extends AsyncTask<String, Integer, String> {
+public class DownloadTask extends AsyncTask<String, Integer, String> {
     private OgspyActivity activity;
-	protected static String dataFromAsyncTask; 
-    
-	public DownloadHostilesTask(OgspyActivity activity) {
+	protected static String hostilesData;
+	protected static JSONObject dataJsonFromAsyncTask;
+	    
+	public DownloadTask(OgspyActivity activity) {
         this.activity = activity;
     }
 
@@ -27,7 +29,9 @@ public class DownloadHostilesTask extends AsyncTask<String, Integer, String> {
 			if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
 				Account account = activity.getHandlerAccount().getAccountById(0);
 				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers());
-				dataFromAsyncTask = OgspyUtils.traiterReponseHostiles(HttpUtils.downloadUrl(url), activity);
+				String data = HttpUtils.downloadUrl(url);				
+				dataJsonFromAsyncTask = new JSONObject(data.replaceAll("[(]", "").replaceAll("[)]", ""));
+				hostilesData = OgspyUtils.traiterReponseHostiles(dataJsonFromAsyncTask, activity);
 			}
 		} catch (Exception e) {
 			Log.e(OgspyActivity.DEBUG_TAG, "Problème lors du telechargement !",e);
@@ -41,16 +45,16 @@ public class DownloadHostilesTask extends AsyncTask<String, Integer, String> {
 
 	protected void onPostExecute(String result) {
 		if(activity.findViewById(R.id.response_ogspy) != null){
-			((EditText) activity.findViewById(R.id.response_ogspy)).setText(dataFromAsyncTask);
+			((EditText) activity.findViewById(R.id.response_ogspy)).setText(hostilesData);
 		}
 	}
 
-    public static String getDataFromAsyncTask() {
-		return dataFromAsyncTask;
+    public static String getHostilesData() {
+		return hostilesData;
 	}
 
-	public static void setDataFromAsyncTask(String dataFromAsyncTask) {
-		DownloadHostilesTask.dataFromAsyncTask = dataFromAsyncTask;
+	public static void setHostilesData(String data) {
+		DownloadTask.hostilesData = data;
 	}
 
 }

@@ -32,7 +32,7 @@ public class NotificationProvider {
 
 		// Notification Icons		
 		Bitmap largeIcon = ((BitmapDrawable) activity.getResources().getDrawable(R.drawable.ic_launcher)).getBitmap();
-		int smallIcon = R.drawable.notification_hostiles;
+		int smallIcon = R.drawable.hostiles_simple_attack;
 		
 		// Notifications details
 		String notificationTitle = "OGSPY";
