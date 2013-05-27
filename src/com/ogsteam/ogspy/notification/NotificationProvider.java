@@ -47,7 +47,10 @@ public class NotificationProvider {
 			.setContentText(getTextNotificationHostiles(details))
 			.setContentIntent(pendingIntent)
 			.setAutoCancel(true)
+			.setDefaults(Notification.DEFAULT_SOUND) // Play default notification sound
+			.setDefaults(Notification.DEFAULT_VIBRATE) // Vibrate if vibrate is enabled
 			.build();
+		
 		mNotification.notify(NOTIFICATION_ID_HOSTILES, notif);
 	}
 	

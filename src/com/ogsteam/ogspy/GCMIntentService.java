@@ -23,8 +23,10 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onRegistered(Context context, String registrationId) {
         Log.i(TAG, "Device registered: regId = " + registrationId);
-        CommonUtilities.displayMessage(context, "Your device registred with GCM");        
-        ServerUtilities.register(context, OgspyActivity.getFirstAccount().getUsername(), registrationId);
+        CommonUtilities.displayMessage(context, "Your device registred with GCM");
+        if(OgspyActivity.getFirstAccount() != null){
+        	ServerUtilities.register(context, OgspyActivity.getFirstAccount().getUsername(), registrationId);
+        }
     }
  
     /**

@@ -119,7 +119,9 @@ public class OgspyActivity extends TabsFragmentActivity {
                     protected Void doInBackground(Void... params) {
                         // Register on our server
                         // On server creates a new user
-                        ServerUtilities.register(context, getFirstAccount().getUsername(), regId);
+                    	if(getFirstAccount() != null){
+                    		ServerUtilities.register(context, getFirstAccount().getUsername(), regId);
+                    	}
                         return null;
                     }
  
@@ -218,7 +220,11 @@ public class OgspyActivity extends TabsFragmentActivity {
 	}
 
 	public static Account getFirstAccount() {
-		return handlerAccount.getAllAccounts().get(0);
+		Account account = null;
+		if(handlerAccount.getAllAccounts() != null && handlerAccount.getAllAccounts().size() > 0){
+			account = handlerAccount.getAllAccounts().get(0);
+		}
+		return account;
 	}
 	
 	public DatabasePreferencesHandler getHandlerPrefs() {
