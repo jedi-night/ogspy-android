@@ -1,7 +1,5 @@
 package com.ogsteam.ogspy.network;
 
-import org.json.JSONObject;
-
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
@@ -13,6 +11,8 @@ import com.ogsteam.ogspy.utils.Constants;
 import com.ogsteam.ogspy.utils.HttpUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
 import com.ogsteam.ogspy.utils.StringUtils;
+
+import org.json.JSONObject;
 
 public class DownloadTask extends AsyncTask<String, Integer, String> {
     private OgspyActivity activity;
@@ -29,7 +29,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
 			if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
 				Account account = activity.getHandlerAccount().getAccountById(0);
 				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers());
-				String data = HttpUtils.downloadUrl(url);				
+				String data = HttpUtils.getUrl(url);
 				dataJsonFromAsyncTask = new JSONObject(data.replaceAll("[(]", "").replaceAll("[)]", ""));
 				hostilesData = OgspyUtils.traiterReponseHostiles(dataJsonFromAsyncTask, activity);
 			}

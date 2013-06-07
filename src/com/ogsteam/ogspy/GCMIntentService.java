@@ -1,6 +1,5 @@
 package com.ogsteam.ogspy;
 
-import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -8,6 +7,8 @@ import android.util.Log;
 import com.google.android.gcm.GCMBaseIntentService;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
+
+import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
  
 public class GCMIntentService extends GCMBaseIntentService {
  
@@ -35,7 +36,9 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onUnregistered(Context context, String registrationId) {
         Log.i(TAG, "Device unregistered");
-        ServerUtilities.unregister(context, registrationId);
+        if(OgspyActivity.getFirstAccount() != null){
+            ServerUtilities.unregister(context, OgspyActivity.getFirstAccount().getUsername(), registrationId);
+        }
     }
  
     /**

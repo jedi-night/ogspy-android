@@ -1,12 +1,5 @@
 package com.ogsteam.ogspy.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -17,6 +10,13 @@ import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.utils.security.MD5;
 import com.ogsteam.ogspy.utils.security.SHA1;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 public class OgspyUtils {
 
@@ -53,7 +53,7 @@ public class OgspyUtils {
 				return activity.getString(R.string.hostiles_none);
 			}
 		} catch (JSONException jsone) {
-			Log.e("OgspyUtils", "Problème d'interprétation des données récupérées !");
+			Log.e("OgspyUtils", "Probleme d'interpretation des donnees recuperees !");
 		}
 		return null;
 		//return "Aucune information n'a pu Ãªtre rÃ©cupÃ©rÃ©e";

@@ -5,7 +5,8 @@
     style="@android:style/Theme.Black.NoTitleBar">
 
     <!-- USER -->
-    <TextView
+
+    <TextView
         android:id="@+id/ogspy_user_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,5 +109,15 @@
         android:layout_centerHorizontal="true"
         style="@style/Button" 
         android:onClick="saveAccount"/>
-    
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gcm_unregister"
+            android:id="@+id/registerNotifications"
+            android:layout_marginTop="14dp"
+            android:onClick="unregisteringOgspy"
+            android:layout_below="@+id/save_button"
+            android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

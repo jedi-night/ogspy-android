@@ -1,13 +1,12 @@
 package com.ogsteam.ogspy.fragments.tabs;
 
-import java.util.HashMap;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 
@@ -15,6 +14,8 @@ import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.preferences.Accounts;
 import com.ogsteam.ogspy.preferences.Preferences;
+
+import java.util.HashMap;
  
  
 /**
@@ -95,8 +96,6 @@ public class TabsFragmentActivity extends FragmentActivity implements TabHost.On
      * @param activity
      * @param tabHost
      * @param tabSpec
-     * @param clss
-     * @param args
      */
     private static void addTab(TabsFragmentActivity activity, TabHost tabHost, TabHost.TabSpec tabSpec, TabInfo tabInfo) {
         // Attach a Tab view factory to the spec
@@ -133,7 +132,7 @@ public class TabsFragmentActivity extends FragmentActivity implements TabHost.On
                 if (newTab.fragment == null) {
                     newTab.fragment = Fragment.instantiate(this,
                             newTab.clss.getName(), newTab.args);
-                    ft.add(R.id.realtabcontent, newTab.fragment, newTab.tag);                    
+                    ft.add(R.id.realtabcontent, newTab.fragment, newTab.tag);
                 } else {
                     ft.attach(newTab.fragment);
                 }

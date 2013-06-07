@@ -1,7 +1,5 @@
 package com.ogsteam.ogspy.permission;
 
-import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
-import static com.ogsteam.ogspy.permission.CommonUtilities.displayMessage;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -9,6 +7,9 @@ import android.util.Log;
 import com.google.android.gcm.GCMBaseIntentService;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
+
+import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
+import static com.ogsteam.ogspy.permission.CommonUtilities.displayMessage;
  
 public class GCMIntentService extends GCMBaseIntentService {
  
@@ -24,8 +25,10 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onRegistered(Context context, String registrationId) {
         Log.i(TAG, "Device registered: regId = " + registrationId);
-        displayMessage(context, "Your device registred with GCM");        
-        ServerUtilities.register(context, OgspyActivity.getFirstAccount().getUsername(), registrationId);
+        displayMessage(context, "Your device registred with GCM");
+        if(OgspyActivity.getFirstAccount() != null){
+            ServerUtilities.register(context, OgspyActivity.getFirstAccount().getUsername(), registrationId);
+        }
     }
  
     /**
@@ -34,7 +37,9 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onUnregistered(Context context, String registrationId) {
         Log.i(TAG, "Device unregistered");
-        ServerUtilities.unregister(context, registrationId);
+        if(OgspyActivity.getFirstAccount() != null){
+            ServerUtilities.unregister(context, OgspyActivity.getFirstAccount().getUsername(), registrationId);
+        }
     }
  
     /**

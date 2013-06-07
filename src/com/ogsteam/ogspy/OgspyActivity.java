@@ -1,12 +1,5 @@
 package com.ogsteam.ogspy;
 
-import static com.ogsteam.ogspy.permission.CommonUtilities.DISPLAY_MESSAGE_ACTION;
-import static com.ogsteam.ogspy.permission.CommonUtilities.EXTRA_MESSAGE;
-import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
@@ -35,12 +29,19 @@ import com.ogsteam.ogspy.preferences.Accounts;
 import com.ogsteam.ogspy.preferences.Preferences;
 import com.ogsteam.ogspy.utils.OgspyUtils;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static com.ogsteam.ogspy.permission.CommonUtilities.DISPLAY_MESSAGE_ACTION;
+import static com.ogsteam.ogspy.permission.CommonUtilities.EXTRA_MESSAGE;
+import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
+
 public class OgspyActivity extends TabsFragmentActivity {
 	public static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();;
 	public static int timer; // MIN * 60 * 1000 : minutes in seconds then milliseconds
 	public Timer autoUpdateHostiles;
-
-	// Variables
+    protected String regId;
+    // Variables
 	public static DatabaseAccountHandler handlerAccount;
 	public DatabasePreferencesHandler handlerPrefs;
 	public static NotificationProvider notifProvider;
@@ -56,7 +57,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		this.requestWindowFeature(Window.FEATURE_CONTEXT_MENU);
 		// Step 1: Inflate layout
         setContentView(R.layout.ogspy_tab_host);
         // Step 2: Setup TabHost
@@ -73,7 +74,7 @@ public class OgspyActivity extends TabsFragmentActivity {
             // stop executing code by return
             return;
         }
-         
+
 		handlerAccount = new DatabaseAccountHandler(this);
 		handlerPrefs = new DatabasePreferencesHandler(this);
 		commonUtilities = new CommonUtilities(this);
@@ -96,10 +97,10 @@ public class OgspyActivity extends TabsFragmentActivity {
         registerReceiver(mHandleMessageReceiver, new IntentFilter(DISPLAY_MESSAGE_ACTION));
         
         // Get GCM registration id
-        final String regId = GCMRegistrar.getRegistrationId(this);
+        regId = GCMRegistrar.getRegistrationId(this);
                         
         // Check if regid already presents
-        if (regId.equals("")) {
+        if (regId.equals("") && getFirstAccount() != null) {
             // Registration is not present, register now with GCM          
             GCMRegistrar.register(this, SENDER_ID);
         } else {
@@ -214,6 +215,16 @@ public class OgspyActivity extends TabsFragmentActivity {
 		Preferences.savePrefs(view, this);
 	}
 
+    public void unregisteringOgspy(View view){
+        CheckBox switchNotifs = ((CheckBox) this.findViewById(R.id.registerNotifications));
+        if(getFirstAccount() != null){
+            if(GCMRegistrar.isRegisteredOnServer(this) && !regId.equals("")) {
+                ServerUtilities.unregister(this, getFirstAccount().getUsername(), regId);
+            }
+        } else {
+            CommonUtilities.displayMessage(this,"Votre compte n'est pas encore configuré !");
+        }
+    }
 
 	public DatabaseAccountHandler getHandlerAccount() {
 		return handlerAccount;

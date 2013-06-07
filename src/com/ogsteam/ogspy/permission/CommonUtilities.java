@@ -8,8 +8,8 @@ import com.ogsteam.ogspy.data.models.Account;
 public final class CommonUtilities {
      
     // give your server registration url here
-    //static final String SERVER_URL = "http://10.0.2.2/gcm_server_php/register.php";
-	static String SERVER_URL = "gcm/register.php";
+    //static final String SERVER_URL_REGISTER = "http://10.0.2.2/gcm_server_php/register.php";
+	static String SERVER_URL_REGISTER = "gcm/register.php?name={0}&regId={1}";
  
     // Google project id
     static final public String SENDER_ID = "990785741190";
@@ -27,7 +27,7 @@ public final class CommonUtilities {
     public CommonUtilities(OgspyActivity activity) {
     	if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
 			Account account = activity.getHandlerAccount().getAccountById(0);
-			SERVER_URL = account.getServerUrl() + "/" + SERVER_URL;
+			SERVER_URL_REGISTER = account.getServerUrl() + "/" + SERVER_URL_REGISTER;
     	}
 	}
     

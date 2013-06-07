@@ -1,5 +1,7 @@
 package com.ogsteam.ogspy.utils;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,15 +10,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import android.util.Log;
-
 public class HttpUtils {
 	private static final String DEBUG_TAG = HttpUtils.class.getSimpleName();
 	
 	// Given a URL, establishes an HttpUrlConnection and retrieves
 	// the web page content as a InputStream, which it returns as
 	// a string.
-	public static String downloadUrl(String myurl) throws IOException {
+	public static String getUrl(String myurl) throws IOException {
 	    InputStream is = null;
 	    // Only display the first 500 characters of the retrieved
 	    // web page content.
@@ -48,7 +48,7 @@ public class HttpUtils {
 	    }
         return contentAsString;
 	}
-	
+
 	// Reads an InputStream and converts it to a String.
 	private static String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
 	    Reader reader = null;
