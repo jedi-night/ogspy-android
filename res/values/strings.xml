@@ -53,19 +53,19 @@
     </string-array>
     
 	<!-- GCM -->
-	<string name="gcm_registered">From GCM: device successfully registered!</string>
-    <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
-    <string name="gcm_message">From GCM: you got message!</string>
-    <string name="gcm_error">From GCM: error (%1$s).</string>
-    <string name="gcm_recoverable_error">From GCM: recoverable error (%1$s).</string>
-    <string name="gcm_deleted">From GCM: server deleted %1$d pending messages!</string>
-    <string name="server_registering">Trying (attempt %1$d/%2$d) to register device on Demo Server.</string>
-    <string name="server_registered">From OGSpy Server: successfully added device!</string>
-    <string name="server_unregistered">From OGSpy Server: successfully removed device!</string>
-    <string name="server_register_error">Could not register device on Demo Server after %1$d attempts.</string>
-    <string name="server_unregister_error">Could not unregister device on Demo Server (%1$s).</string>
-    <string name="options_register">Register</string>
-    <string name="options_unregister">Unregister</string>
+	<string name="gcm_registered">GCM: appareil correctement enregistré !</string>
+    <string name="gcm_unregistered">GCM: appareil correctement supprimé !</string>
+    <string name="gcm_message">GCM: vous avez un message !</string>
+    <string name="gcm_error">GCM: erreur (%1$s).</string>
+    <string name="gcm_recoverable_error">GCM: erreur récupérable (%1$s).</string>
+    <string name="gcm_deleted">GCM: serveur supprimé %1$d message(s) en attente !</string>
+    <string name="server_registering">Tentative (%1$d/%2$d) d\'enregistrement de l\'appareil sur le serveur OGSPY.</string>
+    <string name="server_registered">OGSpy : appareil ajouté !</string>
+    <string name="server_unregistered">OGSpy : appareil supprimé !</string>
+    <string name="server_register_error">Impossible d\'enregistrer l\'appareil sur le serveur OGSPY après %1$d tentatives.</string>
+    <string name="server_unregister_error">Impossible d\'enregistrer l\'appareil sur le serveur OGSPY (%1$s).</string>
+    <string name="options_register">S\'enregistrer</string>
+    <string name="options_unregister">Supprimer</string>
 	<!-- END GCM -->
 	
 </resources>

@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
@@ -106,10 +105,7 @@ public class OgspyActivity extends TabsFragmentActivity {
         } else {
         	//GCMRegistrar.unregister(this);
             // Device is already registered on GCM
-            if (GCMRegistrar.isRegisteredOnServer(this)) {
-                // Skips registration.             
-                Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
-            } else {
+            if (!GCMRegistrar.isRegisteredOnServer(this)) {
                 // Try to register again, but not in the UI thread.
                 // It's also necessary to cancel the thread onDestroy(),
                 // hence the use of AsyncTask instead of a raw thread.
@@ -216,7 +212,6 @@ public class OgspyActivity extends TabsFragmentActivity {
 	}
 
     public void unregisteringOgspy(View view){
-        CheckBox switchNotifs = ((CheckBox) this.findViewById(R.id.registerNotifications));
         if(getFirstAccount() != null){
             if(GCMRegistrar.isRegisteredOnServer(this) && !regId.equals("")) {
                 ServerUtilities.unregister(this, getFirstAccount().getUsername(), regId);
@@ -273,7 +268,7 @@ public class OgspyActivity extends TabsFragmentActivity {
              
             // Showing received message
             //lblMessage.append(newMessage + "\n");          
-            Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
              
             // Releasing wake lock
             wakeLock.release();

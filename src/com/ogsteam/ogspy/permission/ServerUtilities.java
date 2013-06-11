@@ -38,8 +38,8 @@ public final class ServerUtilities {
                 PostingTask post = new PostingTask(context, StringUtils.formatPattern(serverUrl,name,regId));
                 post.execute(new String[] { "do"});
                 GCMRegistrar.setRegisteredOnServer(context, true);
-                String message = context.getString(R.string.server_registered);;
-                CommonUtilities.displayMessage(context, message);
+                //String message = context.getString(R.string.server_registered);;
+                CommonUtilities.displayMessage(context, context.getString(R.string.server_registered));
                 return;
             } catch (Exception e) {
                 // Here we are simplifying and retrying on any error; in a real
