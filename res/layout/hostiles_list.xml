@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:orientation="horizontal"
+                android:padding="5dip" >
+
+    <!--ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hostile_list_image"
+            android:layout_alignParentTop="true" android:minWidth="100px"  android:minHeight="100px"
+            /-->
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Titre attaque"
+            android:id="@+id/hostile_list_title"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentLeft="true"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Détail"
+            android:id="@+id/hostile_list_detail"
+            android:layout_below="@+id/hostile_list_title"
+            android:layout_alignLeft="@+id/hostile_list_title"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="5dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="date"
+            android:id="@+id/hostile_list_date"
+            android:layout_below="@+id/hostile_list_title"
+            android:layout_alignParentRight="true"/>
+</RelativeLayout>

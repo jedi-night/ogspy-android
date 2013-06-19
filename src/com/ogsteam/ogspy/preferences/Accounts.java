@@ -16,16 +16,16 @@ public class Accounts {
 		if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
 			Account account = activity.getHandlerAccount().getAccountById(0); 
 			if(account != null){
-				if(account.getUsername()!=null && account.getUsername().length() > 0){
+				if(account.getUsername() != null && account.getUsername().length() > 0 && activity.findViewById(R.id.ogspy_user) != null){
 					((EditText) activity.findViewById(R.id.ogspy_user)).setText(account.getUsername());
 				}
-				if(account.getPassword()!=null && account.getPassword().length() > 0){
+				if(account.getPassword()!=null && account.getPassword().length() > 0 && activity.findViewById(R.id.ogspy_password) != null){
 					((EditText) activity.findViewById(R.id.ogspy_password)).setText(account.getPassword());
 				}
-				if(account.getServerUrl()!=null && account.getServerUrl().length() > 0){
+				if(account.getServerUrl()!=null && account.getServerUrl().length() > 0 && activity.findViewById(R.id.ogspy_server_url) != null){
 					((EditText) activity.findViewById(R.id.ogspy_server_url)).setText(account.getServerUrl());
 				}
-				if(account.getServerUnivers()!=null && account.getServerUnivers().length() > 0){
+				if(account.getServerUnivers()!=null && account.getServerUnivers().length() > 0 && activity.findViewById(R.id.ogspy_server_universe) != null){
 					((EditText) activity.findViewById(R.id.ogspy_server_universe)).setText(account.getServerUnivers());
 				}
 			}

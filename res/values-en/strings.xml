@@ -64,6 +64,10 @@
     <string name="server_unregister_error">Could not unregister device on OGSpy Server (%1$s).</string>
     <string name="options_register">Register</string>
     <string name="options_unregister">Unregister</string>
-	<!-- END GCM -->
+    <string name="account_not_configured">Votre compte n\'est pas encore configuré !</string>
+    <string name="connexion_ko">Connexion internet inexistante</string>
+    <string name="gcm_problem">Problème avec GCM !</string>
+    <string name="download_problem">Problème lors du telechargement !</string>
+    <!-- END GCM -->
 	
 </resources>

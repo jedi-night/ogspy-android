@@ -22,15 +22,17 @@ public class Preferences {
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
-		spinner.setAdapter(adapter);
+		if(spinner != null && adapter != null) {
+            spinner.setAdapter(adapter);
+        }
 		
 		if(!activity.getHandlerPrefs().getAllPrefs().isEmpty()){
-			Prefs prefs = activity.getHandlerPrefs().getPrefsById(0); 
-			if(prefs != null){
-				if(prefs.getRefreshHostiles() > 0){
-					int value = prefs.getRefreshHostiles();
-					spinner.setSelection(value);
-				}
+			Prefs prefs = activity.getHandlerPrefs().getPrefsById(0);
+			if(prefs != null && prefs.getRefreshHostiles() > 0){
+                int value = prefs.getRefreshHostiles();
+                if(spinner != null) {
+                    spinner.setSelection(value);
+                }
 			}
 		}
 	}

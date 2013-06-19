@@ -36,7 +36,7 @@ import static com.ogsteam.ogspy.permission.CommonUtilities.EXTRA_MESSAGE;
 import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
 
 public class OgspyActivity extends TabsFragmentActivity {
-	public static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();;
+	public static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();
 	public static int timer; // MIN * 60 * 1000 : minutes in seconds then milliseconds
 	public Timer autoUpdateHostiles;
     protected String regId;
@@ -61,7 +61,7 @@ public class OgspyActivity extends TabsFragmentActivity {
         setContentView(R.layout.ogspy_tab_host);
         // Step 2: Setup TabHost
         initialiseTabHost(savedInstanceState);
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null && mTabHost != null && savedInstanceState.getString("tab") != null) {
             mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab")); //set the tab as per the saved state
         }
                 
@@ -69,7 +69,7 @@ public class OgspyActivity extends TabsFragmentActivity {
  
         // Check if Internet present
         if (!connection.isConnectingToInternet()) {
-        	Toast.makeText(this, "Connexion internet inexistante", Toast.LENGTH_LONG).show();	
+        	Toast.makeText(this, getString(R.string.connexion_ko), Toast.LENGTH_LONG).show();
             // stop executing code by return
             return;
         }
@@ -81,56 +81,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 		downloadHostilesTask = new DownloadTask(this);
 		timer=OgspyUtils.getTimerHostiles(this, handlerPrefs);
 		setAutomaticCheckHostiles();
-		
-        // Make sure the device has the proper dependencies.
-		try {
-			GCMRegistrar.checkDevice(this);
-		} catch (Exception e) {
-			Log.e(DEBUG_TAG, "Probleme lors du checkdevice de GCM !");
-		}
-			
-        // Make sure the manifest was properly set - comment out this line
-        // while developing the app, then uncomment it when it's ready.
-        GCMRegistrar.checkManifest(this);
- 
-        registerReceiver(mHandleMessageReceiver, new IntentFilter(DISPLAY_MESSAGE_ACTION));
-        
-        // Get GCM registration id
-        regId = GCMRegistrar.getRegistrationId(this);
-                        
-        // Check if regid already presents
-        if (regId.equals("") && getFirstAccount() != null) {
-            // Registration is not present, register now with GCM          
-            GCMRegistrar.register(this, SENDER_ID);
-        } else {
-        	//GCMRegistrar.unregister(this);
-            // Device is already registered on GCM
-            if (!GCMRegistrar.isRegisteredOnServer(this)) {
-                // Try to register again, but not in the UI thread.
-                // It's also necessary to cancel the thread onDestroy(),
-                // hence the use of AsyncTask instead of a raw thread.
-                final Context context = this;
-                mRegisterTask = new AsyncTask<Void, Void, Void>() {
- 
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        // Register on our server
-                        // On server creates a new user
-                    	if(getFirstAccount() != null){
-                    		ServerUtilities.register(context, getFirstAccount().getUsername(), regId);
-                    	}
-                        return null;
-                    }
- 
-                    @Override
-                    protected void onPostExecute(Void result) {
-                        mRegisterTask = null;
-                    }
- 
-                };
-                mRegisterTask.execute(null, null, null);
-            }
-        }        
+        doGcm();
 	}
 
 	@Override
@@ -166,6 +117,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+        doGcm();
 		//notifProvider.deleteNotificationHostile();
 		//updateOgspyDatas();
 	}
@@ -195,7 +147,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 	private void updateOgspyDatas(){
         // Check if Internet present
         if (!connection.isConnectingToInternet()) {
-        	Toast.makeText(this, "Connexion internet inexistante", Toast.LENGTH_LONG).show();	
+        	Toast.makeText(this, getString(R.string.connexion_ko), Toast.LENGTH_LONG).show();
             // stop executing code by return
             return;
         }         
@@ -217,7 +169,7 @@ public class OgspyActivity extends TabsFragmentActivity {
                 ServerUtilities.unregister(this, getFirstAccount().getUsername(), regId);
             }
         } else {
-            CommonUtilities.displayMessage(this,"Votre compte n'est pas encore configuré !");
+            CommonUtilities.displayMessage(this,getString(R.string.account_not_configured));
         }
     }
 
@@ -237,7 +189,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 		return handlerPrefs;
 	}
 
-	public NotificationProvider getNotifProvider() {
+	public static NotificationProvider getNotifProvider() {
 		return notifProvider;
 	}
 
@@ -251,11 +203,11 @@ public class OgspyActivity extends TabsFragmentActivity {
     private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
+            //String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
             // Waking up mobile if it is sleeping
             //WakeLocker.acquire(getApplicationContext());
             PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "My wakelook");
+            PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "OGSpy wakelock");
             // This will make the screen and power stay on
             // This will release the wakelook after 2000 ms
             wakeLock.acquire(2000);
@@ -271,7 +223,7 @@ public class OgspyActivity extends TabsFragmentActivity {
             //Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
              
             // Releasing wake lock
-            wakeLock.release();
+            if(wakeLock.isHeld()) wakeLock.release();
         }
     };
      
@@ -287,5 +239,62 @@ public class OgspyActivity extends TabsFragmentActivity {
             Log.e("UnRegister Receiver Error", "> " + e.getMessage());
         }
         super.onDestroy();
+    }
+
+    private boolean doGcm(){
+        boolean retour = false;
+        // Make sure the device has the proper dependencies.
+        try {
+            GCMRegistrar.checkDevice(this);
+
+            // Make sure the manifest was properly set - comment out this line
+            // while developing the app, then uncomment it when it's ready.
+            GCMRegistrar.checkManifest(this);
+
+            registerReceiver(mHandleMessageReceiver, new IntentFilter(DISPLAY_MESSAGE_ACTION));
+
+            // Get GCM registration id
+            regId = GCMRegistrar.getRegistrationId(this);
+
+            // Check if regid already presents
+            if (regId.equals("") && getFirstAccount() != null) {
+                // Registration is not present, register now with GCM
+                GCMRegistrar.register(this, SENDER_ID);
+            } else {
+                //GCMRegistrar.unregister(this);
+                // Device is already registered on GCM
+                if (!GCMRegistrar.isRegisteredOnServer(this)) {
+                    // Try to register again, but not in the UI thread.
+                    // It's also necessary to cancel the thread onDestroy(),
+                    // hence the use of AsyncTask instead of a raw thread.
+                    final Context context = this;
+                    mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            // Register on our server
+                            // On server creates a new user
+                            if(getFirstAccount() != null){
+                                ServerUtilities.register(context, getFirstAccount().getUsername(), regId);
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void result) {
+                            mRegisterTask = null;
+                        }
+
+                    };
+                    mRegisterTask.execute(null, null, null);
+                }
+            }
+            retour = true;
+        } catch (Exception e) {
+            Log.e(DEBUG_TAG, getString(R.string.gcm_problem));
+            Log.e(DEBUG_TAG, e.getMessage());
+            retour = false;
+        }
+        return retour;
     }
 }

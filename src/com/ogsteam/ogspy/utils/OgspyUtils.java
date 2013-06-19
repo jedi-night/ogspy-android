@@ -1,22 +1,23 @@
 package com.ogsteam.ogspy.utils;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.notification.NotificationProvider;
+import com.ogsteam.ogspy.server.HostilesHelper;
 import com.ogsteam.ogspy.utils.security.MD5;
 import com.ogsteam.ogspy.utils.security.SHA1;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.TreeMap;
 
 public class OgspyUtils {
 
@@ -24,39 +25,32 @@ public class OgspyUtils {
 		return MD5.toMD5(SHA1.toSHA1(password));
 	}
 	
-	public static String traiterReponseHostiles(JSONObject data, OgspyActivity activity){
-		NotificationProvider notifProvider = activity.getNotifProvider();
-		
-		try {
-			JSONObject json = data.getJSONObject("hostile");
-			if(json.length() > 0 && json.getString("isAttack").equals("1")){
-				JSONArray cibles = json.getJSONArray("user");
-				
-				StringBuilder retour = new StringBuilder(activity.getString(R.string.hostiles_attack));
-				StringBuilder notifHostile = new StringBuilder("");
-				for(int i=0;i < cibles.length(); i++){
-					String cible = cibles.getString(i);
-					retour.append("\n\t- ").append(cible);
-					notifHostile.append(cible);
-					if(i < cibles.length()){
-						notifHostile.append(", ");
-					}
-				}
-				if(!NotificationProvider.notifHostilesAlreadyDone){
-					NotificationProvider.notifHostilesAlreadyDone = true;
-					notifProvider.createNotificationHostile(notifHostile.toString());
-				}
-				return retour.toString();
-			} else {
-				NotificationProvider.notifHostilesAlreadyDone = false;
-				notifProvider.deleteNotificationHostile();
-				return activity.getString(R.string.hostiles_none);
-			}
-		} catch (JSONException jsone) {
-			Log.e("OgspyUtils", "Probleme d'interpretation des donnees recuperees !");
-		}
-		return null;
-		//return "Aucune information n'a pu être récupérée";
+	public static String traiterReponseHostiles(HostilesHelper helperHostile, OgspyActivity activity){
+		//NotificationProvider notifProvider = activity.getNotifProvider();
+        if(helperHostile.isAttack()){
+            TreeMap<String, ArrayList<HostilesHelper.Cible>> attaques = helperHostile.getAttaques();
+
+            StringBuilder retour = new StringBuilder(activity.getString(R.string.hostiles_attack));
+            //StringBuilder notifHostile = new StringBuilder("");
+            for ( Iterator<String> user = attaques.keySet().iterator(); user.hasNext(); ) {
+                String userAttack = user.next();
+                retour.append("\n\t- ").append(userAttack);
+                for(HostilesHelper.Cible cible: attaques.get(userAttack)){
+                    retour.append("\n\t\t* ")
+                            .append(cible.getAttacker()).append(" de ").append(cible.getOriginPlanet()).append(" (").append(cible.getOriginCoords()).append(")")
+                            .append(" attaque ").append(cible.getCiblePlanet()).append(" (").append(cible.getCibleCoords()).append(")");
+                }
+            }
+            /*if(!NotificationProvider.notifHostilesAlreadyDone){
+                NotificationProvider.notifHostilesAlreadyDone = true;
+                notifProvider.createNotificationHostile(notifHostile.toString());
+            }*/
+            return retour.toString();
+        } else {
+            NotificationProvider.notifHostilesAlreadyDone = false;
+            //notifProvider.deleteNotificationHostile();
+            return activity.getString(R.string.hostiles_none);
+        }
 	}
 	
 	public static int getTimerHostiles(Activity activity, DatabasePreferencesHandler handlerPrefs){

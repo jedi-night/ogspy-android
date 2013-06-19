@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
+import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
 
@@ -88,7 +89,8 @@ public class GCMIntentService extends GCMBaseIntentService {
      * Issues a notification to inform the user that server has sent a message.
      */
     private static void generateNotification(Context context, String message) {
-    	OgspyActivity.notifProvider.createNotificationHostile(message);
+        NotificationProvider notifProvider = OgspyActivity.getNotifProvider();
+        if(notifProvider != null) notifProvider.createNotificationHostile(message);
         /*int icon = R.drawable.ic_launcher;
         long when = System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager)

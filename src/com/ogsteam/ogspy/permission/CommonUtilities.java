@@ -1,4 +1,5 @@
 package com.ogsteam.ogspy.permission;
+
 import android.content.Context;
 import android.content.Intent;
 
@@ -41,6 +42,7 @@ public final class CommonUtilities {
      * @param message message to be displayed.
      */
     public static void displayMessage(Context context, String message) {
+        //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);
         intent.putExtra(EXTRA_MESSAGE, message);
         context.sendBroadcast(intent);
