@@ -20,14 +20,14 @@ public class HttpUtils {
 	    InputStream is = null;
 	    // Only display the first 500 characters of the retrieved
 	    // web page content.
-	    int len = 500;
+	    int len = 1500;
 	    String contentAsString = "NA"; 
 	    try {
 	        URL url = new URL(myurl);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setReadTimeout(10000 /* milliseconds */);
 	        conn.setConnectTimeout(15000 /* milliseconds */);
-	        conn.setRequestMethod("GET");
+            conn.setRequestMethod("GET");
 	        conn.setDoInput(true);
 	        // Starts the query
 	        conn.connect();
@@ -52,7 +52,7 @@ public class HttpUtils {
 	// Reads an InputStream and converts it to a String.
 	private static String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
 	    Reader reader = null;
-	    reader = new InputStreamReader(stream, "UTF-8");        
+	    reader = new InputStreamReader(stream, "ISO-8859-1");
 	    char[] buffer = new char[len];
 	    reader.read(buffer);
 	    return new String(buffer);

@@ -78,7 +78,7 @@ public class TabsFragmentActivity extends FragmentActivity implements TabHost.On
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup();
         TabInfo tabInfo = null;
-        TabsFragmentActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab1").setIndicator(getString(R.string.hostiles)), ( tabInfo = new TabInfo("Tab1", HostileFragment.class, args)));
+        TabsFragmentActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab1").setIndicator(getApplicationContext().getString(R.string.hostiles), getApplicationContext().getResources().getDrawable(R.drawable.hostiles_destroy_attack)), ( tabInfo = new TabInfo("Tab1", HostileFragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
         TabsFragmentActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab2").setIndicator(getString(R.string.account)), ( tabInfo = new TabInfo("Tab2", AccountFragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
@@ -145,6 +145,8 @@ public class TabsFragmentActivity extends FragmentActivity implements TabHost.On
             	Preferences.showPrefs((OgspyActivity)this);
             } else if(newTab != null && newTab.clss != null && newTab.clss.getName().equals(AccountFragment.class.getName())) {
             	Accounts.showAccount((OgspyActivity)this);
+            } else if(newTab != null && newTab.clss != null && newTab.clss.getName().equals(HostileFragment.class.getName())) {
+                ((OgspyActivity)this).updateOgspyDatas();
             }
         }
     }

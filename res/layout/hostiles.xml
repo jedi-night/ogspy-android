@@ -4,27 +4,11 @@
               android:layout_height="match_parent"
               android:orientation="horizontal">
 
-    <!--TextView
-            android:id="@+id/response_ogspy"
-            android:layout_width="fill_parent"
-            android:layout_height="136dp"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginTop="25px"/-->
-
     <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_view_hostiles"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal|top"
             />
 
-    <!--EditText
-        android:id="@+id/response_ogspy"
-        android:layout_width="match_parent"
-        android:layout_height="124dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:layout_gravity="center"
-        android:editable="false"/-->
-       
 </LinearLayout>

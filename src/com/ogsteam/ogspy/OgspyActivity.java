@@ -32,7 +32,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.ogsteam.ogspy.permission.CommonUtilities.DISPLAY_MESSAGE_ACTION;
-import static com.ogsteam.ogspy.permission.CommonUtilities.EXTRA_MESSAGE;
 import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
 
 public class OgspyActivity extends TabsFragmentActivity {
@@ -144,9 +143,10 @@ public class OgspyActivity extends TabsFragmentActivity {
 		}
 	}
 
-	private void updateOgspyDatas(){
+	public void updateOgspyDatas(){
         // Check if Internet present
-        if (!connection.isConnectingToInternet()) {
+        if(connection==null){ return;}
+        if ( !connection.isConnectingToInternet()) {
         	Toast.makeText(this, getString(R.string.connexion_ko), Toast.LENGTH_LONG).show();
             // stop executing code by return
             return;

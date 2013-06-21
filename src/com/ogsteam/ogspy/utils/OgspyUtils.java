@@ -11,8 +11,6 @@ import com.ogsteam.ogspy.server.HostilesHelper;
 import com.ogsteam.ogspy.utils.security.MD5;
 import com.ogsteam.ogspy.utils.security.SHA1;
 
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.server.HostilesHelper;
 
 import java.util.ArrayList;
 
@@ -47,7 +46,7 @@ public class HostilesListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.hostiles_list, null);
             holder = new ViewHolder();
-            //holder.image = (ImageView) convertView.findViewById(R.id.hostile_list_image);
+            holder.image = (ImageView) convertView.findViewById(R.id.hostile_list_image);
             holder.title = (TextView) convertView.findViewById(R.id.hostile_list_title);
             holder.date = (TextView) convertView.findViewById(R.id.hostile_list_date);
             holder.detail = (TextView) convertView.findViewById(R.id.hostile_list_detail);
@@ -56,6 +55,9 @@ public class HostilesListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        if(listData.get(position).isAg()){
+                holder.image.setImageResource(R.drawable.hostiles_group_attack);
+        }
         holder.title.setText(listData.get(position).getTitle());
         holder.date.setText(listData.get(position).getDate());
         holder.detail.setText(listData.get(position).getDetail());
