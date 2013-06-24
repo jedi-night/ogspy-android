@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * Created by jp.tessier on 18/06/13.
  */
 public class HostileItem {
+
+    private int image;
     private String title;
     private String date;
     private String detail;
@@ -20,6 +22,14 @@ public class HostileItem {
 
     public boolean isAg() {
         return isAg;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 
         public String getTitle() {

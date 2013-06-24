@@ -55,9 +55,7 @@ public class HostilesListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if(listData.get(position).isAg()){
-                holder.image.setImageResource(R.drawable.hostiles_group_attack);
-        }
+        holder.image.setImageResource(listData.get(position).getImage());
         holder.title.setText(listData.get(position).getTitle());
         holder.date.setText(listData.get(position).getDate());
         holder.detail.setText(listData.get(position).getDetail());

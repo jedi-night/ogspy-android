@@ -33,7 +33,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
 		try {
 			if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
 				Account account = activity.getHandlerAccount().getAccountById(0);
-				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers());
+				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), activity.versionAndroid, activity.getVersionOgspy());
 				String data = HttpUtils.getUrl(url);
 				dataJsonFromAsyncTask = new JSONObject(data.replaceAll("[(]", "").replaceAll("[)]", ""));
                 helperHostile = new HostilesHelper(dataJsonFromAsyncTask);

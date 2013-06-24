@@ -1,12 +1,9 @@
 package com.ogsteam.ogspy;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,14 +28,49 @@ import com.ogsteam.ogspy.utils.OgspyUtils;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.ogsteam.ogspy.permission.CommonUtilities.DISPLAY_MESSAGE_ACTION;
 import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
 
 public class OgspyActivity extends TabsFragmentActivity {
-	public static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();
+
+    /**
+     * Receiving push messages
+     * */
+    /*private BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                //String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
+                // Waking up mobile if it is sleeping
+                //WakeLocker.acquire(getApplicationContext());
+                PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP, "OGSpy wakelock");
+                // This will make the screen and power stay on
+                // This will release the wakelook after 2000 ms
+                wakeLock.acquire(5000);
+
+                // Showing received message
+                //lblMessage.append(newMessage + "\n");
+                //Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
+
+                // Releasing wake lock
+                if(wakeLock!= null && wakeLock.isHeld()) {
+                    wakeLock.release();
+                }
+            } catch (Exception e) {
+                Log.e(DEBUG_TAG,"Problème avec le wakelock OGSpy !",e);
+            }
+        }
+    };
+*/
+
+    public final String versionAndroid = Build.VERSION.RELEASE;
+    public static String versionOgspy = "";
+
+    public static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();
 	public static int timer; // MIN * 60 * 1000 : minutes in seconds then milliseconds
 	public Timer autoUpdateHostiles;
     protected String regId;
+
     // Variables
 	public static DatabaseAccountHandler handlerAccount;
 	public DatabasePreferencesHandler handlerPrefs;
@@ -55,6 +87,13 @@ public class OgspyActivity extends TabsFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+        try{
+            versionOgspy = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (Exception e) {
+            Log.e(DEBUG_TAG,"Impossible de recuperer la version ogspy",e);
+        }
+
 		this.requestWindowFeature(Window.FEATURE_CONTEXT_MENU);
 		// Step 1: Inflate layout
         setContentView(R.layout.ogspy_tab_host);
@@ -118,12 +157,13 @@ public class OgspyActivity extends TabsFragmentActivity {
 		super.onResume();
         doGcm();
 		//notifProvider.deleteNotificationHostile();
-		//updateOgspyDatas();
+		updateOgspyDatas();
+        setAutomaticCheckHostiles();
 	}
 
 	@Override
 	public void onPause() {
-		//autoUpdate.cancel(); cancel the  
+        autoUpdateHostiles.cancel();
 		super.onPause();
 	}
 
@@ -196,44 +236,14 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public static void setTimer(int timer) {
 		OgspyActivity.timer = timer;
 	}	
-	
-    /**
-     * Receiving push messages
-     * */
-    private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
-            // Waking up mobile if it is sleeping
-            //WakeLocker.acquire(getApplicationContext());
-            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "OGSpy wakelock");
-            // This will make the screen and power stay on
-            // This will release the wakelook after 2000 ms
-            wakeLock.acquire(2000);
-            
-            /**
-             * Take appropriate action on this message
-             * depending upon your app requirement
-             * For now i am just displaying it on the screen
-             * */
-             
-            // Showing received message
-            //lblMessage.append(newMessage + "\n");          
-            //Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
-             
-            // Releasing wake lock
-            if(wakeLock.isHeld()) wakeLock.release();
-        }
-    };
-     
+
     @Override
     protected void onDestroy() {
         if (mRegisterTask != null) {
             mRegisterTask.cancel(true);
         }
         try {
-            unregisterReceiver(mHandleMessageReceiver);
+            //unregisterReceiver(mHandleMessageReceiver);
             GCMRegistrar.onDestroy(this);
         } catch (Exception e) {
             Log.e("UnRegister Receiver Error", "> " + e.getMessage());
@@ -251,7 +261,7 @@ public class OgspyActivity extends TabsFragmentActivity {
             // while developing the app, then uncomment it when it's ready.
             GCMRegistrar.checkManifest(this);
 
-            registerReceiver(mHandleMessageReceiver, new IntentFilter(DISPLAY_MESSAGE_ACTION));
+            //registerReceiver(mHandleMessageReceiver, new IntentFilter(DISPLAY_MESSAGE_ACTION));
 
             // Get GCM registration id
             regId = GCMRegistrar.getRegistrationId(this);
@@ -297,4 +307,9 @@ public class OgspyActivity extends TabsFragmentActivity {
         }
         return retour;
     }
+
+    public static String getVersionOgspy() {
+        return versionOgspy;
+    }
+
 }

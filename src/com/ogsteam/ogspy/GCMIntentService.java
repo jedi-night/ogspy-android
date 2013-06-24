@@ -17,6 +17,7 @@ public class GCMIntentService extends GCMBaseIntentService {
  
     public GCMIntentService() {
         super(SENDER_ID);
+        setIntentRedelivery(true);
     }
  
     /**

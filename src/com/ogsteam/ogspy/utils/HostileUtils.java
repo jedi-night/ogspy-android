@@ -22,54 +22,56 @@ public abstract class HostileUtils {
 
     public static void showHostiles(HostilesHelper helperHostile, final OgspyActivity activity){
         ArrayList<HostileItem> hostileItems = new ArrayList<HostileItem>();
-        // Attaques simples
-        for ( Iterator<String> user = helperHostile.getAttaques().keySet().iterator(); user.hasNext(); ) {
-            String userAttack = user.next();
-            HostileItem item = new HostileItem(false);
-            for(HostilesHelper.Cible cible: helperHostile.getAttaques().get(userAttack)){
-                item.setTitle(userAttack, cible.getCiblePlanet(), cible.getCibleCoords());
-                item.setDate(cible.getArrivalTime());
-                item.setDetail(cible.getOriginPlanet(), cible.getOriginCoords(), cible.getAttacker(),false,null);
-                item.setCompo(cible.getCompo());
+        if(helperHostile != null && (helperHostile.getAttaques().size() > 0 || helperHostile.getAttaquesGroup().size() > 0)){
+            // Attaques simples
+            for ( Iterator<String> user = helperHostile.getAttaques().keySet().iterator(); user.hasNext(); ) {
+                String userAttack = user.next();
+                HostileItem item = new HostileItem(false);
+                for(HostilesHelper.Cible cible: helperHostile.getAttaques().get(userAttack)){
+                    item.setImage(R.drawable.hostiles_simple_attack);
+                    item.setTitle(userAttack, cible.getCiblePlanet(), cible.getCibleCoords());
+                    item.setDate(cible.getArrivalTime());
+                    item.setDetail(cible.getOriginPlanet(), cible.getOriginCoords(), cible.getAttacker(),false,null);
+                    item.setCompo(cible.getCompo());
+                    hostileItems.add(item);
+                }
+            }
+            // Attaques groupées
+            for ( Iterator<String> ag = helperHostile.getAttaquesGroup().keySet().iterator(); ag.hasNext(); ) {
+                String idAttack = ag.next();
+                HostileItem item = new HostileItem(true);
+                HostilesHelper.AG attaqueGroup = helperHostile.getAttaquesGroup().get(idAttack).get(idAttack);
+                item.setImage(R.drawable.hostiles_group_attack);
+                item.setTitle(attaqueGroup.getCible(), attaqueGroup.getCiblePlanet(), attaqueGroup.getCibleCoords());
+                item.setDate(attaqueGroup.getArrivalTime());
+
+                StringBuffer detail = new StringBuffer();
+                TreeMap<String,HostilesHelper.Vague> vagues = attaqueGroup.getVagues();
+                int i=0;
+                for(Iterator<String> vague = vagues.keySet().iterator(); vague.hasNext();){
+                    String idVague = vague.next();
+                    HostilesHelper.Vague vagueItem = vagues.get(idVague);
+                    i++;
+                    detail.append(HostileItem.getDetail(vagueItem.getOriginPlanet(), vagueItem.getOriginCoords(), vagueItem.getAttacker(),true,vagueItem.getCompo()));
+                    if(i < vagues.size()){
+                        detail.append("\n");
+                    }
+                }
+                item.setDetail(detail.toString());
                 hostileItems.add(item);
             }
-        }
-        // Attaques groupées
-        for ( Iterator<String> ag = helperHostile.getAttaquesGroup().keySet().iterator(); ag.hasNext(); ) {
-            String idAttack = ag.next();
-            HostileItem item = new HostileItem(true);
-            HostilesHelper.AG attaqueGroup = helperHostile.getAttaquesGroup().get(idAttack).get(idAttack);
-            //item.setImage("hostiles_group_attack");
-            item.setTitle(attaqueGroup.getCible(), attaqueGroup.getCiblePlanet(), attaqueGroup.getCibleCoords());
-            item.setDate(attaqueGroup.getArrivalTime());
-
-            StringBuffer detail = new StringBuffer();
-            TreeMap<String,HostilesHelper.Vague> vagues = attaqueGroup.getVagues();
-            int i=0;
-            for(Iterator<String> vague = vagues.keySet().iterator(); vague.hasNext();){
-                String idVague = vague.next();
-                HostilesHelper.Vague vagueItem = vagues.get(idVague);
-                i++;
-                detail.append(HostileItem.getDetail(vagueItem.getOriginPlanet(), vagueItem.getOriginCoords(), vagueItem.getAttacker(),true,vagueItem.getCompo()));
-                if(i<vagues.size()){
-                    detail.append("\n");
-                }
+            final ListView lv1 = (ListView) activity.findViewById(R.id.list_view_hostiles);
+            if(lv1!=null){
+                lv1.setAdapter(new HostilesListAdapter(activity, hostileItems));
+                lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                        Object o = lv1.getItemAtPosition(position);
+                        HostileItem hostileData = (HostileItem) o;
+                        Toast.makeText(activity, hostileData.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
-            item.setDetail(detail.toString());
-            //item.setCompo(cible.getCompo());
-            hostileItems.add(item);
-        }
-        final ListView lv1 = (ListView) activity.findViewById(R.id.list_view_hostiles);
-        if(lv1!=null){
-            lv1.setAdapter(new HostilesListAdapter(activity, hostileItems));
-            lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                    Object o = lv1.getItemAtPosition(position);
-                    HostileItem hostileData = (HostileItem) o;
-                    Toast.makeText(activity, hostileData.toString(), Toast.LENGTH_LONG).show();
-                }
-            });
         }
     }
 }
