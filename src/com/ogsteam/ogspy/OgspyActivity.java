@@ -86,6 +86,7 @@ public class OgspyActivity extends TabsFragmentActivity {
      
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_CONTEXT_MENU);
 		super.onCreate(savedInstanceState);
 
         try{
@@ -94,15 +95,14 @@ public class OgspyActivity extends TabsFragmentActivity {
             Log.e(DEBUG_TAG,"Impossible de recuperer la version ogspy",e);
         }
 
-		this.requestWindowFeature(Window.FEATURE_CONTEXT_MENU);
 		// Step 1: Inflate layout
-        setContentView(R.layout.ogspy_tab_host);
+        //setContentView(R.layout.ogspy_tab_host);
         // Step 2: Setup TabHost
-        initialiseTabHost(savedInstanceState);
+        /*initialiseTabHost(savedInstanceState);
         if (savedInstanceState != null && mTabHost != null && savedInstanceState.getString("tab") != null) {
             mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab")); //set the tab as per the saved state
         }
-                
+          */
         connection = new ConnectionDetector(getApplicationContext());
  
         // Check if Internet present

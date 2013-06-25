@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- state selected -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <gradient
+                    android:startColor="#555555"
+                    android:centerColor="#444444"
+                    android:endColor="#333333"
+                    android:angle="90"/>
+            <padding android:left="7dp"
+                     android:top="7dp"
+                     android:right="7dp"
+                     android:bottom="7dp" />
+            <stroke
+                    android:width="2dip"
+                    android:color="#555555" />
+        </shape>
+    </item>
+    <!-- state normal -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                    android:startColor="#222222"
+                    android:centerColor="#181818"
+                    android:endColor="#111111"
+                    android:angle="90"/>
+            <padding android:left="7dp"
+                     android:top="7dp"
+                     android:right="7dp"
+                     android:bottom="7dp" />
+            <stroke
+                    android:width="2dip"
+                    android:color="#222222" />
+        </shape>
+    </item>
+</selector>

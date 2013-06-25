@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         
-		<activity android:name="com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity" android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+		<activity android:name="com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity" android:parentActivityName="com.ogsteam.ogspy.OgspyActivity" >
     		<meta-data android:name="android.support.PARENT_ACTIVITY" android:value="com.ogsteam.ogspy.OgspyActivity"/>
 		</activity>
 
