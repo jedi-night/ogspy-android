@@ -1,40 +1,36 @@
 package com.ogsteam.ogspy.fragments.tabs;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
-import android.widget.TabHost.TabContentFactory;
 import android.widget.TextView;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.preferences.Accounts;
-import com.ogsteam.ogspy.preferences.Preferences;
 
-import java.util.HashMap;
- 
- 
+
 /**
  * @author mwho
  *
  */
 public class TabsFragmentActivity extends FragmentActivity {
     /* Tab identifiers */
-    static String TAB_A = "First Tab";
-    static String TAB_B = "Second Tab";
-    static String TAB_C = "Thrid Tab";
+    static String TAB_A = "1 Tab";
+    static String TAB_B = "2 Tab";
+    static String TAB_C = "3 Tab";
+    static String TAB_D = "3 Tab";
 
     TabHost mTabHost;
 
+    public static OgspyActivity activityPrinc;
+
+    GeneralFragment fragmentGeneral;
     HostileFragment fragmentHostile;
     AccountFragment fragmentAccount;
     PrefsFragment fragmentPrefs;
@@ -44,6 +40,12 @@ public class TabsFragmentActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ogspy_tab_host);
 
+        TAB_A = getApplicationContext().getResources().getString(R.string.general);
+        TAB_B = getApplicationContext().getResources().getString(R.string.hostiles);
+        TAB_C = getApplicationContext().getResources().getString(R.string.account);
+        TAB_D = getApplicationContext().getResources().getString(R.string.prefs);
+
+        fragmentGeneral = new GeneralFragment();
         fragmentHostile = new HostileFragment();
         fragmentAccount = new AccountFragment();
         fragmentPrefs = new PrefsFragment();
@@ -61,15 +63,15 @@ public class TabsFragmentActivity extends FragmentActivity {
     public void initializeTab() {
 
         TabHost.TabSpec spec    =   mTabHost.newTabSpec(TAB_A);
-        mTabHost.setCurrentTab(-4);
+        mTabHost.setCurrentTab(-5);
+
         spec.setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
                 return findViewById(android.R.id.tabcontent);
             }
         });
-        spec.setIndicator(createTabView(TAB_A, R.drawable.ic_tab_hostiles_selected));
+        spec.setIndicator(createTabView(TAB_A, R.drawable.ic_tab_general_selected));
         mTabHost.addTab(spec);
-
 
         spec =   mTabHost.newTabSpec(TAB_B);
         spec.setContent(new TabHost.TabContentFactory() {
@@ -77,8 +79,9 @@ public class TabsFragmentActivity extends FragmentActivity {
                 return findViewById(android.R.id.tabcontent);
             }
         });
-        spec.setIndicator(createTabView(TAB_B, R.drawable.ic_tab_account_selected));
+        spec.setIndicator(createTabView(TAB_B, R.drawable.ic_tab_hostiles_selected));
         mTabHost.addTab(spec);
+
 
         spec =   mTabHost.newTabSpec(TAB_C);
         spec.setContent(new TabHost.TabContentFactory() {
@@ -86,7 +89,16 @@ public class TabsFragmentActivity extends FragmentActivity {
                 return findViewById(android.R.id.tabcontent);
             }
         });
-        spec.setIndicator(createTabView(TAB_C, R.drawable.ic_tab_prefs_selected));
+        spec.setIndicator(createTabView(TAB_C, R.drawable.ic_tab_account_selected));
+        mTabHost.addTab(spec);
+
+        spec =   mTabHost.newTabSpec(TAB_D);
+        spec.setContent(new TabHost.TabContentFactory() {
+            public View createTabContent(String tag) {
+                return findViewById(android.R.id.tabcontent);
+            }
+        });
+        spec.setIndicator(createTabView(TAB_D, R.drawable.ic_tab_prefs_selected));
         mTabHost.addTab(spec);
     }
 
@@ -97,13 +109,13 @@ public class TabsFragmentActivity extends FragmentActivity {
         public void onTabChanged(String tabId) {
             /*Set current tab..*/
             if(tabId.equals(TAB_A)){
-                pushFragments(tabId, fragmentHostile);
+                pushFragments(tabId, fragmentGeneral);
             }else if(tabId.equals(TAB_B)){
-                pushFragments(tabId, fragmentAccount);
-                //Accounts.showAccount(OgspyActivity.get);
+                pushFragments(tabId, fragmentHostile);
             }else if(tabId.equals(TAB_C)){
+                pushFragments(tabId, fragmentAccount);
+            }else if(tabId.equals(TAB_D)){
                 pushFragments(tabId, fragmentPrefs);
-                //Preferences.showPrefs((OgspyActivity)this);
             }
         }
     };

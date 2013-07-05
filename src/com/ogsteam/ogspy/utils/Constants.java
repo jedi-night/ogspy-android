@@ -1,6 +1,12 @@
 package com.ogsteam.ogspy.utils;
 
 public interface Constants {
-	public static final String URL_GET_OGSPY_INFORMATION = "{0}/mod/xtense/xtense.php?toolbar_version=2.5.2&toolbar_type=FF&type=android&mod_min_version=2.4.1&user={1}&password={2}&univers={3}&versionAndroid={4}&versionOgspy={5}";
-	public static final int TIMER_DEFAULT_VALUE = 10; 
+	public static final String URL_GET_OGSPY_INFORMATION = "{0}/mod/xtense/xtense.php?toolbar_version=2.5.2&toolbar_type=FF&type=android&mod_min_version=2.4.1&user={1}&password={2}&univers={3}&versionAndroid={4}&versionOgspy={5}&action={6}";
+	public static final int TIMER_DEFAULT_VALUE = 10;
+
+    /* TYPE ENVOI XTENSE */
+    public static final String XTENSE_TYPE_HOSTILES = "attacks";
+    public static final String XTENSE_TYPE_ALLIANCE = "ally";
+    public static final String XTENSE_TYPE_SPYS = "spys";
+    public static final String XTENSE_TYPE_SERVER = "server";
 }

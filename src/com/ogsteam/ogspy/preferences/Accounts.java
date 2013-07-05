@@ -1,43 +1,42 @@
 package com.ogsteam.ogspy.preferences;
 
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.fragments.tabs.AccountFragment;
 
 public class Accounts {
 
 	/** Display the account windows */
-	public static void showAccount(OgspyActivity activity) {		
+	public static void showAccount(OgspyActivity activity, AccountFragment fragment) {
 		//activity.setContentView(R.layout.accounts);
 		if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
 			Account account = activity.getHandlerAccount().getAccountById(0); 
 			if(account != null){
-				if(account.getUsername() != null && account.getUsername().length() > 0 && activity.findViewById(R.id.ogspy_user) != null){
-					((EditText) activity.findViewById(R.id.ogspy_user)).setText(account.getUsername());
+				if(account.getUsername() != null && account.getUsername().length() > 0 && fragment.getUser() != null){
+                    fragment.getUser().setText(account.getUsername());
 				}
-				if(account.getPassword()!=null && account.getPassword().length() > 0 && activity.findViewById(R.id.ogspy_password) != null){
-					((EditText) activity.findViewById(R.id.ogspy_password)).setText(account.getPassword());
+				if(account.getPassword()!=null && account.getPassword().length() > 0 && fragment.getPassword() != null){
+                    fragment.getPassword().setText(account.getPassword());
 				}
-				if(account.getServerUrl()!=null && account.getServerUrl().length() > 0 && activity.findViewById(R.id.ogspy_server_url) != null){
-					((EditText) activity.findViewById(R.id.ogspy_server_url)).setText(account.getServerUrl());
+				if(account.getServerUrl()!=null && account.getServerUrl().length() > 0 && fragment.getServerUrl() != null){
+                    fragment.getServerUrl().setText(account.getServerUrl());
 				}
-				if(account.getServerUnivers()!=null && account.getServerUnivers().length() > 0 && activity.findViewById(R.id.ogspy_server_universe) != null){
-					((EditText) activity.findViewById(R.id.ogspy_server_universe)).setText(account.getServerUnivers());
+				if(account.getServerUnivers()!=null && account.getServerUnivers().length() > 0 && fragment.getServerUniverse() != null){
+                    fragment.getServerUniverse().setText(account.getServerUnivers());
 				}
 			}
 		}
 	}
 	
 	/** Called when the user clicks the Save button in account*/
-	public static void saveAccount(View view, OgspyActivity activity) {
-		String username = ((EditText) activity.findViewById(R.id.ogspy_user)).getText().toString();
-		String password = ((EditText) activity.findViewById(R.id.ogspy_password)).getText().toString();
-		String serverUrl = ((EditText) activity.findViewById(R.id.ogspy_server_url)).getText().toString();
-		String serverUnivers = ((EditText) activity.findViewById(R.id.ogspy_server_universe)).getText().toString();
+	public static void saveAccount(OgspyActivity activity) {
+		String username = AccountFragment.getUser().getText().toString();
+		String password = AccountFragment.getPassword().getText().toString();
+		String serverUrl = AccountFragment.getServerUrl().getText().toString();
+		String serverUnivers = AccountFragment.getServerUniverse().getText().toString();
 		
 		if(check(activity, username, password, serverUrl, serverUnivers)) {
 			if(activity.getHandlerAccount().getAccountsCount() > 0){

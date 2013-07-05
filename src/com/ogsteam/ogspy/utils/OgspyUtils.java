@@ -6,8 +6,8 @@ import android.widget.ArrayAdapter;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
+import com.ogsteam.ogspy.helpers.HostilesHelper;
 import com.ogsteam.ogspy.notification.NotificationProvider;
-import com.ogsteam.ogspy.server.HostilesHelper;
 import com.ogsteam.ogspy.utils.security.MD5;
 import com.ogsteam.ogspy.utils.security.SHA1;
 

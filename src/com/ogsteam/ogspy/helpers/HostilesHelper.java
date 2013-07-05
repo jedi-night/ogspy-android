@@ -1,4 +1,4 @@
-package com.ogsteam.ogspy.server;
+package com.ogsteam.ogspy.helpers;
 
 import android.util.Log;
 
@@ -23,35 +23,37 @@ public class HostilesHelper {
         attaquesGroup = new TreeMap<String, TreeMap<String,AG>>();
         try{
             // "hostile": {"isAttack": 1,"attaks": [[[[[0,"Test","Toto","1:1:1","Tata","9:9:9"]]]]]}
-            JSONObject hostile = datas.getJSONObject("hostile");
-            if(hostile!=null && hostile.length() > 0){
-                isAttack = "1".equals(hostile.getString("isAttack"));
-                if(isAttack){
-                    JSONArray attaks = hostile.getJSONArray("attaks");
-                    for(int i=0;i < attaks.length(); i++){
-                        JSONArray attack = attaks.getJSONArray(i);
-                        JSONArray compos = attack.getJSONArray(9);
-                        if("0".equals(attack.getString(2))){ // Vague = 0 : Attaque simple
-                            String attackUser = attack.getString(1);
-                            Cible cible = new Cible(attack.getString(0),attack.getString(2),attack.getString(3),attack.getString(4),attack.getString(5),attack.getString(6),attack.getString(7),attack.getString(8),compos);
-                            if(!attaques.containsKey(attackUser)){
-                                ArrayList<Cible> array = new ArrayList<Cible>();
-                                array.add(cible);
-                                attaques.put(attackUser, array);
-                            } else {
-                                attaques.get(attackUser).add(cible);
-                            }
-                        } else { // Attaque groupée
-                            String idAttack = attack.getString(0);
-                            AG ag = new AG(attack.getString(0),attack.getString(1),attack.getString(6),attack.getString(7),attack.getString(8));
-                            Vague vague = new Vague(attack.getString(2),attack.getString(3),attack.getString(4),attack.getString(5),compos);
-                            if(!attaquesGroup.containsKey(idAttack)){
-                                TreeMap<String,AG> array = new TreeMap<String,AG>();
-                                ag.addVague(vague);
-                                array.put(idAttack, ag);
-                                attaquesGroup.put(idAttack, array);
-                            } else {
-                                attaquesGroup.get(idAttack).get(idAttack).addVague(vague);
+            if(datas.has("hostile")){
+                JSONObject hostile = datas.getJSONObject("hostile");
+                if(hostile!=null && hostile.length() > 0){
+                    isAttack = "1".equals(hostile.getString("isAttack"));
+                    if(isAttack){
+                        JSONArray attaks = hostile.getJSONArray("attaks");
+                        for(int i=0;i < attaks.length(); i++){
+                            JSONArray attack = attaks.getJSONArray(i);
+                            JSONArray compos = attack.getJSONArray(9);
+                            if("0".equals(attack.getString(2))){ // Vague = 0 : Attaque simple
+                                String attackUser = attack.getString(1);
+                                Cible cible = new Cible(attack.getString(0),attack.getString(2),attack.getString(3),attack.getString(4),attack.getString(5),attack.getString(6),attack.getString(7),attack.getString(8),compos);
+                                if(!attaques.containsKey(attackUser)){
+                                    ArrayList<Cible> array = new ArrayList<Cible>();
+                                    array.add(cible);
+                                    attaques.put(attackUser, array);
+                                } else {
+                                    attaques.get(attackUser).add(cible);
+                                }
+                            } else { // Attaque groupée
+                                String idAttack = attack.getString(0);
+                                AG ag = new AG(attack.getString(0),attack.getString(1),attack.getString(6),attack.getString(7),attack.getString(8));
+                                Vague vague = new Vague(attack.getString(2),attack.getString(3),attack.getString(4),attack.getString(5),compos);
+                                if(!attaquesGroup.containsKey(idAttack)){
+                                    TreeMap<String,AG> array = new TreeMap<String,AG>();
+                                    ag.addVague(vague);
+                                    array.put(idAttack, ag);
+                                    attaquesGroup.put(idAttack, array);
+                                } else {
+                                    attaquesGroup.get(idAttack).get(idAttack).addVague(vague);
+                                }
                             }
                         }
                     }

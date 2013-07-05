@@ -1,4 +1,4 @@
-package com.ogsteam.ogspy.network;
+package com.ogsteam.ogspy.network.download;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.util.Log;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
-import com.ogsteam.ogspy.server.HostilesHelper;
+import com.ogsteam.ogspy.helpers.HostilesHelper;
 import com.ogsteam.ogspy.utils.Constants;
 import com.ogsteam.ogspy.utils.HostileUtils;
 import com.ogsteam.ogspy.utils.HttpUtils;
@@ -15,15 +15,14 @@ import com.ogsteam.ogspy.utils.StringUtils;
 
 import org.json.JSONObject;
 
-public class DownloadTask extends AsyncTask<String, Integer, String> {
+public class DownloadHostilesTask extends AsyncTask<String, Integer, String> {
+    public static final String DEBUG_TAG = DownloadHostilesTask.class.getSimpleName();
     private OgspyActivity activity;
-	protected static String hostilesData;
 	protected static JSONObject dataJsonFromAsyncTask;
     protected HostilesHelper helperHostile;
 
-	public DownloadTask(OgspyActivity activity) {
+	public DownloadHostilesTask(OgspyActivity activity) {
         this.activity = activity;
-        this.hostilesData = null;
         this.dataJsonFromAsyncTask = null;
         this.helperHostile = null;
     }
@@ -33,14 +32,15 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
 		try {
 			if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
 				Account account = activity.getHandlerAccount().getAccountById(0);
-				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), activity.versionAndroid, activity.getVersionOgspy());
+				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), activity.versionAndroid, activity.getVersionOgspy(), Constants.XTENSE_TYPE_HOSTILES);
 				String data = HttpUtils.getUrl(url);
-				dataJsonFromAsyncTask = new JSONObject(data.replaceAll("[(]", "").replaceAll("[)]", ""));
-                helperHostile = new HostilesHelper(dataJsonFromAsyncTask);
-				hostilesData = OgspyUtils.traiterReponseHostiles(helperHostile, activity);
+                if(data != null){
+                    dataJsonFromAsyncTask = new JSONObject(data.replaceAll("[(]", "").replaceAll("[)]", ""));
+                    helperHostile = new HostilesHelper(dataJsonFromAsyncTask);
+                }
 			}
 		} catch (Exception e) {
-			Log.e(OgspyActivity.DEBUG_TAG, activity.getString(R.string.download_problem),e);
+			Log.e(DEBUG_TAG, activity.getString(R.string.download_problem),e);
 		}
 		return null;
 	}

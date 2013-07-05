@@ -16,12 +16,18 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
+            <HorizontalScrollView
+                    android:id="@+id/horizontalScrollView1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true">
             <TabWidget
                     android:id="@android:id/tabs"
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"/>
+            </HorizontalScrollView>
 
             <!--FrameLayout
                 android:id="@+android:id/realtabcontent"

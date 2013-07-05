@@ -6,15 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
+import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
+import com.ogsteam.ogspy.preferences.Preferences;
 
- 
+
 /**
  * @author mwho
  *
  */
 public class PrefsFragment extends Fragment {
+    private static Spinner timerHostiles;
     /** (non-Javadoc)
      * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
      */
@@ -30,6 +34,16 @@ public class PrefsFragment extends Fragment {
             // the view hierarchy; it would just never be used.
             return null;
         }
-        return (RelativeLayout)inflater.inflate(R.layout.prefs, container, false);
-    }    
+        RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.prefs, container, false);
+
+        timerHostiles = (Spinner) layout.findViewById(R.id.prefs_timer_hostiles);
+
+        Preferences.showPrefs((OgspyActivity) getActivity(), this);
+
+        return layout;
+    }
+
+    public static Spinner getTimerHostiles() {
+        return timerHostiles;
+    }
 }

@@ -50,14 +50,17 @@ public class NotificationProvider {
 			.setDefaults(Notification.DEFAULT_SOUND) // Play default notification sound
 			.setDefaults(Notification.DEFAULT_VIBRATE) // Vibrate if vibrate is enabled
 			.build();
-		
+
 		mNotification.notify(NOTIFICATION_ID_HOSTILES, notif);
+        NOTIFICATION_ID_HOSTILES++;
 	}
 	
 	public void deleteNotificationHostile(){
     	final NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
     	//la suppression de la notification se fait grâce a son ID
-    	notificationManager.cancel(NOTIFICATION_ID_HOSTILES);
+        for (int i = 0; i < NOTIFICATION_ID_HOSTILES; i++){
+    	    notificationManager.cancel(i);
+        }
     }
 	
 	private String getTextNotificationHostiles(String details){

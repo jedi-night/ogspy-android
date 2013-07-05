@@ -5,6 +5,7 @@
     <string name="account">Account</string>
     <string name="prefs">Preferences</string>
     <string name="hostiles">Hostiles</string>
+    <string name="general">General</string>
     <string name="quit">Leave</string>
     
     <string name="hello_world">Hello World !</string>
@@ -35,21 +36,21 @@
     <string name="prefs_title">Preferences</string>
     <string name="prefs_timer_hostiles_title">Refresh hostiles (in minutes) : </string>
     <string name="save_button_prefs">Save</string>
-        
-    <!-- Notifs -->
-    <string name="notification">Notification OGSPY</string>
-	<string name="notification_title">Flottes hostiles</string>
-	<string name="notification_desc">{0}</string>
-	
-	
-	<string-array name="prefs_timer_hostiles">	    
+
+    <string-array name="prefs_timer_hostiles">
         <item>None</item>
         <item>5</item>
         <item>15</item>
         <item>30</item>
         <item>60</item>
     </string-array>
-    
+
+    <!-- Notifs -->
+    <string name="notification">Notification OGSPY</string>
+	<string name="notification_title">Flottes hostiles</string>
+	<string name="notification_desc">{0}</string>
+	
+
 	<!-- GCM -->
 	<string name="gcm_registered">From GCM: device successfully registered!</string>
     <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
@@ -69,5 +70,9 @@
     <string name="gcm_problem">Problème avec GCM !</string>
     <string name="download_problem">Problème lors du telechargement !</string>
     <!-- END GCM -->
-	
+
+    <!-- General -->
+    <string name="alliance_spys">Top Player (month)</string>
+    <string name="player_spys">Top Alliance (month)</string>
+    <string name="spy_title_me">My spys</string>
 </resources>

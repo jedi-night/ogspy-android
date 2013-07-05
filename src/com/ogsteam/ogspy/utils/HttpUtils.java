@@ -12,7 +12,8 @@ import java.net.URL;
 
 public class HttpUtils {
 	private static final String DEBUG_TAG = HttpUtils.class.getSimpleName();
-	
+    private static final int bufferLength = 5000;
+
 	// Given a URL, establishes an HttpUrlConnection and retrieves
 	// the web page content as a InputStream, which it returns as
 	// a string.
@@ -20,12 +21,12 @@ public class HttpUtils {
 	    InputStream is = null;
 	    // Only display the first 500 characters of the retrieved
 	    // web page content.
-	    int len = 1500;
-	    String contentAsString = "NA"; 
+	    String contentAsString = null;
+        HttpURLConnection conn = null;
 	    try {
 	        URL url = new URL(myurl);
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setReadTimeout(10000 /* milliseconds */);
+	        conn = (HttpURLConnection) url.openConnection();
+	        conn.setReadTimeout(15000 /* milliseconds */);
 	        conn.setConnectTimeout(15000 /* milliseconds */);
             conn.setRequestMethod("GET");
 	        conn.setDoInput(true);
@@ -36,7 +37,7 @@ public class HttpUtils {
 	        is = conn.getInputStream();
 
 	        // Convert the InputStream into a string
-	        contentAsString = readIt(is, len);	        
+	        contentAsString = readIt(is, bufferLength);
 	    // Makes sure that the InputStream is closed after the app is
 	    // finished using it.
 	    } catch (Exception e){
@@ -45,16 +46,22 @@ public class HttpUtils {
 	        if (is != null) {
 	            is.close();
 	        }
+            if(conn != null){
+                conn.disconnect();
+            }
+
 	    }
         return contentAsString;
 	}
 
 	// Reads an InputStream and converts it to a String.
 	private static String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+        //BufferedReader br = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 	    Reader reader = null;
 	    reader = new InputStreamReader(stream, "ISO-8859-1");
 	    char[] buffer = new char[len];
 	    reader.read(buffer);
+        //br.read(buffer);
 	    return new String(buffer);
 	}
 }

@@ -17,7 +17,10 @@ import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.data.models.Account;
 import com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity;
 import com.ogsteam.ogspy.network.ConnectionDetector;
-import com.ogsteam.ogspy.network.DownloadTask;
+import com.ogsteam.ogspy.network.download.DownloadAllianceTask;
+import com.ogsteam.ogspy.network.download.DownloadHostilesTask;
+import com.ogsteam.ogspy.network.download.DownloadServerTask;
+import com.ogsteam.ogspy.network.download.DownloadSpysTask;
 import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
@@ -75,8 +78,12 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public static DatabaseAccountHandler handlerAccount;
 	public DatabasePreferencesHandler handlerPrefs;
 	public static NotificationProvider notifProvider;
-	public DownloadTask downloadHostilesTask;
-	public static CommonUtilities commonUtilities;
+    public static CommonUtilities commonUtilities;
+
+	public DownloadServerTask downloadServerTask;
+    public DownloadHostilesTask downloadHostilesTask;
+    public DownloadAllianceTask downloadAllianceTask;
+    public DownloadSpysTask downloadSpysTask;
 
 	// Connection detector
     public static ConnectionDetector connection;
@@ -88,6 +95,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_CONTEXT_MENU);
 		super.onCreate(savedInstanceState);
+        activityPrinc = this;
 
         try{
             versionOgspy = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -116,9 +124,16 @@ public class OgspyActivity extends TabsFragmentActivity {
 		handlerPrefs = new DatabasePreferencesHandler(this);
 		commonUtilities = new CommonUtilities(this);
 		notifProvider = new NotificationProvider(this);
-		downloadHostilesTask = new DownloadTask(this);
+
 		timer=OgspyUtils.getTimerHostiles(this, handlerPrefs);
-		setAutomaticCheckHostiles();
+
+        downloadServerTask = new DownloadServerTask(this);
+        downloadAllianceTask = new DownloadAllianceTask(this);
+
+        downloadServerTask.execute(new String[] { "do"});
+        downloadAllianceTask.execute(new String[] { "do"});
+
+        setAutomaticCheckHostiles();
         doGcm();
 	}
 
@@ -157,7 +172,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 		super.onResume();
         doGcm();
 		//notifProvider.deleteNotificationHostile();
-		updateOgspyDatas();
+		//updateOgspyDatas();
         setAutomaticCheckHostiles();
 	}
 
@@ -170,37 +185,43 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public void setAutomaticCheckHostiles(){
 		if(timer > 0){
 			autoUpdateHostiles = new Timer();
+            // Check if Internet present
+            if(connection==null){ return;}
+            if ( !connection.isConnectingToInternet()) {
+                Toast.makeText(this, getString(R.string.connexion_ko), Toast.LENGTH_LONG).show();
+                // stop executing code by return
+                return;
+            }
+
+            downloadHostilesTask = new DownloadHostilesTask(this);
+
+            downloadSpysTask = new DownloadSpysTask(this);
+
 			autoUpdateHostiles.schedule(new TimerTask() {
 				@Override
 				public void run() {
 					runOnUiThread(new Runnable() {
 						public void run() {
-							updateOgspyDatas();
+                            if (downloadHostilesTask.getStatus().equals(AsyncTask.Status.FINISHED)){
+                                downloadHostilesTask.execute(new String[] { "do"});
+                            }
+                            if (downloadSpysTask.getStatus().equals(AsyncTask.Status.FINISHED)){
+                                downloadSpysTask.execute(new String[] { "do"});
+                            }
 						}
 					});
 				}
 			}, 0, timer); // updates each timer secs
 		}
-	}
 
-	public void updateOgspyDatas(){
-        // Check if Internet present
-        if(connection==null){ return;}
-        if ( !connection.isConnectingToInternet()) {
-        	Toast.makeText(this, getString(R.string.connexion_ko), Toast.LENGTH_LONG).show();
-            // stop executing code by return
-            return;
-        }         
-		downloadHostilesTask = new DownloadTask(this);
-		downloadHostilesTask.execute(new String[] { "do"});
 	}
 
 	public void saveAccount(View view){
-		Accounts.saveAccount(view, this);
+		Accounts.saveAccount(this);
 	}
 
 	public void savePrefs(View view){
-		Preferences.savePrefs(view, this);
+		Preferences.savePrefs(this);
 	}
 
     public void unregisteringOgspy(View view){

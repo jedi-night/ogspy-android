@@ -7,9 +7,10 @@ import android.widget.Toast;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
+import com.ogsteam.ogspy.fragments.tabs.HostileFragment;
 import com.ogsteam.ogspy.fragments.tabs.HostileItem;
 import com.ogsteam.ogspy.fragments.tabs.HostilesListAdapter;
-import com.ogsteam.ogspy.server.HostilesHelper;
+import com.ogsteam.ogspy.helpers.HostilesHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,11 +24,12 @@ public abstract class HostileUtils {
     public static void showHostiles(HostilesHelper helperHostile, final OgspyActivity activity){
         ArrayList<HostileItem> hostileItems = new ArrayList<HostileItem>();
         if(helperHostile != null && (helperHostile.getAttaques().size() > 0 || helperHostile.getAttaquesGroup().size() > 0)){
+            HostileItem item = null;
             // Attaques simples
             for ( Iterator<String> user = helperHostile.getAttaques().keySet().iterator(); user.hasNext(); ) {
                 String userAttack = user.next();
-                HostileItem item = new HostileItem(false);
                 for(HostilesHelper.Cible cible: helperHostile.getAttaques().get(userAttack)){
+                    item = new HostileItem(false);
                     item.setImage(R.drawable.hostiles_simple_attack);
                     item.setTitle(userAttack, cible.getCiblePlanet(), cible.getCibleCoords());
                     item.setDate(cible.getArrivalTime());
@@ -39,7 +41,7 @@ public abstract class HostileUtils {
             // Attaques groupées
             for ( Iterator<String> ag = helperHostile.getAttaquesGroup().keySet().iterator(); ag.hasNext(); ) {
                 String idAttack = ag.next();
-                HostileItem item = new HostileItem(true);
+                item = new HostileItem(true);
                 HostilesHelper.AG attaqueGroup = helperHostile.getAttaquesGroup().get(idAttack).get(idAttack);
                 item.setImage(R.drawable.hostiles_group_attack);
                 item.setTitle(attaqueGroup.getCible(), attaqueGroup.getCiblePlanet(), attaqueGroup.getCibleCoords());
@@ -47,20 +49,21 @@ public abstract class HostileUtils {
 
                 StringBuffer detail = new StringBuffer();
                 TreeMap<String,HostilesHelper.Vague> vagues = attaqueGroup.getVagues();
-                int i=0;
+                int coutnVague=1;
                 for(Iterator<String> vague = vagues.keySet().iterator(); vague.hasNext();){
                     String idVague = vague.next();
                     HostilesHelper.Vague vagueItem = vagues.get(idVague);
-                    i++;
+
                     detail.append(HostileItem.getDetail(vagueItem.getOriginPlanet(), vagueItem.getOriginCoords(), vagueItem.getAttacker(),true,vagueItem.getCompo()));
-                    if(i < vagues.size()){
+                    if(coutnVague < vagues.size()){
                         detail.append("\n");
                     }
+                    coutnVague++;
                 }
                 item.setDetail(detail.toString());
                 hostileItems.add(item);
             }
-            final ListView lv1 = (ListView) activity.findViewById(R.id.list_view_hostiles);
+            final ListView lv1 = HostileFragment.getListHostiles();
             if(lv1!=null){
                 lv1.setAdapter(new HostilesListAdapter(activity, hostileItems));
                 lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
