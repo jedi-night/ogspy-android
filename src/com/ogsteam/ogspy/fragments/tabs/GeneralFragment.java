@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.ogsteam.ogspy.OgspyActivity;
@@ -20,7 +22,7 @@ import com.ogsteam.ogspy.network.download.DownloadSpysTask;
  *
  */
 public class GeneralFragment extends Fragment {
-    private static GridLayout layout;
+    private static ScrollView layout;
     private static TextView allianceOwn;
     private static TextView nbMembers;
     private static ListView mostCuriousAlliances;
@@ -37,7 +39,7 @@ public class GeneralFragment extends Fragment {
             // the view hierarchy; it would just never be used.
             return null;
         }
-        layout = (GridLayout)inflater.inflate(R.layout.general, container, false);
+        layout = (ScrollView)inflater.inflate(R.layout.general, container, false);
 
         allianceOwn = (TextView) layout.findViewById(R.id.alliance);
         nbMembers = (TextView) layout.findViewById(R.id.nb_members);

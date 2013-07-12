@@ -2,6 +2,7 @@ package com.ogsteam.ogspy.utils;
 
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public abstract class HostileUtils {
 
     public static void showHostiles(HostilesHelper helperHostile, final OgspyActivity activity){
         ArrayList<HostileItem> hostileItems = new ArrayList<HostileItem>();
+        final ListView hostilesListView = HostileFragment.getListHostiles();
         if(helperHostile != null && (helperHostile.getAttaques().size() > 0 || helperHostile.getAttaquesGroup().size() > 0)){
             HostileItem item = null;
             // Attaques simples
@@ -63,17 +65,22 @@ public abstract class HostileUtils {
                 item.setDetail(detail.toString());
                 hostileItems.add(item);
             }
-            final ListView lv1 = HostileFragment.getListHostiles();
-            if(lv1!=null){
-                lv1.setAdapter(new HostilesListAdapter(activity, hostileItems));
-                lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                        Object o = lv1.getItemAtPosition(position);
-                        HostileItem hostileData = (HostileItem) o;
-                        Toast.makeText(activity, hostileData.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
+            if(hostilesListView!=null){
+                    hostilesListView.setAdapter(new HostilesListAdapter(activity, hostileItems));
+                    hostilesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                            Object o = hostilesListView.getItemAtPosition(position);
+                            HostileItem hostileData = (HostileItem) o;
+                            Toast.makeText(activity, hostileData.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+            }
+        } else {
+            if(hostilesListView != null){
+                ArrayList<String> noHostiles = new ArrayList<String>();
+                noHostiles.add("Aucune flotte hostile en approche sur un des joueurs de la communauté");
+                hostilesListView.setAdapter(new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, noHostiles));
             }
         }
     }

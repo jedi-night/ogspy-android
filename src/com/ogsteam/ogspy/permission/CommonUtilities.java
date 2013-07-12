@@ -1,7 +1,7 @@
 package com.ogsteam.ogspy.permission;
 
 import android.content.Context;
-import android.content.Intent;
+import android.widget.Toast;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.data.models.Account;
@@ -42,9 +42,9 @@ public final class CommonUtilities {
      * @param message message to be displayed.
      */
     public static void displayMessage(Context context, String message) {
-        //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);
-        intent.putExtra(EXTRA_MESSAGE, message);
-        context.sendBroadcast(intent);
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        //Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);
+        //intent.putExtra(EXTRA_MESSAGE, message);
+        //context.sendBroadcast(intent);
     }
 }

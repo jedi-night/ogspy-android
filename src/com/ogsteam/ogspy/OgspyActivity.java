@@ -26,6 +26,7 @@ import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
 import com.ogsteam.ogspy.preferences.Accounts;
 import com.ogsteam.ogspy.preferences.Preferences;
+import com.ogsteam.ogspy.ui.DialogHandler;
 import com.ogsteam.ogspy.utils.OgspyUtils;
 
 import java.util.Timer;
@@ -225,9 +226,30 @@ public class OgspyActivity extends TabsFragmentActivity {
 	}
 
     public void unregisteringOgspy(View view){
+        new DialogHandler().confirm(this,
+                                    "Désincription aux notifications",
+                                    "Etes-vous sûr de vouloir vous désinscrire des notifications du serveur OGSPY ?",
+                                    "Non",
+                                    "Oui",
+                                    new Runnable() {
+                                        public void run() {
+                                            processUnregistering();
+                                        }
+                                    },
+                                    new Runnable() {
+                                        public void run() {
+                                        }
+                                    }
+        );
+    }
+
+    public void processUnregistering(){
         if(getFirstAccount() != null){
             if(GCMRegistrar.isRegisteredOnServer(this) && !regId.equals("")) {
                 ServerUtilities.unregister(this, getFirstAccount().getUsername(), regId);
+                CommonUtilities.displayMessage(this,"Désinscription envoyée");
+            } else {
+                CommonUtilities.displayMessage(this,"Vous n'etes pas enregistré, désincription impossible");
             }
         } else {
             CommonUtilities.displayMessage(this,getString(R.string.account_not_configured));
