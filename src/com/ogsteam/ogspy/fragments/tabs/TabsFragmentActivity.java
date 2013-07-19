@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 
 
@@ -23,12 +22,10 @@ public class TabsFragmentActivity extends FragmentActivity {
     /* Tab identifiers */
     static String TAB_A = "1 Tab";
     static String TAB_B = "2 Tab";
-    static String TAB_C = "3 Tab";
-    static String TAB_D = "3 Tab";
+    /*static String TAB_C = "3 Tab";
+    static String TAB_D = "4 Tab";*/
 
     TabHost mTabHost;
-
-    public static OgspyActivity activityPrinc;
 
     GeneralFragment fragmentGeneral;
     HostileFragment fragmentHostile;
@@ -42,13 +39,13 @@ public class TabsFragmentActivity extends FragmentActivity {
 
         TAB_A = getApplicationContext().getResources().getString(R.string.general);
         TAB_B = getApplicationContext().getResources().getString(R.string.hostiles);
-        TAB_C = getApplicationContext().getResources().getString(R.string.account);
-        TAB_D = getApplicationContext().getResources().getString(R.string.prefs);
+        /*TAB_C = getApplicationContext().getResources().getString(R.string.account);
+        TAB_D = getApplicationContext().getResources().getString(R.string.prefs);*/
 
         fragmentGeneral = new GeneralFragment();
         fragmentHostile = new HostileFragment();
-        fragmentAccount = new AccountFragment();
-        fragmentPrefs = new PrefsFragment();
+        /*fragmentAccount = new AccountFragment();
+        fragmentPrefs = new PrefsFragment();*/
 
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
         mTabHost.setOnTabChangedListener(listener);
@@ -83,7 +80,7 @@ public class TabsFragmentActivity extends FragmentActivity {
         mTabHost.addTab(spec);
 
 
-        spec =   mTabHost.newTabSpec(TAB_C);
+        /*spec =   mTabHost.newTabSpec(TAB_C);
         spec.setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
                 return findViewById(android.R.id.tabcontent);
@@ -99,7 +96,7 @@ public class TabsFragmentActivity extends FragmentActivity {
             }
         });
         spec.setIndicator(createTabView(TAB_D, R.drawable.ic_tab_prefs_selected));
-        mTabHost.addTab(spec);
+        mTabHost.addTab(spec);*/
     }
 
     /*
@@ -112,11 +109,11 @@ public class TabsFragmentActivity extends FragmentActivity {
                 pushFragments(tabId, fragmentGeneral);
             }else if(tabId.equals(TAB_B)){
                 pushFragments(tabId, fragmentHostile);
-            }else if(tabId.equals(TAB_C)){
+            }/*else if(tabId.equals(TAB_C)){
                 pushFragments(tabId, fragmentAccount);
             }else if(tabId.equals(TAB_D)){
                 pushFragments(tabId, fragmentPrefs);
-            }
+            }*/
         }
     };
 
@@ -141,5 +138,29 @@ public class TabsFragmentActivity extends FragmentActivity {
         imageView.setImageDrawable(getResources().getDrawable(id));
         ((TextView) view.findViewById(R.id.tab_text)).setText(text);
         return view;
+    }
+
+    public static String getTAB_A() {
+        return TAB_A;
+    }
+
+    public static String getTAB_B() {
+        return TAB_B;
+    }
+/*
+    public static String getTAB_C() {
+        return TAB_C;
+    }
+
+    public static String getTAB_D() {
+        return TAB_D;
+    }
+*/
+    public GeneralFragment getFragmentGeneral() {
+        return fragmentGeneral;
+    }
+
+    public HostileFragment getFragmentHostile() {
+        return fragmentHostile;
     }
 }

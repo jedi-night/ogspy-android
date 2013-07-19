@@ -9,4 +9,8 @@ public interface Constants {
     public static final String XTENSE_TYPE_ALLIANCE = "ally";
     public static final String XTENSE_TYPE_SPYS = "spys";
     public static final String XTENSE_TYPE_SERVER = "server";
+
+    /* EXEPTIONS */
+    public static final Pair EXCEPTION_SAISIE = new Pair(0,"Problème de saisie");
+    public static final Pair EXCEPTION_DATA_SAVE = new Pair(1,"Problème de sauvegarde");
 }

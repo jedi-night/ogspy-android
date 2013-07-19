@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
@@ -12,6 +11,7 @@ import com.ogsteam.ogspy.fragments.tabs.HostileFragment;
 import com.ogsteam.ogspy.fragments.tabs.HostileItem;
 import com.ogsteam.ogspy.fragments.tabs.HostilesListAdapter;
 import com.ogsteam.ogspy.helpers.HostilesHelper;
+import com.ogsteam.ogspy.ui.DialogHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -72,7 +72,12 @@ public abstract class HostileUtils {
                         public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                             Object o = hostilesListView.getItemAtPosition(position);
                             HostileItem hostileData = (HostileItem) o;
-                            Toast.makeText(activity, hostileData.toString(), Toast.LENGTH_LONG).show();
+                            new DialogHandler().confirm(activity,
+                                                        "Détail de la flotte", hostileData.toString(), null, "Ok", new Runnable() {
+                                public void run() {
+                                }
+                            },null);
+                            //Toast.makeText(activity, hostileData.toString(), Toast.LENGTH_LONG).show();
                         }
                     });
             }

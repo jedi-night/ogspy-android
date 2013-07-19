@@ -9,6 +9,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/list_view_hostiles"
             android:layout_gravity="center_horizontal|top"
-            />
+            android:layout_margin="10dp"/>
 
 </LinearLayout>

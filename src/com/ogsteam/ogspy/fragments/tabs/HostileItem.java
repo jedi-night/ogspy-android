@@ -56,7 +56,7 @@ public class HostileItem {
             StringBuffer retour = new StringBuffer(attaquant).append(" de ").append(originPlanet).append(" (").append(originCoords).append(")");
             if(isAg){
                 StringBuffer retourAg = new StringBuffer(retour);
-                detailsAg.add(retourAg.append(" attaque avec \n").append(compo).toString());
+                detailsAg.add(retourAg.append(" :\n\n").append(compo).toString());
             }
             return retour.toString();
         }
@@ -75,7 +75,7 @@ public class HostileItem {
 
         @Override
         public String toString() {
-            StringBuffer retour = new StringBuffer(detail).append(" attaque avec \n").append(compo);
+            StringBuffer retour = new StringBuffer(detail).append(" :\n\n").append(compo);
             if(this.isAg()){
                 retour = new StringBuffer();
                 int i = 0;

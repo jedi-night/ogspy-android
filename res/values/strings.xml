@@ -34,14 +34,21 @@
    
     <!-- Pref -->
     <string name="prefs_title">Préférences</string>
-    <string name="prefs_timer_hostiles_title">Rafraichissement hostiles (en minutes) : </string>
+    <string name="prefs_timer_hostiles_title">Rafraichissement hostiles</string>
     <string name="save_button_prefs">Sauvegarder</string>
         
     <string name="save_prefs_ok">Sauvegarde des préférences effectuée</string>
     <string name="save_prefs_ko">Echec de la sauvegarde des préférences</string>
 
     <string-array name="prefs_timer_hostiles">
-        <item>Aucun</item>
+        <item>Jamais</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>60 minutes</item>
+    </string-array>
+    <string-array name="prefs_timer_hostiles_values">
+        <item>0</item>
         <item>5</item>
         <item>15</item>
         <item>30</item>
@@ -76,5 +83,7 @@
     <string name="alliance_spys">Top Joueur (mois)</string>
     <string name="player_spys">Top Alliance (mois)</string>
     <string name="spy_title_me">Mes espionnages</string>
+
+    <string name="ogspy_user_summary">Entrez votre nom d\'utilisateur</string>
 
 </resources>

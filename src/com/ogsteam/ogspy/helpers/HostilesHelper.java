@@ -137,7 +137,7 @@ public class HostilesHelper {
                 String comp = compo.next();
                 sb.append(comp).append(" : ").append(compos.get(comp));
                 if(compo.hasNext()){
-                    sb.append(" - ");
+                    sb.append("\n");
                 }
             }
             return sb.toString();
@@ -212,7 +212,7 @@ public class HostilesHelper {
                 String comp = compo.next();
                 sb.append(comp).append(" : ").append(compos.get(comp));
                 if(compo.hasNext()){
-                    sb.append(" - ");
+                    sb.append("\n");
                 }
             }
             return sb.toString();

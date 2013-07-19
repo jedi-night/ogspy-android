@@ -1,14 +1,15 @@
 package com.ogsteam.ogspy.preferences;
 
+import android.content.SharedPreferences;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.ogsteam.ogspy.OgspyActivity;
+import com.ogsteam.ogspy.OgspyException;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Prefs;
 import com.ogsteam.ogspy.fragments.tabs.PrefsFragment;
-import com.ogsteam.ogspy.utils.OgspyUtils;
+import com.ogsteam.ogspy.utils.Constants;
 
 public class Preferences {
 
@@ -38,24 +39,32 @@ public class Preferences {
 	}
 	
 	/** Called when the user clicks the Save button in account*/
-	public static void savePrefs(OgspyActivity activity) {
-		int selectedId = PrefsFragment.getTimerHostiles().getSelectedItemPosition();
+	public static void savePrefs(OgspyActivity activity, SharedPreferences preferences) throws OgspyException {
+		//int selectedId = PrefsFragment.getTimerHostiles().getSelectedItemPosition();
+        try{
+            int timer = Integer.parseInt(preferences.getString("timer_hostiles", "0"));
 
-		if(activity.getHandlerPrefs().getPrefsCount() > 0){
-			activity.getHandlerPrefs().deleteAllPrefs();
-		}
-		if(activity.getHandlerPrefs().addPrefs(new Prefs(0, selectedId)) != -1){
-			Toast.makeText(activity, activity.getString(R.string.save_prefs_ok), Toast.LENGTH_LONG).show();
-			// Affectation du timer
-			OgspyActivity.setTimer(OgspyUtils.getTimerHostiles(activity, activity.getHandlerPrefs()));
-			// Changement du check hostiles suivant le timer
-			if(activity.autoUpdateHostiles != null){
-				activity.autoUpdateHostiles.cancel();
-				activity.autoUpdateHostiles.purge();
-				activity.setAutomaticCheckHostiles();
-			}
-		} else {
-			Toast.makeText(activity, activity.getString(R.string.save_prefs_ko), Toast.LENGTH_LONG).show();
-		}
+            /*if(activity.getHandlerPrefs().getPrefsCount() > 0){
+                activity.getHandlerPrefs().deleteAllPrefs();
+            }
+            if(activity.getHandlerPrefs().addPrefs(new Prefs(0, selectedId)) != -1){
+                Toast.makeText(activity, activity.getString(R.string.save_prefs_ok), Toast.LENGTH_LONG).show();*/
+            // Affectation du timer
+            //OgspyActivity.setTimer(OgspyUtils.getTimerHostiles(activity, activity.getHandlerPrefs()));
+
+            OgspyActivity.setTimer(timer);
+
+            // Changement du check hostiles suivant le timer
+            if(activity.autoUpdateHostiles != null){
+                activity.autoUpdateHostiles.cancel();
+                activity.autoUpdateHostiles.purge();
+                activity.setAutomaticCheckHostiles();
+            }
+            /*} else {
+                Toast.makeText(activity, activity.getString(R.string.save_prefs_ko), Toast.LENGTH_LONG).show();
+            }*/
+        } catch (Exception e) {
+          throw  new OgspyException("Les réglages n'ont pu être sauvegardés", Constants.EXCEPTION_DATA_SAVE);
+        }
 	}
 }

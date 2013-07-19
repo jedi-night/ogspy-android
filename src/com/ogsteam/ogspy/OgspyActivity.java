@@ -1,9 +1,11 @@
 package com.ogsteam.ogspy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,10 +26,7 @@ import com.ogsteam.ogspy.network.download.DownloadSpysTask;
 import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
-import com.ogsteam.ogspy.preferences.Accounts;
-import com.ogsteam.ogspy.preferences.Preferences;
 import com.ogsteam.ogspy.ui.DialogHandler;
-import com.ogsteam.ogspy.utils.OgspyUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -66,6 +65,7 @@ public class OgspyActivity extends TabsFragmentActivity {
         }
     };
 */
+    public static OgspyActivity activity;
 
     public final String versionAndroid = Build.VERSION.RELEASE;
     public static String versionOgspy = "";
@@ -96,7 +96,8 @@ public class OgspyActivity extends TabsFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_CONTEXT_MENU);
 		super.onCreate(savedInstanceState);
-        activityPrinc = this;
+
+        activity = this;
 
         try{
             versionOgspy = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -126,7 +127,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 		commonUtilities = new CommonUtilities(this);
 		notifProvider = new NotificationProvider(this);
 
-		timer=OgspyUtils.getTimerHostiles(this, handlerPrefs);
+		timer = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("timer_hostiles","0"));
 
         downloadServerTask = new DownloadServerTask(this);
         downloadAllianceTask = new DownloadAllianceTask(this);
@@ -157,15 +158,15 @@ public class OgspyActivity extends TabsFragmentActivity {
 			return true;
 		case R.id.account:
 			Accounts.showAccount(this);
-			return true;
-		case R.id.prefs:
-			Preferences.showPrefs(this);
 			return true;*/
+		case R.id.prefs:
+            //startActivityForResult(new Intent(this, OgspyPreferencesActivity.class), CODE_RETOUR_PREFS);
+            startActivity(new Intent(this, OgspyPreferencesActivity.class));
+            return true;
 		case R.id.quit:
 			this.finish();
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+        }
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -179,7 +180,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 
 	@Override
 	public void onPause() {
-        autoUpdateHostiles.cancel();
+        if(autoUpdateHostiles != null) autoUpdateHostiles.cancel();
 		super.onPause();
 	}
 
@@ -218,11 +219,11 @@ public class OgspyActivity extends TabsFragmentActivity {
 	}
 
 	public void saveAccount(View view){
-		Accounts.saveAccount(this);
+		//Accounts.saveAccount(this);
 	}
 
 	public void savePrefs(View view){
-		Preferences.savePrefs(this);
+		//Preferences.savePrefs(this);
 	}
 
     public void unregisteringOgspy(View view){
@@ -256,7 +257,7 @@ public class OgspyActivity extends TabsFragmentActivity {
         }
     }
 
-	public DatabaseAccountHandler getHandlerAccount() {
+	public static DatabaseAccountHandler getHandlerAccount() {
 		return handlerAccount;
 	}
 
@@ -321,16 +322,18 @@ public class OgspyActivity extends TabsFragmentActivity {
                     // It's also necessary to cancel the thread onDestroy(),
                     // hence the use of AsyncTask instead of a raw thread.
                     final Context context = this;
-                    mRegisterTask = new AsyncTask<Void, Void, Void>() {
+                    final Account account = getFirstAccount();
+
+                    /*mRegisterTask = new AsyncTask<Void, Void, Void>() {
 
                         @Override
-                        protected Void doInBackground(Void... params) {
+                        protected Void doInBackground(Void... params) {*/
                             // Register on our server
                             // On server creates a new user
-                            if(getFirstAccount() != null){
-                                ServerUtilities.register(context, getFirstAccount().getUsername(), regId);
+                            if(account != null){
+                                ServerUtilities.register(context, account.getUsername(), regId);
                             }
-                            return null;
+                            /*return null;
                         }
 
                         @Override
@@ -339,7 +342,7 @@ public class OgspyActivity extends TabsFragmentActivity {
                         }
 
                     };
-                    mRegisterTask.execute(null, null, null);
+                    mRegisterTask.execute(null, null, null);*/
                 }
             }
             retour = true;

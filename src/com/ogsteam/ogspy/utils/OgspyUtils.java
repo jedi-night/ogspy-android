@@ -1,11 +1,7 @@
 package com.ogsteam.ogspy.utils;
 
-import android.app.Activity;
-import android.widget.ArrayAdapter;
-
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.helpers.HostilesHelper;
 import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.utils.security.MD5;
@@ -22,7 +18,7 @@ public class OgspyUtils {
 	public static String enryptPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		return MD5.toMD5(SHA1.toSHA1(password));
 	}
-	
+
 	public static String traiterReponseHostiles(HostilesHelper helperHostile, OgspyActivity activity){
 		//NotificationProvider notifProvider = activity.getNotifProvider();
         if(helperHostile.isAttack()){
@@ -50,7 +46,7 @@ public class OgspyUtils {
             return activity.getString(R.string.hostiles_none);
         }
 	}
-	
+	/*
 	public static int getTimerHostiles(Activity activity, DatabasePreferencesHandler handlerPrefs){
 		int timer = (Constants.TIMER_DEFAULT_VALUE * 60 * 1000);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.prefs_timer_hostiles, android.R.layout.simple_spinner_item);
@@ -64,5 +60,5 @@ public class OgspyUtils {
 			timer = (timeSet * 60 * 1000);
 		}
 		return timer;
-	}
+	}*/
 }
