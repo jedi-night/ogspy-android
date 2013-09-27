@@ -52,4 +52,8 @@ public class DownloadSpysTask extends AsyncTask<String, Integer, String> {
 	protected void onPostExecute(String result) {
         GeneralUtils.showGeneral(null, null, spysHelper, activity);
 	}
+
+    public SpysHelper getSpysHelper() {
+        return spysHelper;
+    }
 }

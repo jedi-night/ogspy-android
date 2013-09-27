@@ -15,7 +15,9 @@
                 android:id="@+id/general_spy_list_name"
                 android:layout_gravity="left"
                 android:gravity="center_vertical|left"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_alignRight="@+id/general_spy_list_number"
+                android:layout_alignParentLeft="true"/>
 
         <TextView
                 android:layout_width="wrap_content"
@@ -26,7 +28,6 @@
                 android:layout_gravity="right"
                 android:gravity="center_vertical|center_horizontal"
                 android:textColor="#5eff08"
-                android:layout_alignBottom="@+id/general_spy_list_name"
-                android:layout_alignParentRight="true"
-                />
+                android:layout_below="@+id/general_spy_list_name"
+                android:layout_alignParentRight="true"/>
 </RelativeLayout>

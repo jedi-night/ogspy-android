@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.network.download.DownloadAllianceTask;
-import com.ogsteam.ogspy.network.download.DownloadSpysTask;
+import com.ogsteam.ogspy.utils.GeneralUtils;
 
 
 /**
@@ -50,8 +49,14 @@ public class GeneralFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        new DownloadAllianceTask((OgspyActivity) getActivity()).execute(new String[] { "do"});
-        new DownloadSpysTask((OgspyActivity) getActivity()).execute(new String[] { "do"});
+        //new DownloadAllianceTask((OgspyActivity) getActivity()).execute(new String[] { "do"});
+        //new DownloadSpysTask((OgspyActivity) getActivity()).execute(new String[] { "do"});
+        if(OgspyActivity.getDownloadAllianceTask() != null && OgspyActivity.getDownloadAllianceTask().getAllianceHelper() != null) {
+            GeneralUtils.showGeneral(null, OgspyActivity.getDownloadAllianceTask().getAllianceHelper(), null, (OgspyActivity) getActivity());
+        }
+        if(OgspyActivity.getDownloadSpysTask() != null && OgspyActivity.getDownloadSpysTask().getSpysHelper() != null) {
+            GeneralUtils.showGeneral(null, null, OgspyActivity.getDownloadSpysTask().getSpysHelper(), (OgspyActivity) getActivity());
+        }
     }
 
     public static TextView getAllianceOwn() {
@@ -69,4 +74,5 @@ public class GeneralFragment extends Fragment {
     public static ListView getMostCuriousPlayers() {
         return mostCuriousPlayers;
     }
+
 }

@@ -69,7 +69,7 @@
 
         <ListView
                 android:layout_width="175dp"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:id="@+id/curiousPlayers"
                 android:layout_row="3"
                 android:layout_column="0"
@@ -78,7 +78,7 @@
 
         <ListView
                 android:layout_width="175dp"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:id="@+id/curiousAlliances"
                 android:layout_row="3"
                 android:layout_column="1"

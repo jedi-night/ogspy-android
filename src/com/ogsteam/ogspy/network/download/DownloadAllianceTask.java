@@ -52,4 +52,8 @@ public class DownloadAllianceTask extends AsyncTask<String, Integer, String> {
 	protected void onPostExecute(String result) {
         GeneralUtils.showGeneral(null, allianceHelper, null, activity);
 	}
+
+    public AllianceHelper getAllianceHelper() {
+        return allianceHelper;
+    }
 }

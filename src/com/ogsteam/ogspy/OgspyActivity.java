@@ -81,10 +81,10 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public static NotificationProvider notifProvider;
     public static CommonUtilities commonUtilities;
 
-	public DownloadServerTask downloadServerTask;
-    public DownloadHostilesTask downloadHostilesTask;
-    public DownloadAllianceTask downloadAllianceTask;
-    public DownloadSpysTask downloadSpysTask;
+    public static DownloadServerTask downloadServerTask;
+    public static DownloadHostilesTask downloadHostilesTask;
+    public static DownloadAllianceTask downloadAllianceTask;
+    public static DownloadSpysTask downloadSpysTask;
 
 	// Connection detector
     public static ConnectionDetector connection;
@@ -358,4 +358,15 @@ public class OgspyActivity extends TabsFragmentActivity {
         return versionOgspy;
     }
 
+    public static DownloadHostilesTask getDownloadHostilesTask() {
+        return downloadHostilesTask;
+    }
+
+    public static DownloadAllianceTask getDownloadAllianceTask() {
+        return downloadAllianceTask;
+    }
+
+    public static DownloadSpysTask getDownloadSpysTask() {
+        return downloadSpysTask;
+    }
 }
