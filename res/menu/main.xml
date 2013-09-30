@@ -4,12 +4,12 @@
         android:id="@+id/ogspy_activity"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/hostiles"/>
+        android:title="@string/hostiles"/-->
     <item
-        android:id="@+id/account"
+        android:id="@+id/about"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/account"/-->
+        android:title="A propos"/>
     <item
         android:id="@+id/prefs"
         android:orderInCategory="100"

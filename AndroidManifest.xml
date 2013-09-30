@@ -47,6 +47,10 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="com.ogsteam.ogspy.OgspyActivity"/>
         </activity>
 
+        <activity android:name="com.ogsteam.ogspy.OgspyAboutActivity" android:parentActivityName="com.ogsteam.ogspy.OgspyActivity" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="com.ogsteam.ogspy.OgspyActivity"/>
+        </activity>
+
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >

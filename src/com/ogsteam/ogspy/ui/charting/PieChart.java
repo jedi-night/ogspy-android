@@ -442,7 +442,10 @@ public class PieChart extends ViewGroup {
         return mData.size() - 1;
     }
 
-
+    public void removeAllItems() {
+        this.mData = new ArrayList<Item>();
+        this.refreshDrawableState();
+    }
 
 
     @Override

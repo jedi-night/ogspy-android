@@ -3,6 +3,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res/com.ogsteam.ogspy"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rentabilté mensuelle"
+        android:id="@+id/textView"
+        android:layout_gravity="left|center_vertical" />
+
     <com.ogsteam.ogspy.ui.charting.PieChart
         android:id="@+id/pie"
         android:layout_width="wrap_content"

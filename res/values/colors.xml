@@ -9,4 +9,11 @@
     <color name="bluegrass">#ff96c9b5</color>
     <color name="turquoise">#ff86b9b5</color>
     <color name="slate">#ff76a9b5</color>
+
+    <!-- PIE CHART -->
+    <color name="pie.color.1">#D4E03C</color>
+    <color name="pie.color.2">#6CD26E</color>
+    <color name="pie.color.3">#C5666C</color>
+    <color name="pie.color.4">#90ACCC</color>
+    <color name="pie.color.5">#8DD3DA</color>
 </resources>

@@ -21,6 +21,7 @@ import com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity;
 import com.ogsteam.ogspy.network.ConnectionDetector;
 import com.ogsteam.ogspy.network.download.DownloadAllianceTask;
 import com.ogsteam.ogspy.network.download.DownloadHostilesTask;
+import com.ogsteam.ogspy.network.download.DownloadRentabilitesTask;
 import com.ogsteam.ogspy.network.download.DownloadServerTask;
 import com.ogsteam.ogspy.network.download.DownloadSpysTask;
 import com.ogsteam.ogspy.notification.NotificationProvider;
@@ -85,6 +86,7 @@ public class OgspyActivity extends TabsFragmentActivity {
     public static DownloadHostilesTask downloadHostilesTask;
     public static DownloadAllianceTask downloadAllianceTask;
     public static DownloadSpysTask downloadSpysTask;
+    public static DownloadRentabilitesTask downloadRentasTask;
 
 	// Connection detector
     public static ConnectionDetector connection;
@@ -155,10 +157,10 @@ public class OgspyActivity extends TabsFragmentActivity {
 			// Step 1: Inflate layout
 	        setContentView(R.layout.ogspy_tab_host);
 	        mTabHost.setCurrentTab(0); //set the tab as per the saved state
-			return true;
-		case R.id.account:
-			Accounts.showAccount(this);
 			return true;*/
+		case R.id.about:
+            startActivity(new Intent(this, OgspyAboutActivity.class));
+			return true;
 		case R.id.prefs:
             //startActivityForResult(new Intent(this, OgspyPreferencesActivity.class), CODE_RETOUR_PREFS);
             startActivity(new Intent(this, OgspyPreferencesActivity.class));
@@ -199,6 +201,8 @@ public class OgspyActivity extends TabsFragmentActivity {
 
             downloadSpysTask = new DownloadSpysTask(this);
 
+            downloadRentasTask = new DownloadRentabilitesTask(this);
+
 			autoUpdateHostiles.schedule(new TimerTask() {
 				@Override
 				public void run() {
@@ -209,6 +213,9 @@ public class OgspyActivity extends TabsFragmentActivity {
                             }
                             if (downloadSpysTask.getStatus().equals(AsyncTask.Status.FINISHED)){
                                 downloadSpysTask.execute(new String[] { "do"});
+                            }
+                            if (downloadRentasTask.getStatus().equals(AsyncTask.Status.FINISHED)){
+                                downloadRentasTask.execute(new String[] { "do"});
                             }
 						}
 					});
