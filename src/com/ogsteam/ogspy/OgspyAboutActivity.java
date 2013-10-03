@@ -21,9 +21,19 @@ public class OgspyAboutActivity extends Activity {
         // 1) How to replace link by text like "Click Here to visit Google" and
         // the text is linked with the website url ?
         TextView link = (TextView) findViewById(R.id.forumLink);
-        String linkText = "<a href='http://forum.ogsteam.fr/index.php'>http://forum.ogsteam.fr/index.php</a>";
+        String linkText = "<a href='http://forum.ogsteam.fr/index.php'>http://forum.ogsteam.fr</a>";
         link.setText(Html.fromHtml(linkText));
         link.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView linkBugs = (TextView) findViewById(R.id.bugsLink);
+        String linkBugsText = "<a href='https://bitbucket.org/Jedinight/ogspy-android/issues?status=new&status=open'>https://bitbucket.org</a>";
+        linkBugs.setText(Html.fromHtml(linkBugsText));
+        linkBugs.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView linkPlayStore = (TextView) findViewById(R.id.playstoreLink);
+        String linkPlayStoreText = "<a href='https://play.google.com/store/apps/details?id=com.ogsteam.ogspy&hl=fr'>https://play.google.com</a>";
+        linkPlayStore.setText(Html.fromHtml(linkPlayStoreText));
+        linkPlayStore.setMovementMethod(LinkMovementMethod.getInstance());
 
         // 2) How to place email address
         //TextView email = (TextView) findViewById(R.id.textView2);

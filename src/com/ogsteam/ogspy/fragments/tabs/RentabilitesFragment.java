@@ -37,6 +37,7 @@ public class RentabilitesFragment extends Fragment {
         LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.rentabilite, container, false);
 
         pie =  (PieChart) layout.findViewById(R.id.pie);
+        pie.removeAllItems();
         pie.addItem("Aucun",0,Color.BLACK);
         return layout;
     }

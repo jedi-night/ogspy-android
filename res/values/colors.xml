@@ -11,9 +11,14 @@
     <color name="slate">#ff76a9b5</color>
 
     <!-- PIE CHART -->
-    <color name="pie.color.1">#D4E03C</color>
-    <color name="pie.color.2">#6CD26E</color>
-    <color name="pie.color.3">#C5666C</color>
-    <color name="pie.color.4">#90ACCC</color>
-    <color name="pie.color.5">#8DD3DA</color>
+    <color name="pie.color.1">#DDDF0D</color>
+    <color name="pie.color.2">#55BF3B</color>
+    <color name="pie.color.3">#DF5353</color>
+    <color name="pie.color.4">#7798BF</color>
+    <color name="pie.color.5">#AAEEEE</color>
+    <color name="pie.color.6">#FF0066</color>
+    <color name="pie.color.7">#EEAAEE</color>
+    <color name="pie.color.8">#55BF3B</color>
+    <color name="pie.color.9">#DF5353</color>
+    <color name="pie.color.10">#7798BF</color>
 </resources>
