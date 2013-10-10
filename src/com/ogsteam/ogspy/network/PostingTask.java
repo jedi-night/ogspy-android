@@ -7,9 +7,9 @@ import android.util.Log;
 import com.ogsteam.ogspy.utils.HttpUtils;
 
 public class PostingTask extends AsyncTask<String, Integer, String> {
-    private Context activity;
-    private String url;
-    private String result;
+    public Context activity;
+    public String url;
+    public String result;
 
 	public PostingTask(Context activity, String url) {
         this.activity = activity;
@@ -24,13 +24,5 @@ public class PostingTask extends AsyncTask<String, Integer, String> {
 			Log.e("PostingTask", "Problème lors du post !",e);
 		}
 		return result;
-	}
-
-     protected void onProgressUpdate(Integer... progress) {
-         //setProgressPercent(progress[0]);
-     }
-
-	protected void onPostExecute(String result) {
-		//this.result = result;
 	}
 }

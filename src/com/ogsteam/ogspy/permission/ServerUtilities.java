@@ -7,8 +7,10 @@ import com.google.android.gcm.GCMRegistrar;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.network.PostingTask;
+import com.ogsteam.ogspy.network.SendMessage;
 import com.ogsteam.ogspy.utils.StringUtils;
 
+import java.net.URLEncoder;
 import java.util.Random;
 
 import static com.ogsteam.ogspy.permission.CommonUtilities.TAG;
@@ -87,5 +89,16 @@ public final class ServerUtilities {
             String message = context.getString(R.string.server_unregister_error, e.getMessage());
             CommonUtilities.displayMessage(context, message);
         }
+    }
+
+    /**
+     * Register this account/device pair within the server.
+     *
+     */
+    public static void sendAlertMesage(final Context context, final String regId, final String username, final String message) {
+        String serverUrl = OgspyActivity.commonUtilities.SERVER_URL_ALERT;
+
+        SendMessage sendMessage = new SendMessage(context, StringUtils.formatPattern(serverUrl, regId, username, URLEncoder.encode(message)));
+        sendMessage.execute(new String[] { "do"});
     }
 }

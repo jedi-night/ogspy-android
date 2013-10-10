@@ -15,6 +15,6 @@
             android:text="asdfads"
             android:paddingTop="5dp"
             android:paddingBottom="2dp"
-            android:textSize="14sp"
+            android:textSize="12sp"
             />
 </LinearLayout>

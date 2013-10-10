@@ -1,5 +1,7 @@
 package com.ogsteam.ogspy.network.download;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -18,11 +20,15 @@ import org.json.JSONObject;
 public class DownloadRentabilitesTask extends AsyncTask<String, Integer, String> {
     public static final String DEBUG_TAG = DownloadRentabilitesTask.class.getSimpleName();
     private OgspyActivity activity;
-	protected static JSONObject dataJsonFromAsyncTask;
+    private String interval;
+    private Activity waitActivity;
+    private Intent intentWait;
+    protected static JSONObject dataJsonFromAsyncTask;
     protected RentabilitesHelper helperRentabilites;
 
-	public DownloadRentabilitesTask(OgspyActivity activity) {
+	public DownloadRentabilitesTask(OgspyActivity activity, String interval) {
         this.activity = activity;
+        this.interval = interval;
         this.dataJsonFromAsyncTask = null;
         this.helperRentabilites = null;
     }
@@ -31,8 +37,10 @@ public class DownloadRentabilitesTask extends AsyncTask<String, Integer, String>
 	protected String doInBackground(String... params) {
 		try {
 			if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
+                //OgspyActivity.activity.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                //AnimationUtils.loadAnimation(activity, R.id.loadingPanel);
 				Account account = activity.getHandlerAccount().getAccountById(0);
-				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), activity.versionAndroid, activity.getVersionOgspy(), Constants.XTENSE_TYPE_RENTABILITES);
+				String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), activity.versionAndroid, activity.getVersionOgspy(), Constants.XTENSE_TYPE_RENTABILITES).concat("&interval="+interval);
 				String data = HttpUtils.getUrl(url);
                 if(data != null){
                     dataJsonFromAsyncTask = new JSONObject(data.replaceAll("[(]", "").replaceAll("[)]", ""));
@@ -46,10 +54,13 @@ public class DownloadRentabilitesTask extends AsyncTask<String, Integer, String>
 	}
 
     protected void onProgressUpdate(Integer... progress) {
-     //setProgressPercent(progress[0]);
+
     }
 
 	protected void onPostExecute(String result) {
+        //OgspyActivity.activity.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        //waitActivity.stopService(intentWait);
+        //AnimationUtils.loadAnimation(activity, R.id.loadingPanel);
         RentabilitesUtils.showRentabilites(helperRentabilites, activity);
 	}
 }

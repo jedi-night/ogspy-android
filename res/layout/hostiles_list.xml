@@ -11,7 +11,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/hostile_list_image"
-            android:layout_alignParentTop="true" android:minWidth="100px"  android:minHeight="100px" android:src="@drawable/hostiles_simple_attack"/>
+        android:minWidth="100px"  android:minHeight="100px" android:src="@drawable/hostiles_simple_attack"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/hostile_list_date"
+        android:layout_marginLeft="5dp" />
 
     <TextView
             android:layout_width="wrap_content"
@@ -39,6 +42,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="date"
             android:id="@+id/hostile_list_date"
-            android:layout_alignBottom="@+id/hostile_list_detail"
-            android:layout_alignParentRight="true"/>
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true" />
 </RelativeLayout>

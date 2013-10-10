@@ -444,6 +444,7 @@ public class PieChart extends ViewGroup {
 
     public void removeAllItems() {
         this.mData = new ArrayList<Item>();
+        this.mTotal = 0;
         this.refreshDrawableState();
     }
 

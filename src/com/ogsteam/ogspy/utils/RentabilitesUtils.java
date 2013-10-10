@@ -4,7 +4,6 @@ import android.graphics.Color;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.fragments.tabs.RentabilitesFragment;
 import com.ogsteam.ogspy.helpers.RentabilitesHelper;
 import com.ogsteam.ogspy.ui.charting.PieChart;
 
@@ -14,8 +13,9 @@ import com.ogsteam.ogspy.ui.charting.PieChart;
 public abstract class RentabilitesUtils {
 
     public static void showRentabilites(RentabilitesHelper helperRentabilites, final OgspyActivity activity){
-        PieChart pie = RentabilitesFragment.getPie();
+        PieChart pie = activity.getFragmentRentabilites().getPie();
         pie.removeAllItems();
+        pie.refreshDrawableState();
 
         if(helperRentabilites!=null && helperRentabilites.getRentabilites() != null &&
                 helperRentabilites.getRentabilites().size() > 0 && helperRentabilites.getRentabilites().containsKey(activity.getHandlerAccount().getAccountById(0).getUsername())){

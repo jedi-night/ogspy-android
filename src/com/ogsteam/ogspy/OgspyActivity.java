@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
@@ -201,7 +202,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 
             downloadSpysTask = new DownloadSpysTask(this);
 
-            downloadRentasTask = new DownloadRentabilitesTask(this);
+            //downloadRentasTask = new DownloadRentabilitesTask(this);
 
 			autoUpdateHostiles.schedule(new TimerTask() {
 				@Override
@@ -214,9 +215,9 @@ public class OgspyActivity extends TabsFragmentActivity {
                             if (downloadSpysTask.getStatus().equals(AsyncTask.Status.FINISHED)){
                                 downloadSpysTask.execute(new String[] { "do"});
                             }
-                            if (downloadRentasTask.getStatus().equals(AsyncTask.Status.FINISHED)){
+                            /*if (downloadRentasTask.getStatus().equals(AsyncTask.Status.FINISHED)){
                                 downloadRentasTask.execute(new String[] { "do"});
-                            }
+                            }*/
 						}
 					});
 				}
@@ -375,5 +376,21 @@ public class OgspyActivity extends TabsFragmentActivity {
 
     public static DownloadSpysTask getDownloadSpysTask() {
         return downloadSpysTask;
+    }
+
+    public static DownloadRentabilitesTask getDownloadRentasTask() {
+        return downloadRentasTask;
+    }
+
+    public void sendAlert(View v){
+        if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
+            EditText messageEditText = getFragmentAlert().getMessage();
+            if(messageEditText.getText().length() > 0){
+                ServerUtilities.sendAlertMesage(this, regId, activity.getHandlerAccount().getAccountById(0).getUsername(), messageEditText.getText().toString());
+                messageEditText.setText("");
+            } else {
+                CommonUtilities.displayMessage(this,"Le message d'alerte est vide, il n'a donc pas été envoyé.");
+            }
+        }
     }
 }

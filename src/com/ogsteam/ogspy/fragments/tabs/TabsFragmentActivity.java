@@ -23,13 +23,14 @@ public class TabsFragmentActivity extends FragmentActivity {
     static String TAB_A = "1 Tab";
     static String TAB_B = "2 Tab";
     static String TAB_C = "3 Tab";
-    /*static String TAB_D = "4 Tab";*/
+    static String TAB_D = "4 Tab";
 
     TabHost mTabHost;
 
     GeneralFragment fragmentGeneral;
     HostileFragment fragmentHostile;
     RentabilitesFragment fragmentRentabilites;
+    AlertFragment fragmentAlert;
 
     /*AccountFragment fragmentAccount;
     PrefsFragment fragmentPrefs;*/
@@ -42,12 +43,12 @@ public class TabsFragmentActivity extends FragmentActivity {
         TAB_A = getApplicationContext().getResources().getString(R.string.general);
         TAB_B = getApplicationContext().getResources().getString(R.string.hostiles);
         TAB_C = getApplicationContext().getResources().getString(R.string.rentabilites);
-        /*TAB_D = getApplicationContext().getResources().getString(R.string.prefs);*/
+        TAB_D = "Alerter";
 
         fragmentGeneral = new GeneralFragment();
         fragmentHostile = new HostileFragment();
         fragmentRentabilites = new RentabilitesFragment();
-        /*fragmentPrefs = new PrefsFragment();*/
+        fragmentAlert = new AlertFragment();
 
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
         mTabHost.setOnTabChangedListener(listener);
@@ -90,15 +91,15 @@ public class TabsFragmentActivity extends FragmentActivity {
         });
         spec.setIndicator(createTabView(TAB_C, R.drawable.ic_tab_rentabilites_selected));
         mTabHost.addTab(spec);
-/*
+
         spec =   mTabHost.newTabSpec(TAB_D);
         spec.setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
                 return findViewById(android.R.id.tabcontent);
             }
         });
-        spec.setIndicator(createTabView(TAB_D, R.drawable.ic_tab_prefs_selected));
-        mTabHost.addTab(spec);*/
+        spec.setIndicator(createTabView(TAB_D, R.drawable.ic_tab_alert_selected));
+        mTabHost.addTab(spec);
     }
 
     /*
@@ -113,9 +114,9 @@ public class TabsFragmentActivity extends FragmentActivity {
                 pushFragments(tabId, fragmentHostile);
             }else if(tabId.equals(TAB_C)){
                 pushFragments(tabId, fragmentRentabilites);
-            }/*else if(tabId.equals(TAB_D)){
-                pushFragments(tabId, fragmentPrefs);
-            }*/
+            }else if(tabId.equals(TAB_D)){
+                pushFragments(tabId, fragmentAlert);
+            }
         }
     };
 
@@ -142,27 +143,11 @@ public class TabsFragmentActivity extends FragmentActivity {
         return view;
     }
 
-    public static String getTAB_A() {
-        return TAB_A;
+    public AlertFragment getFragmentAlert() {
+        return fragmentAlert;
     }
 
-    public static String getTAB_B() {
-        return TAB_B;
-    }
-
-    public static String getTAB_C() {
-        return TAB_C;
-    }
-/*
-    public static String getTAB_D() {
-        return TAB_D;
-    }
-*/
-    public GeneralFragment getFragmentGeneral() {
-        return fragmentGeneral;
-    }
-
-    public HostileFragment getFragmentHostile() {
-        return fragmentHostile;
+    public RentabilitesFragment getFragmentRentabilites() {
+        return fragmentRentabilites;
     }
 }
