@@ -41,10 +41,10 @@ public class OgspyAboutActivity extends Activity {
         linkHelpInLine.setMovementMethod(LinkMovementMethod.getInstance());
 
         // 2) How to place email address
-        //TextView email = (TextView) findViewById(R.id.textView2);
-        //String emailText = "Send email: <a href=\"mailto:person@stackoverflow.com\">Click Me!</a>";
-        //email.setText(Html.fromHtml(emailText));
-        //email.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView email = (TextView) findViewById(R.id.developerName);
+        String emailText = "Jedinight (<a href=\"mailto:jp.tessier.dev@gmail.com\">Jean-Philippe TESSIER</a>)";
+        email.setText(Html.fromHtml(emailText));
+        email.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
