@@ -1,4 +1,4 @@
-package com.ogsteam.ogspy.fragments.tabs;
+package com.ogsteam.ogspy.fragments.tabs.items;
 
 import java.util.ArrayList;
 

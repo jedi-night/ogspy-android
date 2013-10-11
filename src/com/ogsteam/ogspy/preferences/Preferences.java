@@ -1,43 +1,13 @@
 package com.ogsteam.ogspy.preferences;
 
 import android.content.SharedPreferences;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.OgspyException;
-import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.data.models.Prefs;
-import com.ogsteam.ogspy.fragments.tabs.PrefsFragment;
-import com.ogsteam.ogspy.utils.Constants;
+import com.ogsteam.ogspy.utils.helpers.Constants;
 
 public class Preferences {
 
-	/** Display the account windows */
-	public static void showPrefs(OgspyActivity activity, PrefsFragment fragment) {
-		//activity.setContentView(R.layout.prefs);
-		Spinner spinner = fragment.getTimerHostiles();
-		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.prefs_timer_hostiles, android.R.layout.simple_spinner_item);
-		
-		// Specify the layout to use when the list of choices appears
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		if(spinner != null && adapter != null) {
-            spinner.setAdapter(adapter);
-        }
-		
-		if(!activity.getHandlerPrefs().getAllPrefs().isEmpty()){
-			Prefs prefs = activity.getHandlerPrefs().getPrefsById(0);
-			if(prefs != null && prefs.getRefreshHostiles() > 0){
-                int value = prefs.getRefreshHostiles();
-                if(spinner != null) {
-                    spinner.setSelection(value);
-                }
-			}
-		}
-	}
-	
 	/** Called when the user clicks the Save button in account*/
 	public static void savePrefs(OgspyActivity activity, SharedPreferences preferences) throws OgspyException {
 		//int selectedId = PrefsFragment.getTimerHostiles().getSelectedItemPosition();

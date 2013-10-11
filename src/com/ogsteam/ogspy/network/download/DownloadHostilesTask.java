@@ -1,23 +1,22 @@
 package com.ogsteam.ogspy.network.download;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
-import com.ogsteam.ogspy.helpers.HostilesHelper;
-import com.ogsteam.ogspy.utils.Constants;
-import com.ogsteam.ogspy.utils.HostileUtils;
+import com.ogsteam.ogspy.ui.displays.HostileUtils;
 import com.ogsteam.ogspy.utils.HttpUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
 import com.ogsteam.ogspy.utils.StringUtils;
+import com.ogsteam.ogspy.utils.helpers.Constants;
+import com.ogsteam.ogspy.utils.helpers.HostilesHelper;
 
 import org.json.JSONObject;
 
-public class DownloadHostilesTask extends AsyncTask<String, Integer, String> {
+public class DownloadHostilesTask extends DownloadTask {
     public static final String DEBUG_TAG = DownloadHostilesTask.class.getSimpleName();
-    private OgspyActivity activity;
+
 	protected static JSONObject dataJsonFromAsyncTask;
     protected HostilesHelper helperHostile;
 
@@ -45,11 +44,8 @@ public class DownloadHostilesTask extends AsyncTask<String, Integer, String> {
 		return null;
 	}
 
-    protected void onProgressUpdate(Integer... progress) {
-     //setProgressPercent(progress[0]);
-    }
-
 	protected void onPostExecute(String result) {
         HostileUtils.showHostiles(helperHostile,activity);
+        super.onPostExecute(result);
 	}
 }

@@ -6,8 +6,8 @@ import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.network.PostingTask;
-import com.ogsteam.ogspy.network.SendMessage;
+import com.ogsteam.ogspy.network.post.PostingTask;
+import com.ogsteam.ogspy.network.post.SendMessage;
 import com.ogsteam.ogspy.utils.StringUtils;
 
 import java.net.URLEncoder;

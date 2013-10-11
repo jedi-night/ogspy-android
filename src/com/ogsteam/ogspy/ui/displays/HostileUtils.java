@@ -1,4 +1,4 @@
-package com.ogsteam.ogspy.utils;
+package com.ogsteam.ogspy.ui.displays;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,10 +8,10 @@ import android.widget.ListView;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.fragments.tabs.HostileFragment;
-import com.ogsteam.ogspy.fragments.tabs.HostileItem;
-import com.ogsteam.ogspy.fragments.tabs.HostilesListAdapter;
-import com.ogsteam.ogspy.helpers.HostilesHelper;
+import com.ogsteam.ogspy.fragments.tabs.items.HostileItem;
+import com.ogsteam.ogspy.fragments.tabs.items.HostilesListAdapter;
 import com.ogsteam.ogspy.ui.DialogHandler;
+import com.ogsteam.ogspy.utils.helpers.HostilesHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;

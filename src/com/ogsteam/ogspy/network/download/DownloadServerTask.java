@@ -1,23 +1,22 @@
 package com.ogsteam.ogspy.network.download;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
-import com.ogsteam.ogspy.helpers.ServerHelper;
-import com.ogsteam.ogspy.utils.Constants;
-import com.ogsteam.ogspy.utils.GeneralUtils;
+import com.ogsteam.ogspy.ui.displays.GeneralUtils;
 import com.ogsteam.ogspy.utils.HttpUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
 import com.ogsteam.ogspy.utils.StringUtils;
+import com.ogsteam.ogspy.utils.helpers.Constants;
+import com.ogsteam.ogspy.utils.helpers.ServerHelper;
 
 import org.json.JSONObject;
 
-public class DownloadServerTask extends AsyncTask<String, Integer, String> {
+public class DownloadServerTask extends DownloadTask {
     public static final String DEBUG_TAG = DownloadServerTask.class.getSimpleName();
-    private OgspyActivity activity;
+
 	protected static JSONObject dataJsonFromAsyncTask;
     protected ServerHelper serverHelper;
 
@@ -44,10 +43,6 @@ public class DownloadServerTask extends AsyncTask<String, Integer, String> {
 		}
 		return null;
 	}
-
-    protected void onProgressUpdate(Integer... progress) {
-     //setProgressPercent(progress[0]);
-    }
 
 	protected void onPostExecute(String result) {
         GeneralUtils.showGeneral(serverHelper, null, null, activity);

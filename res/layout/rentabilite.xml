@@ -11,6 +11,15 @@
         android:layout_gravity="left|center_vertical"
         android:layout_marginBottom="15dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Rentabilité : "
+        android:id="@+id/rentabilityTotal"
+        android:layout_gravity="center_vertical|right|top"
+        android:layout_marginTop="-25dp" />
+
     <com.ogsteam.ogspy.ui.charting.PieChart
         android:id="@+id/pie"
         android:layout_width="wrap_content"

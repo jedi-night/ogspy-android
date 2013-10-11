@@ -1,4 +1,4 @@
-package com.ogsteam.ogspy.fragments.tabs;
+package com.ogsteam.ogspy.fragments.tabs.items;
 
 /**
  * Created by jp.tessier on 18/06/13.

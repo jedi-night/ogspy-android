@@ -38,8 +38,8 @@ import android.view.ViewGroup;
 import android.widget.Scroller;
 
 import com.ogsteam.ogspy.R;
+import com.ogsteam.ogspy.utils.NumberUtils;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -442,13 +442,6 @@ public class PieChart extends ViewGroup {
         return mData.size() - 1;
     }
 
-    public void removeAllItems() {
-        this.mData = new ArrayList<Item>();
-        this.mTotal = 0;
-        this.refreshDrawableState();
-    }
-
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // Let the GestureDetector interpret this event
@@ -485,8 +478,7 @@ public class PieChart extends ViewGroup {
         // Draw the label text
         if (getShowText()) {
             canvas.drawText(mData.get(mCurrentItem).mLabel, mTextX, mTextY, mTextPaint);
-            DecimalFormat decimalFormat = new DecimalFormat("#,###");
-            canvas.drawText(decimalFormat.format(mData.get(mCurrentItem).mValue), mTextX, mTextY+30, mTextPaint);
+            canvas.drawText(NumberUtils.format(mData.get(mCurrentItem).mValue), mTextX, mTextY+30, mTextPaint);
         }
 
         // If the API level is less than 11, we can't rely on the view animation system to
@@ -1030,5 +1022,13 @@ public class PieChart extends ViewGroup {
         return l * sign;
     }
 
+    public void removeAllItems() {
+        this.mData = new ArrayList<Item>();
+        this.mTotal = 0;
+        this.refreshDrawableState();
+    }
 
+    public float getTotal() {
+        return mTotal;
+    }
 }

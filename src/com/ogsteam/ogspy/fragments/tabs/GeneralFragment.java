@@ -13,7 +13,7 @@ import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.network.download.DownloadAllianceTask;
 import com.ogsteam.ogspy.network.download.DownloadSpysTask;
-import com.ogsteam.ogspy.utils.GeneralUtils;
+import com.ogsteam.ogspy.ui.displays.GeneralUtils;
 
 
 /**

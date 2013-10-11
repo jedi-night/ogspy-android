@@ -1,8 +1,6 @@
-package com.ogsteam.ogspy.helpers;
+package com.ogsteam.ogspy.utils.helpers;
 
 import android.util.Log;
-
-import com.ogsteam.ogspy.utils.Pair;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

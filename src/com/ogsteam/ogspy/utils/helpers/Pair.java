@@ -1,4 +1,4 @@
-package com.ogsteam.ogspy.utils;
+package com.ogsteam.ogspy.utils.helpers;
 
 /**
  * Created by jp.tessier on 12/07/13.

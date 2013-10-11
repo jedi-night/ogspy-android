@@ -76,6 +76,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public static int timer; // MIN * 60 * 1000 : minutes in seconds then milliseconds
 	public Timer autoUpdateHostiles;
     protected String regId;
+    private static boolean isWaiting = false;
 
     // Variables
 	public static DatabaseAccountHandler handlerAccount;
@@ -101,6 +102,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 		super.onCreate(savedInstanceState);
 
         activity = this;
+
 
         try{
             versionOgspy = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -202,8 +204,6 @@ public class OgspyActivity extends TabsFragmentActivity {
 
             downloadSpysTask = new DownloadSpysTask(this);
 
-            //downloadRentasTask = new DownloadRentabilitesTask(this);
-
 			autoUpdateHostiles.schedule(new TimerTask() {
 				@Override
 				public void run() {
@@ -215,23 +215,12 @@ public class OgspyActivity extends TabsFragmentActivity {
                             if (downloadSpysTask.getStatus().equals(AsyncTask.Status.FINISHED)){
                                 downloadSpysTask.execute(new String[] { "do"});
                             }
-                            /*if (downloadRentasTask.getStatus().equals(AsyncTask.Status.FINISHED)){
-                                downloadRentasTask.execute(new String[] { "do"});
-                            }*/
 						}
 					});
 				}
 			}, 0, timer); // updates each timer secs
 		}
 
-	}
-
-	public void saveAccount(View view){
-		//Accounts.saveAccount(this);
-	}
-
-	public void savePrefs(View view){
-		//Preferences.savePrefs(this);
 	}
 
     public void unregisteringOgspy(View view){
@@ -392,5 +381,19 @@ public class OgspyActivity extends TabsFragmentActivity {
                 CommonUtilities.displayMessage(this,"Le message d'alerte est vide, il n'a donc pas été envoyé.");
             }
         }
+    }
+
+    public void showWaiting(boolean visible){
+            if(visible){
+                if(!isWaiting){
+                    findViewById(android.R.id.tabcontent).setVisibility(View.GONE);
+                    findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                    isWaiting=true;
+                }
+            } else {
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                findViewById(android.R.id.tabcontent).setVisibility(View.VISIBLE);
+                isWaiting=false;
+            }
     }
 }

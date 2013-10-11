@@ -6,33 +6,11 @@ import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.OgspyException;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
-import com.ogsteam.ogspy.fragments.tabs.AccountFragment;
 import com.ogsteam.ogspy.ui.DialogHandler;
-import com.ogsteam.ogspy.utils.Constants;
+import com.ogsteam.ogspy.utils.helpers.Constants;
 
 public class Accounts {
 
-	/** Display the account windows */
-	public static void showAccount(OgspyActivity activity, AccountFragment fragment) {
-		//activity.setContentView(R.layout.accounts);
-		if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
-			Account account = activity.getHandlerAccount().getAccountById(0); 
-			if(account != null){
-				if(account.getUsername() != null && account.getUsername().length() > 0 && fragment.getUser() != null){
-                    fragment.getUser().setText(account.getUsername());
-				}
-				if(account.getPassword()!=null && account.getPassword().length() > 0 && fragment.getPassword() != null){
-                    fragment.getPassword().setText(account.getPassword());
-				}
-				if(account.getServerUrl()!=null && account.getServerUrl().length() > 0 && fragment.getServerUrl() != null){
-                    fragment.getServerUrl().setText(account.getServerUrl());
-				}
-				if(account.getServerUnivers()!=null && account.getServerUnivers().length() > 0 && fragment.getServerUniverse() != null){
-                    fragment.getServerUniverse().setText(account.getServerUnivers());
-				}
-			}
-		}
-	}
     public static void showAccount(OgspyActivity activity, SharedPreferences preferences) {
         if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
             Account account = activity.getHandlerAccount().getAccountById(0);

@@ -1,6 +1,6 @@
 package com.ogsteam.ogspy;
 
-import com.ogsteam.ogspy.utils.Pair;
+import com.ogsteam.ogspy.utils.helpers.Pair;
 
 /**
  * Created by jp.tessier on 19/07/13.

@@ -2,8 +2,8 @@ package com.ogsteam.ogspy.utils;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.helpers.HostilesHelper;
 import com.ogsteam.ogspy.notification.NotificationProvider;
+import com.ogsteam.ogspy.utils.helpers.HostilesHelper;
 import com.ogsteam.ogspy.utils.security.MD5;
 import com.ogsteam.ogspy.utils.security.SHA1;
 

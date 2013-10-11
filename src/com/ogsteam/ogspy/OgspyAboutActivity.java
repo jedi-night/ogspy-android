@@ -35,6 +35,11 @@ public class OgspyAboutActivity extends Activity {
         linkPlayStore.setText(Html.fromHtml(linkPlayStoreText));
         linkPlayStore.setMovementMethod(LinkMovementMethod.getInstance());
 
+        TextView linkHelpInLine = (TextView) findViewById(R.id.helpLink);
+        String linkHelpInLineText = "<a href='http://wiki.ogsteam.fr/doku.php?id=ogspy:android'>http://wiki.ogsteam.fr</a>";
+        linkHelpInLine.setText(Html.fromHtml(linkHelpInLineText));
+        linkHelpInLine.setMovementMethod(LinkMovementMethod.getInstance());
+
         // 2) How to place email address
         //TextView email = (TextView) findViewById(R.id.textView2);
         //String emailText = "Send email: <a href=\"mailto:person@stackoverflow.com\">Click Me!</a>";

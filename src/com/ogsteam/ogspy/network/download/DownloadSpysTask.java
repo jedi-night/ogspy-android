@@ -1,23 +1,22 @@
 package com.ogsteam.ogspy.network.download;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
-import com.ogsteam.ogspy.helpers.SpysHelper;
-import com.ogsteam.ogspy.utils.Constants;
-import com.ogsteam.ogspy.utils.GeneralUtils;
+import com.ogsteam.ogspy.ui.displays.GeneralUtils;
 import com.ogsteam.ogspy.utils.HttpUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
 import com.ogsteam.ogspy.utils.StringUtils;
+import com.ogsteam.ogspy.utils.helpers.Constants;
+import com.ogsteam.ogspy.utils.helpers.SpysHelper;
 
 import org.json.JSONObject;
 
-public class DownloadSpysTask extends AsyncTask<String, Integer, String> {
+public class DownloadSpysTask extends DownloadTask {
     public static final String DEBUG_TAG = DownloadSpysTask.class.getSimpleName();
-    private OgspyActivity activity;
+
 	protected static JSONObject dataJsonFromAsyncTask;
     protected SpysHelper spysHelper;
 
@@ -45,12 +44,9 @@ public class DownloadSpysTask extends AsyncTask<String, Integer, String> {
 		return null;
 	}
 
-    protected void onProgressUpdate(Integer... progress) {
-     //setProgressPercent(progress[0]);
-    }
-
 	protected void onPostExecute(String result) {
         GeneralUtils.showGeneral(null, null, spysHelper, activity);
+        super.onPostExecute(result);
 	}
 
     public SpysHelper getSpysHelper() {

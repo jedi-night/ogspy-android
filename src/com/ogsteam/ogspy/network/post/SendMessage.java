@@ -1,4 +1,4 @@
-package com.ogsteam.ogspy.network;
+package com.ogsteam.ogspy.network.post;
 
 import android.content.Context;
 

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
@@ -22,8 +23,10 @@ import com.ogsteam.ogspy.ui.charting.PieChart;
  *
  */
 public class RentabilitesFragment extends Fragment {
-    private static PieChart pie;
     private static Spinner rentabiliteInterval;
+    private static TextView rentabilityTotal;
+    private static PieChart pie;
+
 
     /** (non-Javadoc)
      * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
@@ -39,11 +42,14 @@ public class RentabilitesFragment extends Fragment {
             // the view hierarchy; it would just never be used.
             return null;
         }
+
         LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.rentabilite, container, false);
 
         pie =  (PieChart) layout.findViewById(R.id.pie);
         pie.removeAllItems();
-        pie.addItem("Aucun",0,Color.BLACK);
+        pie.addItem("",0,Color.BLACK);
+
+        rentabilityTotal = (TextView) layout.findViewById(R.id.rentabilityTotal);
 
         //activity.setContentView(R.layout.prefs);
         rentabiliteInterval = (Spinner) layout.findViewById(R.id.rentas_interval);
@@ -81,7 +87,6 @@ public class RentabilitesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //new DownloadRentabilitesTask((OgspyActivity) getActivity()).execute(new String[] { "do"});
     }
 
     public static PieChart getPie() {
@@ -90,5 +95,9 @@ public class RentabilitesFragment extends Fragment {
 
     public static Spinner getRentabiliteInterval() {
         return rentabiliteInterval;
+    }
+
+    public static TextView getRentabilityTotal() {
+        return rentabilityTotal;
     }
 }

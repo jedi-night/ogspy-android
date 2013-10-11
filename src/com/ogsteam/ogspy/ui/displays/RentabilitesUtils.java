@@ -1,11 +1,12 @@
-package com.ogsteam.ogspy.utils;
+package com.ogsteam.ogspy.ui.displays;
 
 import android.graphics.Color;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.helpers.RentabilitesHelper;
 import com.ogsteam.ogspy.ui.charting.PieChart;
+import com.ogsteam.ogspy.utils.NumberUtils;
+import com.ogsteam.ogspy.utils.helpers.RentabilitesHelper;
 
 /**
  * Created by jp.tessier on 20/06/13.
@@ -23,8 +24,10 @@ public abstract class RentabilitesUtils {
             pie.addItem("Métal", Float.parseFloat(renta.getMetal()), activity.getResources().getColor(R.color.pie_color_1));
             pie.addItem("Cristal", Float.parseFloat(renta.getCristal()), activity.getResources().getColor(R.color.pie_color_2));
             pie.addItem("Deutérium", Float.parseFloat(renta.getDeuterium()), activity.getResources().getColor(R.color.pie_color_3));
+            activity.getFragmentRentabilites().getRentabilityTotal().setText("Rentabilité : " + NumberUtils.format(pie.getTotal()));
         } else {
             pie.addItem("Aucun",0,Color.BLACK);
+            activity.getFragmentRentabilites().getRentabilityTotal().setText("Rentabilité : " + NumberUtils.format(pie.getTotal()));
         }
         pie.setCurrentItem(0);
         pie.setShowText(true);

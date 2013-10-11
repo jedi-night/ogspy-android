@@ -1,4 +1,4 @@
-package com.ogsteam.ogspy.helpers;
+package com.ogsteam.ogspy.utils.helpers;
 
 import android.util.Log;
 
