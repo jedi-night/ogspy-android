@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gcm.GCMRegistrar;
-import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.network.post.PostingTask;
 import com.ogsteam.ogspy.network.post.SendMessage;
@@ -27,7 +26,7 @@ public final class ServerUtilities {
      */
     public static void register(final Context context, String name, final String regId) {
         Log.i(TAG, "registering device (regId = " + regId + ")");
-        String serverUrl = OgspyActivity.commonUtilities.SERVER_URL_REGISTER;
+        String serverUrl = CommonUtilities.getSERVER_URL_REGISTER();
 
         long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
         // Once GCM returns a registration id, we need to register on our server
@@ -73,7 +72,7 @@ public final class ServerUtilities {
      */
     public static void unregister(final Context context, final String name, final String regId) {
         Log.i(TAG, "unregistering device (regId = " + regId + ")");
-        String serverUrl = OgspyActivity.commonUtilities.SERVER_URL_REGISTER + "&unregister=1";
+        String serverUrl = CommonUtilities.getSERVER_URL_REGISTER() + "&unregister=1";
         PostingTask post = new PostingTask(context, StringUtils.formatPattern(serverUrl, name, regId));
         try {
             post.execute(new String[]{"do"});
@@ -96,7 +95,7 @@ public final class ServerUtilities {
      *
      */
     public static void sendAlertMesage(final Context context, final String regId, final String username, final String message) {
-        String serverUrl = OgspyActivity.commonUtilities.SERVER_URL_ALERT;
+        String serverUrl = CommonUtilities.getSERVER_URL_ALERT();
 
         SendMessage sendMessage = new SendMessage(context, StringUtils.formatPattern(serverUrl, regId, username, URLEncoder.encode(message)));
         sendMessage.execute(new String[] { "do"});

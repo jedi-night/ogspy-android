@@ -1,115 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Forum de l'OGSteam"
-        android:id="@+id/labelForum"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="15dp" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="lien"
-        android:id="@+id/forumLink"
-        android:layout_gravity="center_vertical|right"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Forum de l'OGSteam"
+            android:id="@+id/labelForum"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Déclaration de bugs"
-        android:id="@+id/textView"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="lien"
+            android:id="@+id/forumLink"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="lien"
-        android:id="@+id/bugsLink"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Déclaration de bugs"
+            android:id="@+id/textView"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Google Play Store"
-        android:id="@+id/textView2"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="lien"
+            android:id="@+id/bugsLink"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="lien"
-        android:id="@+id/playstoreLink"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Google Play Store"
+            android:id="@+id/textView2"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Aide en ligne"
-        android:id="@+id/textView5"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="lien"
+            android:id="@+id/playstoreLink"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="lien"
-        android:id="@+id/helpLink"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Aide en ligne"
+            android:id="@+id/textView5"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Application développée bénévolement par"
-        android:id="@+id/textView3"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginTop="75dp"
-        android:layout_marginLeft="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="lien"
+            android:id="@+id/helpLink"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Jedinight (Jean-Philippe TESSIER)"
-        android:id="@+id/developerName"
-        android:layout_gravity="center"
-        android:textColor="#faff0f"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Application développée bénévolement par"
+            android:id="@+id/textView3"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="75dp"
+            android:layout_marginLeft="15dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/avatar_jedinight"
-        android:layout_gravity="center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Jedinight (Jean-Philippe TESSIER)"
+            android:id="@+id/developerName"
+            android:layout_gravity="center"
+            android:textColor="#faff0f"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/avatar_jedinight"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+</ScrollView>

@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
@@ -15,11 +15,14 @@ import com.ogsteam.ogspy.network.download.DownloadHostilesTask;
 
 /**
  * @author mwho
- *
  */
 public class HostileFragment extends Fragment {
+    private static ScrollView layout;
     private static ListView listHostiles;
-    /** (non-Javadoc)
+
+    /**
+     * (non-Javadoc)
+     *
      * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,9 +36,9 @@ public class HostileFragment extends Fragment {
             // the view hierarchy; it would just never be used.
             return null;
         }
-        LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.hostiles, container, false);
+        layout = (ScrollView) inflater.inflate(R.layout.hostiles, container, false);
 
-        listHostiles =  (ListView) layout.findViewById(R.id.list_view_hostiles);
+        listHostiles = (ListView) layout.findViewById(R.id.list_view_hostiles);
 
         return layout;
     }

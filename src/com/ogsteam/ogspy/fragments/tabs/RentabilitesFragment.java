@@ -23,6 +23,7 @@ import com.ogsteam.ogspy.ui.charting.PieChart;
  *
  */
 public class RentabilitesFragment extends Fragment {
+    private static LinearLayout layout;
     private static Spinner rentabiliteInterval;
     private static TextView rentabilityTotal;
     private static PieChart pie;
@@ -43,7 +44,7 @@ public class RentabilitesFragment extends Fragment {
             return null;
         }
 
-        LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.rentabilite, container, false);
+        layout = (LinearLayout) inflater.inflate(R.layout.rentabilite, container, false);
 
         pie =  (PieChart) layout.findViewById(R.id.pie);
         pie.removeAllItems();
