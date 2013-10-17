@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <!-- item
+        android:id="@+id/ogspy_activity"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/hostiles"/-->
+    <item
+        android:id="@+id/about"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="A propos"/>
+    <item
+        android:id="@+id/prefs"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/prefs"/>
+    <item
+        android:id="@+id/quit"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/quit"/>
+
+</menu>
