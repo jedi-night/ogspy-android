@@ -40,7 +40,8 @@ public class DownloadHostilesTask extends DownloadTask {
 			}
 		} catch (Exception e) {
 			Log.e(DEBUG_TAG, activity.getString(R.string.download_problem),e);
-		}
+            activity.showConnectivityProblem(true);
+        }
 		return null;
 	}
 

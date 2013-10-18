@@ -31,6 +31,9 @@ public class TabsFragmentActivity extends FragmentActivity {
     HostileFragment fragmentHostile;
     RentabilitesFragment fragmentRentabilites;
     AlertFragment fragmentAlert;
+    ConnectionFragment fragmentConnection;
+
+    Fragment lastFragment;
 
     /*AccountFragment fragmentAccount;
     PrefsFragment fragmentPrefs;*/
@@ -43,12 +46,13 @@ public class TabsFragmentActivity extends FragmentActivity {
         TAB_A = getApplicationContext().getResources().getString(R.string.general);
         TAB_B = getApplicationContext().getResources().getString(R.string.hostiles);
         TAB_C = getApplicationContext().getResources().getString(R.string.rentabilites);
-        TAB_D = "Alerter";
+        TAB_D = "Messages";
 
         fragmentGeneral = new GeneralFragment();
         fragmentHostile = new HostileFragment();
         fragmentRentabilites = new RentabilitesFragment();
         fragmentAlert = new AlertFragment();
+        fragmentConnection = new ConnectionFragment();
 
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
         mTabHost.setOnTabChangedListener(listener);
@@ -110,12 +114,16 @@ public class TabsFragmentActivity extends FragmentActivity {
             /*Set current tab..*/
             if(tabId.equals(TAB_A)){
                 pushFragments(tabId, fragmentGeneral);
+                lastFragment = fragmentGeneral;
             }else if(tabId.equals(TAB_B)){
                 pushFragments(tabId, fragmentHostile);
+                lastFragment = fragmentHostile;
             }else if(tabId.equals(TAB_C)){
                 pushFragments(tabId, fragmentRentabilites);
+                lastFragment = fragmentRentabilites;
             }else if(tabId.equals(TAB_D)){
                 pushFragments(tabId, fragmentAlert);
+                lastFragment = fragmentAlert;
             }
         }
     };
@@ -145,6 +153,17 @@ public class TabsFragmentActivity extends FragmentActivity {
 
     public AlertFragment getFragmentAlert() {
         return fragmentAlert;
+    }
+
+    public ConnectionFragment getFragmentConnection() {
+        return fragmentConnection;
+    }
+
+    public Fragment getLastFragment() {
+        if (lastFragment == null) {
+            lastFragment = fragmentGeneral;
+        }
+        return lastFragment;
     }
 
     public RentabilitesFragment getFragmentRentabilites() {

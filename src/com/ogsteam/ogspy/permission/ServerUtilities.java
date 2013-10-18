@@ -97,8 +97,11 @@ public final class ServerUtilities {
      */
     public static void sendAlertMesage(final Context context, final String regId, final String username, final String message) {
         String serverUrl = OgspyActivity.commonUtilities.SERVER_URL_ALERT;
-
-        SendMessage sendMessage = new SendMessage(context, StringUtils.formatPattern(serverUrl, regId, username, URLEncoder.encode(message)));
+        try {
+            SendMessage sendMessage = new SendMessage(context, StringUtils.formatPattern(serverUrl, regId, username, URLEncoder.encode(message)));
         sendMessage.execute(new String[] { "do"});
+        } catch (Exception ex) {
+            CommonUtilities.displayMessage(context, "Problème lors de l'envoi du message : " + ex.getMessage());
+        }
     }
 }

@@ -13,10 +13,6 @@ public class SendMessage extends PostingTask {
         super(activity,url);
     }
 
-    protected void onProgressUpdate(Integer... progress) {
-        //setProgressPercent(progress[0]);
-    }
-
     protected void onPostExecute(String result) {
         boolean success = result.contains("success");
         if(success){
@@ -27,7 +23,7 @@ public class SendMessage extends PostingTask {
                 CommonUtilities.displayMessage(activity, "Aucun membre n'a recu votre message !");
             }
         } else {
-            CommonUtilities.displayMessage(activity, "Echec lors de l'envoi du message !");
+            CommonUtilities.displayMessage(activity, "Echec lors de l'envoi du message !\n" + result);
         }
     }
 }

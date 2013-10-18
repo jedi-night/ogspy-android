@@ -28,5 +28,6 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         activity.showWaiting(false);
+        activity.showConnectivityProblem(!activity.connection.isConnectingToInternet());
     }
 }

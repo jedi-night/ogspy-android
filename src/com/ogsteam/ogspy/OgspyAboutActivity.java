@@ -1,9 +1,12 @@
 package com.ogsteam.ogspy;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 /**
@@ -50,5 +53,35 @@ public class OgspyAboutActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        /*case R.id.ogspy_activity:
+			//setContentView(R.layout.hostiles);
+			// Step 1: Inflate layout
+	        setContentView(R.layout.ogspy_tab_host);
+	        mTabHost.setCurrentTab(0); //set the tab as per the saved state
+			return true;*/
+            case R.id.about:
+                startActivity(new Intent(this, OgspyAboutActivity.class));
+                return true;
+            case R.id.prefs:
+                //startActivityForResult(new Intent(this, OgspyPreferencesActivity.class), CODE_RETOUR_PREFS);
+                startActivity(new Intent(this, OgspyPreferencesActivity.class));
+                return true;
+            case R.id.quit:
+                this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,37 +1,37 @@
 <resources>
-	<!-- Application theme. -->
+    <!-- Application theme. -->
     <style name="OgspyTheme" parent="android:Theme.Holo">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->      
-         
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
     </style>
-    
+
     <style name="ButtonText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/btnTextColor</item>
         <item name="android:textSize">@dimen/btnTextSize</item>
     </style>
-    
+
     <style name="TitleText" parent="@android:style/TextAppearance">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">@dimen/titleTextSize</item>
     </style>
-    
-    <style name="Button" parent="@android:style/Widget.Button">  
-        <item name="android:gravity">center_vertical|center_horizontal</item>  
-        <item name="android:textColor">#FFFFFFFF</item>  
-        <item name="android:shadowColor">#FF000000</item>  
-        <item name="android:shadowDx">0</item>  
-        <item name="android:shadowDy">-1</item>  
-        <item name="android:shadowRadius">0.2</item>  
-        <item name="android:textSize">16sp</item>  
+
+    <style name="Button" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:focusable">true</item>  
-        <item name="android:clickable">true</item>  
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
     </style>
-    
+
     <style name="TabWidgetText" parent="@android:style/TextAppearance.Widget.TabWidget">
-    	<item name="android:textSize">10sp</item>
-    	<item name="android:textStyle">bold</item>
-	</style>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <style name="GenericProgressBackground" parent="android:Theme">
         <item name="android:layout_width">fill_parent</item>
@@ -39,7 +39,8 @@
         <item name="android:background">#DD111111</item>
         <item name="android:gravity">center</item>
     </style>
-    <style name="GenericProgressIndicator" parent="@android:style/Widget.ProgressBar">
+
+    <style name="GenericProgressIndicator" parent="@android:style/Widget.ProgressBar.Inverse">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:indeterminate">true</item>

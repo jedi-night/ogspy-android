@@ -78,6 +78,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public Timer autoUpdateHostiles;
     protected String regId;
     private static boolean isWaiting = false;
+    private static boolean isConnectionProblem = false;
 
     // Variables
 	public static DatabaseAccountHandler handlerAccount;
@@ -122,13 +123,6 @@ public class OgspyActivity extends TabsFragmentActivity {
         }
           */
         connection = new ConnectionDetector(getApplicationContext());
- 
-        // Check if Internet present
-        if (!connection.isConnectingToInternet()) {
-        	Toast.makeText(this, getString(R.string.connexion_ko), Toast.LENGTH_LONG).show();
-            // stop executing code by return
-            return;
-        }
 
 		handlerAccount = new DatabaseAccountHandler(this);
 		handlerPrefs = new DatabasePreferencesHandler(this);
@@ -147,7 +141,16 @@ public class OgspyActivity extends TabsFragmentActivity {
 
         setAutomaticCheckHostiles();
         doGcm();
-	}
+
+        // Check if Internet present
+        if (!connection.isConnectingToInternet()) {
+            //Toast.makeText(this, getString(R.string.connexion_ko), Toast.LENGTH_LONG).show();
+            // stop executing code by return
+            //return;
+            showWaiting(false);
+            showConnectivityProblem(true);
+        }
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -379,7 +382,7 @@ public class OgspyActivity extends TabsFragmentActivity {
     public void sendAlert(View v){
         if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
             EditText messageEditText = getFragmentAlert().getMessage();
-            if(messageEditText.getText().length() > 0){
+            if (messageEditText.getText() != null && messageEditText.getText().length() > 0) {
                 ServerUtilities.sendAlertMesage(this, regId, activity.getHandlerAccount().getAccountById(0).getUsername(), messageEditText.getText().toString());
                 messageEditText.setText("");
             } else {
@@ -400,5 +403,15 @@ public class OgspyActivity extends TabsFragmentActivity {
                 findViewById(android.R.id.tabcontent).setVisibility(View.VISIBLE);
                 isWaiting=false;
             }
+    }
+
+    public void showConnectivityProblem(boolean visible) {
+        if (visible) {
+            pushFragments("connection", getFragmentConnection());
+            isConnectionProblem = true;
+        } else {
+            pushFragments("noproblem", getLastFragment());
+            isConnectionProblem = false;
+        }
     }
 }
