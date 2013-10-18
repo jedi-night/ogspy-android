@@ -6,9 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TableLayout;
 
+import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
+import com.ogsteam.ogspy.data.models.Message;
+import com.ogsteam.ogspy.fragments.tabs.items.MessageItem;
+import com.ogsteam.ogspy.fragments.tabs.items.MessageListAdapter;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Locale;
 
 
 /**
@@ -17,6 +26,7 @@ import com.ogsteam.ogspy.R;
  */
 public class AlertFragment extends Fragment {
     private static EditText message;
+    private static ListView messages;
     /** (non-Javadoc)
      * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
      */
@@ -31,8 +41,9 @@ public class AlertFragment extends Fragment {
             // the view hierarchy; it would just never be used.
             return null;
         }
-        LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.alert, container, false);
+        TableLayout layout = (TableLayout)inflater.inflate(R.layout.messages, container, false);
 
+        messages = (ListView) layout.findViewById(R.id.message_list);
         message =  (EditText) layout.findViewById(R.id.alertMessage);
 
         return layout;
@@ -41,9 +52,23 @@ public class AlertFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        ArrayList<MessageItem> messagesItems = new ArrayList<MessageItem>();
+        //SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd MMM yyyy - HH:mm", Locale.FRANCE);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy - HH:mm", Locale.FRANCE);
+        for(Message message:OgspyActivity.handlerMessages.getAllMessagesDesc()){
+            messagesItems.add(new MessageItem(sdf.format(Long.parseLong(message.getDatetime())),message.getSender(),message.getContent()));
+        }
+        if(messages!=null){
+            messages.setAdapter(new MessageListAdapter(OgspyActivity.activity, messagesItems));
+        }
     }
 
     public EditText getMessage() {
         return message;
+    }
+
+    public static ListView getMessagesList() {
+        return messages;
     }
 }

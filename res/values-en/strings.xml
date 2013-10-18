@@ -69,7 +69,8 @@
     </string-array>
     <!-- Notifs -->
     <string name="notification">Notification OGSPY</string>
-	<string name="notification_title">Flottes hostiles</string>
+	<string name="notification_title_hostiles">Hostile Fleets</string>
+    <string name="notification_title_message">Message from {0}</string>
 	<string name="notification_desc">{0}</string>
 	
 

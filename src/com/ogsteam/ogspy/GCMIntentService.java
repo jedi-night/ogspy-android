@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
+import com.ogsteam.ogspy.data.models.Message;
 import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
+import com.ogsteam.ogspy.utils.helpers.Constants;
+
+import java.util.Date;
 
 import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
  
@@ -50,10 +54,12 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onMessage(Context context, Intent intent) {
         Log.i(TAG, "Received message");
         String message = intent.getExtras().getString("message");
+        String messagetype = intent.getExtras().getString("messagetype");
+        String sender = intent.getExtras().getString("sender");
          
-        CommonUtilities.displayMessage(context, message);
+        //CommonUtilities.displayMessage(context, message);
         // notifies user
-        generateNotification(context, message);
+        generateNotification(context, message, messagetype, sender);
     }
  
     /**
@@ -63,9 +69,9 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onDeletedMessages(Context context, int total) {
         Log.i(TAG, "Received deleted messages notification");
         String message = getString(R.string.gcm_deleted, total);
-        CommonUtilities.displayMessage(context, message);
+        //CommonUtilities.displayMessage(context, message);
         // notifies user
-        generateNotification(context, message);
+        generateNotification(context, message, null, null);
     }
  
     /**
@@ -89,9 +95,18 @@ public class GCMIntentService extends GCMBaseIntentService {
     /**
      * Issues a notification to inform the user that server has sent a message.
      */
-    private static void generateNotification(Context context, String message) {
+    private static void generateNotification(Context context, String message, String messageType, String sender) {
         NotificationProvider notifProvider = OgspyActivity.getNotifProvider();
-        if(notifProvider != null) notifProvider.createNotificationHostile(message);
+        if(notifProvider != null){
+            if(messageType != null && Constants.NOTIFICATION_TYPE_HOSTILES.equals(messageType)){
+                notifProvider.createNotificationHostile(message);
+            } else if(messageType != null && Constants.NOTIFICATION_TYPE_MESSAGE.equals(messageType)){
+                notifProvider.createNotificationMessage(message, sender);
+                OgspyActivity.handlerMessages.addMessage(new Message(OgspyActivity.handlerMessages.getNextMessageId(),String.valueOf(new Date().getTime()), sender, message));
+            }
+        }
+
+
         /*int icon = R.drawable.ic_launcher;
         long when = System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager)

@@ -72,7 +72,8 @@
 
     <!-- Notifs -->
     <string name="notification">Notification OGSPY</string>
-	<string name="notification_title">Flottes hostiles</string>
+    <string name="notification_title_hostiles">Flottes hostiles</string>
+    <string name="notification_title_message">Message de {0}</string>
 	<string name="notification_desc">{0}</string>
 
 	<!-- GCM -->

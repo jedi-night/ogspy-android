@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
  
     // Database Name
     private static final String DATABASE_NAME = "ogspy";
@@ -15,7 +15,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Table names
     protected static final String TABLE_ACCOUNTS = "accounts";
     protected static final String TABLE_PREFS = "preferences";
-    protected static final String TABLE_MESSAGES = "accounts";
+    protected static final String TABLE_MESSAGES = "messages";
 
     // Messages Table Columns names
     protected static final String KEY_MESSAGES_ID = "id";
@@ -68,7 +68,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private void createMessageTable(SQLiteDatabase db){
         String CREATE_MESSAGES_TABLE = "CREATE TABLE " + TABLE_MESSAGES + "("
                 + KEY_MESSAGES_ID + " INTEGER PRIMARY KEY,"
-                + KEY_MESSAGES_DATE + " INTEGER,"
+                + KEY_MESSAGES_DATE + " TEXT,"
                 + KEY_MESSAGES_SENDER + " TEXT,"
                 + KEY_MESSAGES_CONTENT + " TEXT"
                 + ")";
@@ -85,6 +85,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		} else if(oldVersion == 2){
 			createPreferencesTable(db);
         } else if(oldVersion == 3){
+            createMessageTable(db);
+        } else if(oldVersion == 4){
+            db.execSQL("DROP TABLE " + TABLE_MESSAGES);
             createMessageTable(db);
         }
     	

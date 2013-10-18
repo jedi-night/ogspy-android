@@ -3,24 +3,24 @@ package com.ogsteam.ogspy.data.models;
 public class Message {
 
 	private int id;
-    private int datetime;
+    private String datetime;
 	private String sender;
 	private String content;
 
 	public Message(){
 	}
 
-	public Message( int datetime, String sender, String content){
+	public Message(String datetime, String sender, String content){
 		this.sender=sender;
 		this.content=content;
 		this.datetime=datetime;
 	}
 
-	public Message(int id,  int datetime, String sender, String content){
+	public Message(int id, String datetime, String sender, String content){
 		this.id = id;
+        this.datetime=datetime;
         this.sender=sender;
         this.content=content;
-        this.datetime=datetime;
 	}
 
 	public int getId() {
@@ -31,11 +31,11 @@ public class Message {
 		this.id = id;
 	}
 
-    public int getDatetime() {
+    public String getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(int datetime) {
+    public void setDatetime(String datetime) {
         this.datetime = datetime;
     }
 

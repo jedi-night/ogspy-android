@@ -11,6 +11,10 @@ public interface Constants {
     public static final String XTENSE_TYPE_SERVER = "server";
     public static final String XTENSE_TYPE_RENTABILITES = "rentas";
 
+    /* TYPE DE NOTIFICATIONS */
+    public static final String NOTIFICATION_TYPE_HOSTILES = "hostiles";
+    public static final String NOTIFICATION_TYPE_MESSAGE = "message";
+
     /* EXEPTIONS */
     public static final Pair EXCEPTION_SAISIE = new Pair(0,"Problème de saisie");
     public static final Pair EXCEPTION_DATA_SAVE = new Pair(1,"Problème de sauvegarde");

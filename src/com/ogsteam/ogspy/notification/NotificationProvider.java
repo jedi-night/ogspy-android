@@ -18,6 +18,7 @@ public class NotificationProvider {
 
 	public static boolean notifHostilesAlreadyDone = false; 
 	private int NOTIFICATION_ID_HOSTILES = 0;
+    private int NOTIFICATION_ID_MESSAGES = 0;
 	private Activity activity;
 	
 	public NotificationProvider(Activity activity){
@@ -36,7 +37,7 @@ public class NotificationProvider {
 		
 		// Notifications details
 		String notificationTitle = "OGSPY";
-		String notificationContent = activity.getResources().getString(R.string.notification_title);
+		String notificationContent = activity.getResources().getString(R.string.notification_title_hostiles);
 		
 		Notification notif = new NotificationCompat.Builder(activity)
 			.setWhen(System.currentTimeMillis())
@@ -54,6 +55,37 @@ public class NotificationProvider {
 		mNotification.notify(NOTIFICATION_ID_HOSTILES, notif);
         NOTIFICATION_ID_HOSTILES++;
 	}
+
+    public final void createNotificationMessage(String details, String sender){
+        final NotificationManager mNotification = (NotificationManager) activity.getSystemService(Activity.NOTIFICATION_SERVICE);
+
+        final Intent launchNotifiactionIntent = new Intent(activity, OgspyActivity.class);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, launchNotifiactionIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        // Notification Icons
+        Bitmap largeIcon = ((BitmapDrawable) activity.getResources().getDrawable(R.drawable.ic_launcher)).getBitmap();
+        int smallIcon = R.drawable.message;
+
+        // Notifications details
+        String notificationTitle = "OGSPY";
+        String notificationContent = activity.getResources().getString(R.string.notification_title_message);
+
+        Notification notif = new NotificationCompat.Builder(activity)
+                .setWhen(System.currentTimeMillis())
+                .setLargeIcon(largeIcon)
+                .setSmallIcon(smallIcon)
+                .setTicker(notificationTitle)
+                .setContentTitle(StringUtils.formatPattern(notificationContent,sender))
+                .setContentText(details)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_SOUND) // Play default notification sound
+                .setDefaults(Notification.DEFAULT_VIBRATE) // Vibrate if vibrate is enabled
+                .build();
+
+        mNotification.notify(NOTIFICATION_ID_MESSAGES, notif);
+        NOTIFICATION_ID_MESSAGES++;
+    }
 	
 	public void deleteNotificationHostile(){
     	final NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
