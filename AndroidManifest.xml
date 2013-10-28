@@ -4,66 +4,87 @@
     android:versionCode="13"
     android:versionName="1.4.0">
 
-<uses-sdk android:minSdkVersion="11" android:targetSdkVersion="18" />
-	
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="18" />
+
     <!-- INTERNET -->
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<!-- NOTIFS -->
-	<uses-permission android:name="android.permission.VIBRATE" />
-	
-	<!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- NOTIFS -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- GCM requires a Google account. -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
- 
+
     <!-- Keeps the processor from sleeping when a message is received. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
- 
+
     <!-- Creates a custom permission so only this app can receive its messages. -->
-    <permission android:name="com.ogsteam.ogspy.permission.C2D_MESSAGE" android:protectionLevel="signature" />
- 
+    <permission
+        android:name="com.ogsteam.ogspy.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="com.ogsteam.ogspy.permission.C2D_MESSAGE" />
- 
+
     <!-- This app has permission to register and receive data message. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
- 
+
+    <!--application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" android:theme="@style/OgspyTheme"-->
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" android:theme="@style/OgspyTheme">
+        android:label="@string/app_name">
         <activity
             android:name="com.ogsteam.ogspy.OgspyActivity"
-            android:label="@string/app_name" android:launchMode="singleInstance">
+            android:label="@string/app_name"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-		<activity android:name="com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity" android:parentActivityName="com.ogsteam.ogspy.OgspyActivity" >
-    		<meta-data android:name="android.support.PARENT_ACTIVITY" android:value="com.ogsteam.ogspy.OgspyActivity"/>
-		</activity>
 
-        <activity android:name="com.ogsteam.ogspy.OgspyPreferencesActivity" android:parentActivityName="com.ogsteam.ogspy.OgspyActivity" >
-            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="com.ogsteam.ogspy.OgspyActivity"/>
+        <activity
+            android:name="com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity"
+            android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
         </activity>
 
-        <activity android:name="com.ogsteam.ogspy.OgspyAboutActivity" android:parentActivityName="com.ogsteam.ogspy.OgspyActivity" >
-            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="com.ogsteam.ogspy.OgspyActivity"/>
+        <activity
+            android:name="com.ogsteam.ogspy.OgspyPreferencesActivity"
+            android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+        </activity>
+
+        <activity
+            android:name="com.ogsteam.ogspy.OgspyAboutActivity"
+            android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
         </activity>
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter> 
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
                 <!-- Receives the actual messages. -->
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <!-- Receives the registration id. -->
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
- 
+
                 <category android:name="com.ogsteam.ogspy" />
             </intent-filter>
         </receiver>
- 
+
         <service android:name=".GCMIntentService" />
     </application>
 

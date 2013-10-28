@@ -18,7 +18,6 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
@@ -744,14 +743,14 @@ public class PieChart extends ViewGroup {
 
 
         // In edit mode it's nice to have some demo data, so add that here.
-        if (this.isInEditMode()) {
+        /*if (this.isInEditMode()) {
             Resources res = getResources();
             addItem("Annabelle", 3, res.getColor(R.color.bluegrass));
             addItem("Brunhilde", 4, res.getColor(R.color.chartreuse));
             addItem("Carolina", 2, res.getColor(R.color.emerald));
             addItem("Dahlia", 3, res.getColor(R.color.seafoam));
             addItem("Ekaterina", 1, res.getColor(R.color.slate));
-        }
+        }*/
 
     }
 
@@ -1025,7 +1024,6 @@ public class PieChart extends ViewGroup {
     public void removeAllItems() {
         this.mData = new ArrayList<Item>();
         this.mTotal = 0;
-        this.refreshDrawableState();
     }
 
     public float getTotal() {

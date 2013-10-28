@@ -18,12 +18,14 @@ public class DownloadRentabilitesTask extends DownloadTask {
     public static final String DEBUG_TAG = DownloadRentabilitesTask.class.getSimpleName();
 
     private String interval;
+    private String type;
     protected RentabilitesHelper helperRentabilites;
     protected static JSONObject dataJsonFromAsyncTask;
 
-    public DownloadRentabilitesTask(OgspyActivity activity, String interval) {
+    public DownloadRentabilitesTask(OgspyActivity activity, String interval, String type) {
         this.activity = activity;
         this.interval = interval;
+        this.type = type;
         this.dataJsonFromAsyncTask = null;
         this.helperRentabilites = null;
     }
@@ -33,7 +35,7 @@ public class DownloadRentabilitesTask extends DownloadTask {
         try {
             if (!activity.getHandlerAccount().getAllAccounts().isEmpty()) {
                 Account account = activity.getHandlerAccount().getAccountById(0);
-                String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), activity.versionAndroid, activity.getVersionOgspy(), Constants.XTENSE_TYPE_RENTABILITES).concat("&interval=" + interval);
+                String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), activity.versionAndroid, activity.getVersionOgspy(), Constants.XTENSE_TYPE_RENTABILITES).concat("&interval=" + interval).concat("&typerenta=" + type);
                 String data = HttpUtils.getUrl(url);
                 if (data != null) {
                     dataJsonFromAsyncTask = new JSONObject(data.replaceAll("[(]", "").replaceAll("[)]", ""));
@@ -48,7 +50,7 @@ public class DownloadRentabilitesTask extends DownloadTask {
     }
 
     protected void onPostExecute(String result) {
-        RentabilitesUtils.showRentabilites(helperRentabilites, activity);
+        RentabilitesUtils.showRentabilites(helperRentabilites, activity, type);
         super.onPostExecute(result);
     }
 }

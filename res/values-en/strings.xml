@@ -8,14 +8,14 @@
     <string name="general">General</string>
     <string name="rentabilites">Rentabilities</string>
     <string name="quit">Leave</string>
-    
+
     <string name="hello_world">Hello World !</string>
     <string name="button_send">Send</string>
 
     <!-- Hostiles -->
     <string name="hostiles_none">No member of community is attack</string>
     <string name="hostiles_attack">Hostile fleet detect on member(s) : </string>
-        
+
     <!-- Account -->
     <string name="account_ogspy_title">Parameters of OGSPY account</string>
     <string name="ogspy_user_title">User : </string>
@@ -25,14 +25,14 @@
     <string name="save_button">Save</string>
     <string name="gcm_unregister">Force unregistering to notifications</string>
 
-	<string name="save_account_username_ko">Username is required</string>
+    <string name="save_account_username_ko">Username is required</string>
     <string name="save_account_password_ko">Password is required</string>
     <string name="save_account_server_url_ko">Wrong Server URL, may be malformed</string>
     <string name="save_account_server_univers_ko">Wrong Universe URL, may be malformed</string>
-    
+
     <string name="save_account_ok">Account saved</string>
     <string name="save_account_ko">Save of account failed</string>
-    
+
     <!-- Pref -->
     <string name="prefs_title">Preferences</string>
     <string name="prefs_timer_hostiles_title">Refresh hostiles</string>
@@ -67,15 +67,26 @@
         <item>week</item>
         <item>month</item>
     </string-array>
+    <string-array name="rentas_type">
+        <item>My stats</item>
+        <item>Stats of alliance</item>
+        <item>Stats by member</item>
+    </string-array>
+    <string-array name="rentas_type_values">
+        <item>me</item>
+        <item>us</item>
+        <item>member</item>
+    </string-array>
+
     <!-- Notifs -->
     <string name="notification">Notification OGSPY</string>
-	<string name="notification_title_hostiles">Hostile Fleets</string>
+    <string name="notification_title_hostiles">Hostile Fleets</string>
     <string name="notification_title_message">Message from {0}</string>
-	<string name="notification_desc">{0}</string>
-	
+    <string name="notification_desc">{0}</string>
 
-	<!-- GCM -->
-	<string name="gcm_registered">From GCM: device successfully registered!</string>
+
+    <!-- GCM -->
+    <string name="gcm_registered">From GCM: device successfully registered!</string>
     <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
     <string name="gcm_message">From GCM: you got message!</string>
     <string name="gcm_error">From GCM: error (%1$s).</string>

@@ -3,6 +3,7 @@ package com.ogsteam.ogspy.fragments.tabs;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.ogsteam.ogspy.ui.charting.PieChart;
  */
 public class RentabilitesFragment extends Fragment {
     private static Spinner rentabiliteInterval;
+    private static Spinner rentabiliteType;
     private static TextView rentabilityTotal;
     private static PieChart pie;
 
@@ -46,33 +48,60 @@ public class RentabilitesFragment extends Fragment {
         LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.rentabilite, container, false);
 
         pie =  (PieChart) layout.findViewById(R.id.pie);
-        pie.removeAllItems();
         pie.addItem("",0,Color.BLACK);
 
         rentabilityTotal = (TextView) layout.findViewById(R.id.rentabilityTotal);
 
         //activity.setContentView(R.layout.prefs);
         rentabiliteInterval = (Spinner) layout.findViewById(R.id.rentas_interval);
+        rentabiliteType = (Spinner) layout.findViewById(R.id.rentas_type);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(OgspyActivity.activity, R.array.rentas_interval, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterInterval = ArrayAdapter.createFromResource(OgspyActivity.activity, R.array.rentas_interval, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(OgspyActivity.activity, R.array.rentas_type, android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterInterval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        if(rentabiliteInterval != null && adapter != null) {
-            rentabiliteInterval.setAdapter(adapter);
+        if (rentabiliteInterval != null && adapterInterval != null) {
+            rentabiliteInterval.setAdapter(adapterInterval);
         }
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        if (rentabiliteType != null && adapterType != null) {
+            rentabiliteType.setAdapter(adapterType);
+        }
+
         rentabiliteInterval.setSelection(0);
+        rentabiliteType.setSelection(0);
+
+        rentabiliteType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                int positionSelected = getRentabiliteInterval().getSelectedItemPosition();
+                int positionSelectedType = getRentabiliteType().getSelectedItemPosition();
+                Log.d(RentabilitesFragment.class.getName(), "OnItemSelectedListener de rentabiliteType ! posPeriode=" + positionSelected + " posType=" + positionSelectedType);
+                String interval = getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
+                String type = getResources().getStringArray(R.array.rentas_type_values)[positionSelectedType];
+                DownloadRentabilitesTask rentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, interval, type);
+                rentasTask.execute(new String[]{"do"});
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
 
         rentabiliteInterval.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 int positionSelected = getRentabiliteInterval().getSelectedItemPosition();
+                int positionSelectedType = getRentabiliteType().getSelectedItemPosition();
+                Log.d(RentabilitesFragment.class.getName(), "OnItemSelectedListener de rentabiliteInterval ! posPeriode=" + positionSelected + " posType=" + positionSelectedType);
                 String interval = getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
-                DownloadRentabilitesTask rentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, interval);
+                String type = getResources().getStringArray(R.array.rentas_type_values)[positionSelectedType];
+                DownloadRentabilitesTask rentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, interval, type);
                 rentasTask.execute(new String[]{"do"});
-                //CommonUtilities.displayMessage(OgspyActivity.activity, "Sélection de l'intervalle de rentabilité =" + interval);
             }
 
             @Override
@@ -99,5 +128,9 @@ public class RentabilitesFragment extends Fragment {
 
     public static TextView getRentabilityTotal() {
         return rentabilityTotal;
+    }
+
+    public static Spinner getRentabiliteType() {
+        return rentabiliteType;
     }
 }

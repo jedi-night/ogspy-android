@@ -3,19 +3,19 @@
 
     <string name="app_name">OGSpy</string>
     <string name="account">Compte</string>
-    <string name="hostiles">Hostiles</string>    
+    <string name="hostiles">Hostiles</string>
     <string name="prefs">Préférences</string>
     <string name="general">General</string>
     <string name="rentabilites">Rentabilites</string>
     <string name="quit">Quitter</string>
-    
+
     <string name="hello_world">Bonjour le monde !</string>
     <string name="button_send">Envoyer</string>
 
     <!-- Hostiles -->
     <string name="hostiles_none">Aucun membre de la communauté n\'est attaqué</string>
     <string name="hostiles_attack">Flottes hostiles en approche sur le(s) joueur(s) : </string>
-    
+
     <!-- Account -->
     <string name="account_ogspy_title">Paramètres du compte OGSPY</string>
     <string name="ogspy_user_title">Utilisateur : </string>
@@ -29,15 +29,15 @@
     <string name="save_account_password_ko">Le mot de passe est obligatoire</string>
     <string name="save_account_server_url_ko">L\'URL du serveur n\'est pas une URL</string>
     <string name="save_account_server_univers_ko">L\'URL de l\'univers n\'est pas une URL</string>
-    
+
     <string name="save_account_ok">Sauvegarde du compte effectué</string>
     <string name="save_account_ko">Echec de la sauvegarde du compte</string>
-   
+
     <!-- Pref -->
     <string name="prefs_title">Préférences</string>
     <string name="prefs_timer_hostiles_title">Rafraichissement hostiles</string>
     <string name="save_button_prefs">Sauvegarder</string>
-        
+
     <string name="save_prefs_ok">Sauvegarde des préférences effectuée</string>
     <string name="save_prefs_ko">Echec de la sauvegarde des préférences</string>
 
@@ -69,15 +69,25 @@
         <item>week</item>
         <item>month</item>
     </string-array>
+    <string-array name="rentas_type">
+        <item>Mes stats</item>
+        <item>Stats de l\'alliance</item>
+        <item>Stats par membre</item>
+    </string-array>
+    <string-array name="rentas_type_values">
+        <item>me</item>
+        <item>us</item>
+        <item>member</item>
+    </string-array>
 
     <!-- Notifs -->
     <string name="notification">Notification OGSPY</string>
     <string name="notification_title_hostiles">Flottes hostiles</string>
     <string name="notification_title_message">Message de {0}</string>
-	<string name="notification_desc">{0}</string>
+    <string name="notification_desc">{0}</string>
 
-	<!-- GCM -->
-	<string name="gcm_registered">GCM: appareil correctement enregistré !</string>
+    <!-- GCM -->
+    <string name="gcm_registered">GCM: appareil correctement enregistré !</string>
     <string name="gcm_unregistered">GCM: appareil correctement supprimé !</string>
     <string name="gcm_message">GCM: vous avez un message !</string>
     <string name="gcm_error">GCM: erreur (%1$s).</string>

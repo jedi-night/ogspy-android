@@ -1,34 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res/com.ogsteam.ogspy"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.ogsteam.ogspy"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rentas_interval"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginBottom="15dp" />
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Période"
+            android:id="@+id/textView"
+            android:layout_column="0"
+            android:layout_gravity="center_vertical"
+            android:gravity="left"
+            android:layout_marginLeft="5dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rentas_interval"
+            android:layout_gravity="left|center_vertical"
+            android:layout_column="1"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="25dp" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Type"
+            android:id="@+id/textView2"
+            android:layout_column="0"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rentas_type"
+            android:layout_column="1"
+            android:layout_gravity="left"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="25dp" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Rentabilité : "
         android:id="@+id/rentabilityTotal"
-        android:layout_gravity="center_vertical|right|top"
-        android:layout_marginTop="-25dp" />
+            android:layout_column="1"
+            android:gravity="right"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center_horizontal|left" />
+    </TableRow>
 
-    <com.ogsteam.ogspy.ui.charting.PieChart
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <com.ogsteam.ogspy.ui.charting.PieChart
         android:id="@+id/pie"
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
-        android:padding="10dp"
-        android:layout_weight="100"
-        custom:showText="true"
-        custom:labelHeight="20dp"
-        custom:labelWidth="110dp"
+            android:layout_width="fill_parent"
+            android:layout_height="350dp"
+            android:padding="10dp"
+            android:layout_weight="0"
+            custom:showText="true"
+            custom:labelHeight="18dp"
+            custom:labelWidth="110dp"
         custom:labelY="85dp"
         custom:labelPosition="left"
         custom:highlightStrength="1.12"
@@ -36,6 +92,8 @@
         custom:pieRotation="0"
         custom:labelColor="@android:color/white"
         custom:autoCenterPointerInSlice="true"
-        custom:pointerRadius="4dp"
-        />
-</LinearLayout>
+            custom:pointerRadius="4dp"
+            android:layout_column="0"
+            android:layout_span="2" />
+    </TableRow>
+</TableLayout>
