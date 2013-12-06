@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="btnTextColor">#884DA7</color>
-	<color name="btnBackground">#ffffff</color>
+    <color name="btnTextColor">#884DA7</color>
+    <color name="white">#ffffff</color>
 
     <color name="seafoam">#ffc6f9e5</color>
     <color name="chartreuse">#ffb6e9b5</color>

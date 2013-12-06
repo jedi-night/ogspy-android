@@ -72,6 +72,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 
     public final String versionAndroid = Build.VERSION.RELEASE;
     public static String versionOgspy = "";
+    public final String deviceName = retrieveDeviceName();
 
     public static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();
 	public static int timer; // MIN * 60 * 1000 : minutes in seconds then milliseconds
@@ -136,11 +137,11 @@ public class OgspyActivity extends TabsFragmentActivity {
         downloadServerTask = new DownloadServerTask(this);
         downloadAllianceTask = new DownloadAllianceTask(this);
 
-        downloadServerTask.execute(new String[] { "do"});
-        downloadAllianceTask.execute(new String[] { "do"});
-
         setAutomaticCheckHostiles();
         doGcm();
+
+        downloadServerTask.execute(new String[]{"do"});
+        downloadAllianceTask.execute(new String[]{"do"});
 
         // Check if Internet present
         if (!connection.isConnectingToInternet()) {
@@ -412,6 +413,37 @@ public class OgspyActivity extends TabsFragmentActivity {
         } else {
             pushFragments("noproblem", getLastFragment());
             isConnectionProblem = false;
+        }
+    }
+
+    public String getRegId() {
+        return regId;
+    }
+
+    public String getDeviceName() {
+        return this.deviceName;
+    }
+
+    public String retrieveDeviceName() {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        String buildNumber = Build.ID;
+        if (model.startsWith(manufacturer)) {
+            return capitalize(model) + "-" + buildNumber;
+        } else {
+            return capitalize(manufacturer) + "-" + model + "-" + buildNumber;
+        }
+    }
+
+    private String capitalize(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        char first = s.charAt(0);
+        if (Character.isUpperCase(first)) {
+            return s;
+        } else {
+            return Character.toUpperCase(first) + s.substring(1);
         }
     }
 }

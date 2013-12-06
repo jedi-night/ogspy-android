@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res/com.ogsteam.ogspy"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -60,11 +59,11 @@
         android:layout_height="fill_parent">
 
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Rentabilité : "
-        android:id="@+id/rentabilityTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Rentabilité : "
+            android:id="@+id/rentabilityTotal"
             android:layout_column="1"
             android:gravity="right"
             android:layout_marginBottom="10dp"
@@ -76,24 +75,13 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <com.ogsteam.ogspy.ui.charting.PieChart
-        android:id="@+id/pie"
+        <LinearLayout
+            android:id="@+id/pieChartContainer"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="350dp"
-            android:padding="10dp"
-            android:layout_weight="0"
-            custom:showText="true"
-            custom:labelHeight="18dp"
-            custom:labelWidth="110dp"
-        custom:labelY="85dp"
-        custom:labelPosition="left"
-        custom:highlightStrength="1.12"
-        android:background="@android:color/black"
-        custom:pieRotation="0"
-        custom:labelColor="@android:color/white"
-        custom:autoCenterPointerInSlice="true"
-            custom:pointerRadius="4dp"
-            android:layout_column="0"
-            android:layout_span="2" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+        </LinearLayout>
     </TableRow>
 </TableLayout>

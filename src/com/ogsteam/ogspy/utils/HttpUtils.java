@@ -2,6 +2,8 @@ package com.ogsteam.ogspy.utils;
 
 import android.util.Log;
 
+import com.ogsteam.ogspy.OgspyActivity;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,18 +40,20 @@ public class HttpUtils {
 
 	        // Convert the InputStream into a string
 	        contentAsString = readIt(is, bufferLength);
-	    // Makes sure that the InputStream is closed after the app is
+
+            OgspyActivity.activity.showConnectivityProblem(false);
+            // Makes sure that the InputStream is closed after the app is
 	    // finished using it.
 	    } catch (Exception e){
 	    	Log.e(DEBUG_TAG, "Problème lors d'une connection", e);
-	    } finally {
+            OgspyActivity.activity.showConnectivityProblem(true);
+        } finally {
 	        if (is != null) {
 	            is.close();
 	        }
             if(conn != null){
                 conn.disconnect();
             }
-
 	    }
         return contentAsString;
 	}

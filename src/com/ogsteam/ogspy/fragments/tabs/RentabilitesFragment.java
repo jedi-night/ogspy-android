@@ -1,6 +1,5 @@
 package com.ogsteam.ogspy.fragments.tabs;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,13 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.network.download.DownloadRentabilitesTask;
-import com.ogsteam.ogspy.ui.charting.PieChart;
-
 
 /**
  * @author mwho
@@ -27,8 +25,7 @@ public class RentabilitesFragment extends Fragment {
     private static Spinner rentabiliteInterval;
     private static Spinner rentabiliteType;
     private static TextView rentabilityTotal;
-    private static PieChart pie;
-
+    private static LinearLayout pieChartContainer;
 
     /** (non-Javadoc)
      * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
@@ -45,10 +42,9 @@ public class RentabilitesFragment extends Fragment {
             return null;
         }
 
-        LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.rentabilite, container, false);
+        TableLayout layout = (TableLayout) inflater.inflate(R.layout.rentabilite, container, false);
 
-        pie =  (PieChart) layout.findViewById(R.id.pie);
-        pie.addItem("",0,Color.BLACK);
+        pieChartContainer = (LinearLayout) layout.findViewById(R.id.pieChartContainer);
 
         rentabilityTotal = (TextView) layout.findViewById(R.id.rentabilityTotal);
 
@@ -118,8 +114,8 @@ public class RentabilitesFragment extends Fragment {
         super.onResume();
     }
 
-    public static PieChart getPie() {
-        return pie;
+    public static LinearLayout getPieChartContainer() {
+        return pieChartContainer;
     }
 
     public static Spinner getRentabiliteInterval() {
