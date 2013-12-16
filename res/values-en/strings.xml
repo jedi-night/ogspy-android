@@ -110,4 +110,20 @@
     <string name="player_spys">Top Alliance (month)</string>
     <string name="spy_title_me">My spys</string>
     <string name="ogspy_user_summary">Entrez votre nom d\'utilisateur</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Home</item>
+        <item>Find People</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_tab_general_selected</item>
+        <item>@drawable/ic_tab_prefs_selected</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
 </resources>

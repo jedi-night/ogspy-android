@@ -40,7 +40,8 @@ public class DownloadSpysTask extends DownloadTask {
             }
         } catch (Exception e) {
             Log.e(DEBUG_TAG, activity.getString(R.string.download_problem), e);
-            activity.showConnectivityProblem(true);
+            if (!isCancelled()) cancel(true);
+            onCancelled();
         }
         return null;
     }

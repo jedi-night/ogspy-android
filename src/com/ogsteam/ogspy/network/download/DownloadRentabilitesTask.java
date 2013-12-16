@@ -24,10 +24,10 @@ public class DownloadRentabilitesTask extends DownloadTask {
 
     public DownloadRentabilitesTask(OgspyActivity activity, String interval, String type) {
         this.activity = activity;
-        this.interval = interval;
-        this.type = type;
         this.dataJsonFromAsyncTask = null;
         this.helperRentabilites = null;
+        this.interval = interval;
+        this.type = type;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DownloadRentabilitesTask extends DownloadTask {
             }
         } catch (Exception e) {
             Log.e(DEBUG_TAG, activity.getString(R.string.download_problem), e);
-            activity.showConnectivityProblem(true);
+            if (!isCancelled()) cancel(true);
         }
         return null;
     }

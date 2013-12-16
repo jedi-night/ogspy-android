@@ -20,10 +20,10 @@ import com.ogsteam.ogspy.R;
  */
 public class TabsFragmentActivity extends FragmentActivity {
     /* Tab identifiers */
-    static String TAB_A = "1 Tab";
-    static String TAB_B = "2 Tab";
-    static String TAB_C = "3 Tab";
-    static String TAB_D = "4 Tab";
+    protected static String TAB_A = "1 Tab";
+    protected static String TAB_B = "2 Tab";
+    protected static String TAB_C = "3 Tab";
+    protected static String TAB_D = "4 Tab";
 
     TabHost mTabHost;
 

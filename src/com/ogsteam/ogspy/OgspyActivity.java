@@ -2,16 +2,23 @@ package com.ogsteam.ogspy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
@@ -19,6 +26,7 @@ import com.ogsteam.ogspy.data.DatabaseAccountHandler;
 import com.ogsteam.ogspy.data.DatabaseMessagesHandler;
 import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.fragments.tabs.GeneralFragment;
 import com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity;
 import com.ogsteam.ogspy.network.ConnectionDetector;
 import com.ogsteam.ogspy.network.download.DownloadAllianceTask;
@@ -29,8 +37,11 @@ import com.ogsteam.ogspy.network.download.DownloadSpysTask;
 import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
+import com.ogsteam.ogspy.sliding.menu.adapter.NavDrawerListAdapter;
+import com.ogsteam.ogspy.sliding.menu.model.NavDrawerItem;
 import com.ogsteam.ogspy.ui.DialogHandler;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -70,6 +81,23 @@ public class OgspyActivity extends TabsFragmentActivity {
 */
     public static OgspyActivity activity;
 
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    // drawer title
+    private CharSequence mDrawerTitle;
+
+    // used to store app title
+    private CharSequence mTitle;
+
+    // slide menu items
+    private String[] navMenuTitles;
+    private TypedArray navMenuIcons;
+
+    private ArrayList<NavDrawerItem> navDrawerItems;
+    private NavDrawerListAdapter adapter;
+
     public final String versionAndroid = Build.VERSION.RELEASE;
     public static String versionOgspy = "";
     public final String deviceName = retrieveDeviceName();
@@ -108,7 +136,6 @@ public class OgspyActivity extends TabsFragmentActivity {
 
         activity = this;
 
-
         try{
             versionOgspy = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (Exception e) {
@@ -140,6 +167,8 @@ public class OgspyActivity extends TabsFragmentActivity {
         setAutomaticCheckHostiles();
         doGcm();
 
+        setMenuSliding();
+
         downloadServerTask.execute(new String[]{"do"});
         downloadAllianceTask.execute(new String[]{"do"});
 
@@ -162,7 +191,11 @@ public class OgspyActivity extends TabsFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
+        // toggle nav drawer on selecting action bar app icon/title
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle item selection
 		switch (item.getItemId()) {
 		/*case R.id.ogspy_activity:
 			//setContentView(R.layout.hostiles);
@@ -183,8 +216,38 @@ public class OgspyActivity extends TabsFragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	public void onResume() {
+    /**
+     * Called when invalidateOptionsMenu() is triggered
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // if nav drawer is opened, hide the action items
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.prefs).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    /**
+     * When using the ActionBarDrawerToggle, you must call it during
+     * onPostCreate() and onConfigurationChanged()...
+     */
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onResume() {
 		super.onResume();
         doGcm();
 		//notifProvider.deleteNotificationHostile();
@@ -406,6 +469,70 @@ public class OgspyActivity extends TabsFragmentActivity {
             }
     }
 
+    private void setMenuSliding() {
+        // load slide menu items
+        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+
+        // nav drawer icons from resources
+        navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+
+        navDrawerItems = new ArrayList<NavDrawerItem>();
+
+        // adding nav drawer items to array
+        // Home
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+        // Find People
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        // Photos
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        // Communities, Will add a counter here
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+        // Pages
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
+        // What's hot, We  will add a counter here
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+
+        // Recycle the typed array
+        navMenuIcons.recycle();
+
+        // setting the nav drawer list adapter
+        adapter = new NavDrawerListAdapter(this, navDrawerItems);
+        mDrawerList.setAdapter(adapter);
+
+        // enabling action bar app icon and behaving it as toggle button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, //nav menu toggle icon
+                R.string.app_name, // nav drawer open - description for accessibility
+                R.string.app_name // nav drawer close - description for accessibility
+        ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
+                // calling onPrepareOptionsMenu() to show action bar icons
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                // calling onPrepareOptionsMenu() to hide action bar icons
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
+
+        /*if (savedInstanceState == null) {
+            // on first time display view for first nav item
+            displayView(0);
+        }*/
+    }
+
     public void showConnectivityProblem(boolean visible) {
         if (visible) {
             pushFragments("connection", getFragmentConnection());
@@ -445,5 +572,48 @@ public class OgspyActivity extends TabsFragmentActivity {
         } else {
             return Character.toUpperCase(first) + s.substring(1);
         }
+    }
+
+    /**
+     * Slide menu item click listener
+     */
+    private class SlideMenuClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            // display view for selected nav drawer item
+            displayView(position);
+        }
+    }
+
+    /**
+     * Diplaying fragment view for selected nav drawer list item
+     */
+    private void displayView(int position) {
+        // update the main content by replacing fragments
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new GeneralFragment();
+                break;
+            case 1: // prefs
+                startActivity(new Intent(this, OgspyPreferencesActivity.class));
+                break;
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            pushFragments(TAB_A, fragment);
+        } else {
+            // error in creating fragment
+            Log.d(DEBUG_TAG, "Error in creating fragmentor not a fragment");
+        }
+
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerList.setSelection(position);
+        setTitle(navMenuTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 }

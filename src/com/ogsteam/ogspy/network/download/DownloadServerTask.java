@@ -40,6 +40,7 @@ public class DownloadServerTask extends DownloadTask {
             }
         } catch (Exception e) {
             Log.e(DEBUG_TAG, activity.getString(R.string.download_problem), e);
+            if (!isCancelled()) cancel(true);
         }
         return null;
     }

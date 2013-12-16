@@ -19,7 +19,6 @@ import com.ogsteam.ogspy.network.download.DownloadRentabilitesTask;
 
 /**
  * @author mwho
- *
  */
 public class RentabilitesFragment extends Fragment {
     private static Spinner rentabiliteInterval;
@@ -27,7 +26,9 @@ public class RentabilitesFragment extends Fragment {
     private static TextView rentabilityTotal;
     private static LinearLayout pieChartContainer;
 
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     *
      * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,8 +78,10 @@ public class RentabilitesFragment extends Fragment {
                 Log.d(RentabilitesFragment.class.getName(), "OnItemSelectedListener de rentabiliteType ! posPeriode=" + positionSelected + " posType=" + positionSelectedType);
                 String interval = getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
                 String type = getResources().getStringArray(R.array.rentas_type_values)[positionSelectedType];
-                DownloadRentabilitesTask rentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, interval, type);
-                rentasTask.execute(new String[]{"do"});
+                if (OgspyActivity.activity.downloadRentasTask == null || OgspyActivity.activity.downloadRentasTask.canExecute()) {
+                    DownloadRentabilitesTask rentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, interval, type);
+                    rentasTask.execute(new String[]{"do"});
+                }
             }
 
             @Override
@@ -96,8 +99,10 @@ public class RentabilitesFragment extends Fragment {
                 Log.d(RentabilitesFragment.class.getName(), "OnItemSelectedListener de rentabiliteInterval ! posPeriode=" + positionSelected + " posType=" + positionSelectedType);
                 String interval = getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
                 String type = getResources().getStringArray(R.array.rentas_type_values)[positionSelectedType];
-                DownloadRentabilitesTask rentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, interval, type);
-                rentasTask.execute(new String[]{"do"});
+                if (OgspyActivity.activity.downloadRentasTask == null || OgspyActivity.activity.downloadRentasTask.canExecute()) {
+                    DownloadRentabilitesTask rentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, interval, type);
+                    rentasTask.execute(new String[]{"do"});
+                }
             }
 
             @Override
@@ -107,11 +112,6 @@ public class RentabilitesFragment extends Fragment {
         });
 
         return layout;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     public static LinearLayout getPieChartContainer() {
