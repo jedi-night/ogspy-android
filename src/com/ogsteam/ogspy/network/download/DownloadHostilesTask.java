@@ -24,6 +24,7 @@ public class DownloadHostilesTask extends DownloadTask {
         this.activity = activity;
         this.dataJsonFromAsyncTask = null;
         this.helperHostile = null;
+        typeDownload = DownloadType.HOSTILES;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class DownloadHostilesTask extends DownloadTask {
                 }
             }
         } catch (Exception e) {
-            Log.e(DEBUG_TAG, activity.getString(R.string.download_problem), e);
+            Log.e(DEBUG_TAG, activity.getString(R.string.download_problem) + " (" + typeDownload.getLibelle() + ")", e);
             if (!isCancelled()) cancel(true);
         }
         return null;

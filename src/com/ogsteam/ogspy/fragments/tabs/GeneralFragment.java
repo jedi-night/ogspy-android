@@ -1,7 +1,7 @@
 package com.ogsteam.ogspy.fragments.tabs;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +18,6 @@ import com.ogsteam.ogspy.ui.displays.GeneralUtils;
 
 /**
  * @author Jedinight
- *
  */
 public class GeneralFragment extends Fragment {
     private static ScrollView layout;
@@ -38,7 +37,7 @@ public class GeneralFragment extends Fragment {
             // the view hierarchy; it would just never be used.
             return null;
         }
-        layout = (ScrollView)inflater.inflate(R.layout.general, container, false);
+        layout = (ScrollView) inflater.inflate(R.layout.general, container, false);
 
         allianceOwn = (TextView) layout.findViewById(R.id.alliance);
         nbMembers = (TextView) layout.findViewById(R.id.nb_members);
@@ -51,17 +50,15 @@ public class GeneralFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //new DownloadAllianceTask((OgspyActivity) getActivity()).execute(new String[] { "do"});
-        //new DownloadSpysTask((OgspyActivity) getActivity()).execute(new String[] { "do"});
-        if(OgspyActivity.getDownloadAllianceTask() != null && OgspyActivity.getDownloadAllianceTask().getAllianceHelper() != null) {
+        if (OgspyActivity.getDownloadAllianceTask() != null && OgspyActivity.getDownloadAllianceTask().getAllianceHelper() != null) {
             GeneralUtils.showGeneral(null, OgspyActivity.getDownloadAllianceTask().getAllianceHelper(), null, (OgspyActivity) getActivity());
         } else {
-            new DownloadAllianceTask((OgspyActivity) getActivity()).execute(new String[] { "do"});
+            new DownloadAllianceTask((OgspyActivity) getActivity()).execute(new String[]{"do"});
         }
-        if(OgspyActivity.getDownloadSpysTask() != null && OgspyActivity.getDownloadSpysTask().getSpysHelper() != null) {
+        if (OgspyActivity.getDownloadSpysTask() != null && OgspyActivity.getDownloadSpysTask().getSpysHelper() != null) {
             GeneralUtils.showGeneral(null, null, OgspyActivity.getDownloadSpysTask().getSpysHelper(), (OgspyActivity) getActivity());
         } else {
-            new DownloadSpysTask((OgspyActivity) getActivity()).execute(new String[] { "do"});
+            new DownloadSpysTask((OgspyActivity) getActivity()).execute(new String[]{"do"});
         }
     }
 

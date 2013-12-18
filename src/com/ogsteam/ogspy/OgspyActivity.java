@@ -1,5 +1,8 @@
 package com.ogsteam.ogspy;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -9,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -26,8 +28,11 @@ import com.ogsteam.ogspy.data.DatabaseAccountHandler;
 import com.ogsteam.ogspy.data.DatabaseMessagesHandler;
 import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.fragments.tabs.AlertFragment;
+import com.ogsteam.ogspy.fragments.tabs.ConnectionFragment;
 import com.ogsteam.ogspy.fragments.tabs.GeneralFragment;
-import com.ogsteam.ogspy.fragments.tabs.TabsFragmentActivity;
+import com.ogsteam.ogspy.fragments.tabs.HostileFragment;
+import com.ogsteam.ogspy.fragments.tabs.RentabilitesFragment;
 import com.ogsteam.ogspy.network.ConnectionDetector;
 import com.ogsteam.ogspy.network.download.DownloadAllianceTask;
 import com.ogsteam.ogspy.network.download.DownloadHostilesTask;
@@ -47,8 +52,8 @@ import java.util.TimerTask;
 
 import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
 
-public class OgspyActivity extends TabsFragmentActivity {
-
+//public class OgspyActivity extends TabsFragmentActivity {
+public class OgspyActivity extends Activity {
     /**
      * Receiving push messages
      * */
@@ -86,10 +91,14 @@ public class OgspyActivity extends TabsFragmentActivity {
     private ActionBarDrawerToggle mDrawerToggle;
 
     // drawer title
-    private CharSequence mDrawerTitle;
+    public CharSequence mDrawerTitle;
 
     // used to store app title
-    private CharSequence mTitle;
+    public CharSequence mTitle;
+
+    // used to store ogspy server name
+    public CharSequence mServerName = "OGSpy";
+
 
     // slide menu items
     private String[] navMenuTitles;
@@ -97,6 +106,9 @@ public class OgspyActivity extends TabsFragmentActivity {
 
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+
+    private ArrayList<Fragment> fragments;
+    private Fragment lastFragment;
 
     public final String versionAndroid = Build.VERSION.RELEASE;
     public static String versionOgspy = "";
@@ -107,7 +119,6 @@ public class OgspyActivity extends TabsFragmentActivity {
 	public Timer autoUpdateHostiles;
     protected String regId;
     private static boolean isWaiting = false;
-    private static boolean isConnectionProblem = false;
 
     // Variables
 	public static DatabaseAccountHandler handlerAccount;
@@ -133,8 +144,10 @@ public class OgspyActivity extends TabsFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_CONTEXT_MENU);
 		super.onCreate(savedInstanceState);
+        setContentView(R.layout.ogspy_tab_host);
 
         activity = this;
+        fragments = new ArrayList<Fragment>();
 
         try{
             versionOgspy = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -142,21 +155,18 @@ public class OgspyActivity extends TabsFragmentActivity {
             Log.e(DEBUG_TAG,"Impossible de recuperer la version ogspy",e);
         }
 
-		// Step 1: Inflate layout
-        //setContentView(R.layout.ogspy_tab_host);
-        // Step 2: Setup TabHost
-        /*initialiseTabHost(savedInstanceState);
-        if (savedInstanceState != null && mTabHost != null && savedInstanceState.getString("tab") != null) {
-            mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab")); //set the tab as per the saved state
-        }
-          */
         connection = new ConnectionDetector(getApplicationContext());
 
 		handlerAccount = new DatabaseAccountHandler(this);
 		handlerPrefs = new DatabasePreferencesHandler(this);
         handlerMessages = new DatabaseMessagesHandler(this);
 
-		commonUtilities = new CommonUtilities(this);
+        fragments.add(new GeneralFragment());
+        fragments.add(new HostileFragment());
+        fragments.add(new RentabilitesFragment());
+        fragments.add(new AlertFragment());
+
+        commonUtilities = new CommonUtilities(this);
 		notifProvider = new NotificationProvider(this);
 
 		timer = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("timer_hostiles","0"));
@@ -167,16 +177,13 @@ public class OgspyActivity extends TabsFragmentActivity {
         setAutomaticCheckHostiles();
         doGcm();
 
-        setMenuSliding();
+        setMenuSliding(savedInstanceState);
 
         downloadServerTask.execute(new String[]{"do"});
         downloadAllianceTask.execute(new String[]{"do"});
 
         // Check if Internet present
         if (!connection.isConnectingToInternet()) {
-            //Toast.makeText(this, getString(R.string.connexion_ko), Toast.LENGTH_LONG).show();
-            // stop executing code by return
-            //return;
             showWaiting(false);
             showConnectivityProblem(true);
         }
@@ -197,21 +204,15 @@ public class OgspyActivity extends TabsFragmentActivity {
         }
         // Handle item selection
 		switch (item.getItemId()) {
-		/*case R.id.ogspy_activity:
-			//setContentView(R.layout.hostiles);
-			// Step 1: Inflate layout
-	        setContentView(R.layout.ogspy_tab_host);
-	        mTabHost.setCurrentTab(0); //set the tab as per the saved state
-			return true;*/
-		case R.id.about:
-            startActivity(new Intent(this, OgspyAboutActivity.class));
-			return true;
-		case R.id.prefs:
-            //startActivityForResult(new Intent(this, OgspyPreferencesActivity.class), CODE_RETOUR_PREFS);
-            startActivity(new Intent(this, OgspyPreferencesActivity.class));
-            return true;
-		case R.id.quit:
-			this.finish();
+            case R.id.about:
+                startActivity(new Intent(this, OgspyAboutActivity.class));
+                return true;
+            case R.id.prefs:
+                //startActivityForResult(new Intent(this, OgspyPreferencesActivity.class), CODE_RETOUR_PREFS);
+                startActivity(new Intent(this, OgspyPreferencesActivity.class));
+                return true;
+            case R.id.quit:
+                this.finish();
         }
 		return super.onOptionsItemSelected(item);
 	}
@@ -445,7 +446,7 @@ public class OgspyActivity extends TabsFragmentActivity {
 
     public void sendAlert(View v){
         if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
-            EditText messageEditText = getFragmentAlert().getMessage();
+            EditText messageEditText = ((AlertFragment) getFragmentAlert()).getMessage();
             if (messageEditText.getText() != null && messageEditText.getText().length() > 0) {
                 ServerUtilities.sendAlertMesage(this, regId, activity.getHandlerAccount().getAccountById(0).getUsername(), messageEditText.getText().toString());
                 messageEditText.setText("");
@@ -458,18 +459,20 @@ public class OgspyActivity extends TabsFragmentActivity {
     public void showWaiting(boolean visible){
             if(visible){
                 if(!isWaiting){
-                    findViewById(android.R.id.tabcontent).setVisibility(View.GONE);
+                    findViewById(R.id.tabcontent).setVisibility(View.GONE);
                     findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                     isWaiting=true;
                 }
             } else {
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-                findViewById(android.R.id.tabcontent).setVisibility(View.VISIBLE);
+                findViewById(R.id.tabcontent).setVisibility(View.VISIBLE);
                 isWaiting=false;
             }
     }
 
-    private void setMenuSliding() {
+    private void setMenuSliding(Bundle savedInstanceState) {
+        mTitle = mDrawerTitle = getTitle();
+
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
@@ -482,14 +485,14 @@ public class OgspyActivity extends TabsFragmentActivity {
         navDrawerItems = new ArrayList<NavDrawerItem>();
 
         // adding nav drawer items to array
-        // Home
+        // General
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Find People
+        // Hostiles
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Communities, Will add a counter here
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+        // Rentabilites
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        // Messages
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
         // Pages
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // What's hot, We  will add a counter here
@@ -512,13 +515,13 @@ public class OgspyActivity extends TabsFragmentActivity {
                 R.string.app_name // nav drawer close - description for accessibility
         ) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                getActionBar().setTitle(mTitle + " - " + mServerName);
                 // calling onPrepareOptionsMenu() to show action bar icons
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+                //getActionBar().setTitle(mDrawerTitle);
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
             }
@@ -527,19 +530,23 @@ public class OgspyActivity extends TabsFragmentActivity {
 
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
-        /*if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
             // on first time display view for first nav item
             displayView(0);
-        }*/
+        }
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(new StringBuilder(mTitle).append(" - ").append(mServerName));
     }
 
     public void showConnectivityProblem(boolean visible) {
         if (visible) {
-            pushFragments("connection", getFragmentConnection());
-            isConnectionProblem = true;
+            pushFragments(new ConnectionFragment());
         } else {
-            pushFragments("noproblem", getLastFragment());
-            isConnectionProblem = false;
+            pushFragments(lastFragment);
         }
     }
 
@@ -579,8 +586,7 @@ public class OgspyActivity extends TabsFragmentActivity {
      */
     private class SlideMenuClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // display view for selected nav drawer item
             displayView(position);
         }
@@ -591,23 +597,20 @@ public class OgspyActivity extends TabsFragmentActivity {
      */
     private void displayView(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = null;
-        switch (position) {
-            case 0:
-                fragment = new GeneralFragment();
-                break;
-            case 1: // prefs
-                startActivity(new Intent(this, OgspyPreferencesActivity.class));
-                break;
-            default:
-                break;
-        }
+        Fragment fragment = fragments.get(position);
 
         if (fragment != null) {
-            pushFragments(TAB_A, fragment);
+            pushFragments(fragment);
+            lastFragment = fragment;
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            setTitle(navMenuTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             // error in creating fragment
-            Log.d(DEBUG_TAG, "Error in creating fragmentor not a fragment");
+            Log.d(DEBUG_TAG, "Error in creating fragment or not a fragment");
         }
 
         // update selected item and title, then close the drawer
@@ -615,5 +618,18 @@ public class OgspyActivity extends TabsFragmentActivity {
         mDrawerList.setSelection(position);
         setTitle(navMenuTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    public Fragment getFragmentRentabilites() {
+        return fragments.get(2);
+    }
+
+    public Fragment getFragmentAlert() {
+        return fragments.get(3);
+    }
+
+    public void pushFragments(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.tabcontent, fragment).commit();
     }
 }

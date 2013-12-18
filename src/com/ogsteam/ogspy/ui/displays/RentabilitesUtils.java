@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ogsteam.ogspy.OgspyActivity;
+import com.ogsteam.ogspy.fragments.tabs.RentabilitesFragment;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.utils.NumberUtils;
 import com.ogsteam.ogspy.utils.helpers.Constants;
@@ -58,8 +59,8 @@ public abstract class RentabilitesUtils {
             if (Constants.RENTA_TYPE_MEMBER.equals(type)) {
                 addPieOnClickListener(activity, helperRenta, piechart);
             }
-            activity.getFragmentRentabilites().getPieChartContainer().removeAllViews();
-            activity.getFragmentRentabilites().getPieChartContainer().addView(piechart, new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            ((RentabilitesFragment) activity.getFragmentRentabilites()).getPieChartContainer().removeAllViews();
+            ((RentabilitesFragment) activity.getFragmentRentabilites()).getPieChartContainer().addView(piechart, new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         }
     }
 
@@ -74,7 +75,7 @@ public abstract class RentabilitesUtils {
     }
 
     private static void setRentabiliteText(OgspyActivity activity, float value) {
-        activity.getFragmentRentabilites().getRentabilityTotal().setText("Rentabilité : " + NumberUtils.format(value));
+        ((RentabilitesFragment) activity.getFragmentRentabilites()).getRentabilityTotal().setText("Rentabilité : " + NumberUtils.format(value));
     }
 
     private static void addPieOnClickListener(final OgspyActivity activity, final RentabilitesHelper helperRenta, GraphicalView piechart) {

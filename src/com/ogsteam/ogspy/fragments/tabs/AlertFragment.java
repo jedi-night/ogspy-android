@@ -1,7 +1,7 @@
 package com.ogsteam.ogspy.fragments.tabs;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +22,14 @@ import java.util.Locale;
 
 /**
  * @author mwho
- *
  */
 public class AlertFragment extends Fragment {
     private static EditText message;
     private static ListView messages;
-    /** (non-Javadoc)
+
+    /**
+     * (non-Javadoc)
+     *
      * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,10 +43,10 @@ public class AlertFragment extends Fragment {
             // the view hierarchy; it would just never be used.
             return null;
         }
-        TableLayout layout = (TableLayout)inflater.inflate(R.layout.messages, container, false);
+        TableLayout layout = (TableLayout) inflater.inflate(R.layout.messages, container, false);
 
         messages = (ListView) layout.findViewById(R.id.message_list);
-        message =  (EditText) layout.findViewById(R.id.alertMessage);
+        message = (EditText) layout.findViewById(R.id.alertMessage);
 
         return layout;
     }
@@ -56,10 +58,10 @@ public class AlertFragment extends Fragment {
         ArrayList<MessageItem> messagesItems = new ArrayList<MessageItem>();
         //SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd MMM yyyy - HH:mm", Locale.FRANCE);
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy - HH:mm", Locale.FRANCE);
-        for(Message message:OgspyActivity.handlerMessages.getAllMessagesDesc()){
-            messagesItems.add(new MessageItem(sdf.format(Long.parseLong(message.getDatetime())),message.getSender(),message.getContent()));
+        for (Message message : OgspyActivity.handlerMessages.getAllMessagesDesc()) {
+            messagesItems.add(new MessageItem(sdf.format(Long.parseLong(message.getDatetime())), message.getSender(), message.getContent()));
         }
-        if(messages!=null){
+        if (messages != null) {
             messages.setAdapter(new MessageListAdapter(OgspyActivity.activity, messagesItems));
         }
     }

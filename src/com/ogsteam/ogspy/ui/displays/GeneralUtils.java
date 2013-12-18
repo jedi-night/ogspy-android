@@ -19,7 +19,7 @@ public class GeneralUtils {
 	/** Display the general view */
 	public static void showGeneral(ServerHelper serverHelper, AllianceHelper allianceHelper, SpysHelper spysHelper, OgspyActivity activity) {
         if(serverHelper != null && activity.getTitle() != null){
-            activity.setTitle(serverHelper.getServerName());
+            activity.mServerName = serverHelper.getServerName();
         }
         if(allianceHelper != null && GeneralFragment.getAllianceOwn() != null){
             GeneralFragment.getAllianceOwn().setText(allianceHelper.getOwnAlliance());

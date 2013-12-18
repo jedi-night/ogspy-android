@@ -28,6 +28,7 @@ public class DownloadRentabilitesTask extends DownloadTask {
         this.helperRentabilites = null;
         this.interval = interval;
         this.type = type;
+        typeDownload = DownloadType.RENTABILITES;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class DownloadRentabilitesTask extends DownloadTask {
                 }
             }
         } catch (Exception e) {
-            Log.e(DEBUG_TAG, activity.getString(R.string.download_problem), e);
+            Log.e(DEBUG_TAG, activity.getString(R.string.download_problem) + " (" + typeDownload.getLibelle() + ")", e);
             if (!isCancelled()) cancel(true);
         }
         return null;

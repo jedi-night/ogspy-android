@@ -24,6 +24,7 @@ public class DownloadSpysTask extends DownloadTask {
         this.activity = activity;
         this.dataJsonFromAsyncTask = null;
         this.spysHelper = null;
+        typeDownload = DownloadType.SPY;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class DownloadSpysTask extends DownloadTask {
                 }
             }
         } catch (Exception e) {
-            Log.e(DEBUG_TAG, activity.getString(R.string.download_problem), e);
+            Log.e(DEBUG_TAG, activity.getString(R.string.download_problem) + " (" + typeDownload.getLibelle() + ")", e);
             if (!isCancelled()) cancel(true);
             onCancelled();
         }

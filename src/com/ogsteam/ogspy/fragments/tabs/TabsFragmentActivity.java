@@ -16,7 +16,6 @@ import com.ogsteam.ogspy.R;
 
 /**
  * @author mwho
- *
  */
 public class TabsFragmentActivity extends FragmentActivity {
     /* Tab identifiers */
@@ -54,8 +53,8 @@ public class TabsFragmentActivity extends FragmentActivity {
         fragmentAlert = new AlertFragment();
         fragmentConnection = new ConnectionFragment();
 
-        mTabHost = (TabHost)findViewById(android.R.id.tabhost);
-        mTabHost.setOnTabChangedListener(listener);
+        mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+        //mTabHost.setOnTabChangedListener(listener);
         mTabHost.setup();
 
         initializeTab();
@@ -66,7 +65,7 @@ public class TabsFragmentActivity extends FragmentActivity {
      */
     public void initializeTab() {
 
-        TabHost.TabSpec spec    =   mTabHost.newTabSpec(TAB_A);
+        TabHost.TabSpec spec = mTabHost.newTabSpec(TAB_A);
         mTabHost.setCurrentTab(-5);
 
         spec.setContent(new TabHost.TabContentFactory() {
@@ -77,7 +76,7 @@ public class TabsFragmentActivity extends FragmentActivity {
         spec.setIndicator(createTabView(TAB_A, R.drawable.ic_tab_general_selected));
         mTabHost.addTab(spec);
 
-        spec =   mTabHost.newTabSpec(TAB_B);
+        spec = mTabHost.newTabSpec(TAB_B);
         spec.setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
                 return findViewById(android.R.id.tabcontent);
@@ -87,7 +86,7 @@ public class TabsFragmentActivity extends FragmentActivity {
         mTabHost.addTab(spec);
 
 
-        spec =   mTabHost.newTabSpec(TAB_C);
+        spec = mTabHost.newTabSpec(TAB_C);
         spec.setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
                 return findViewById(android.R.id.tabcontent);
@@ -96,7 +95,7 @@ public class TabsFragmentActivity extends FragmentActivity {
         spec.setIndicator(createTabView(TAB_C, R.drawable.ic_tab_rentabilites_selected));
         mTabHost.addTab(spec);
 
-        spec =   mTabHost.newTabSpec(TAB_D);
+        spec = mTabHost.newTabSpec(TAB_D);
         spec.setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
                 return findViewById(android.R.id.tabcontent);
@@ -109,9 +108,9 @@ public class TabsFragmentActivity extends FragmentActivity {
     /*
      * TabChangeListener for changing the tab when one of the tabs is pressed
      */
-    TabHost.OnTabChangeListener listener    =   new TabHost.OnTabChangeListener() {
+   /* TabHost.OnTabChangeListener listener    =   new TabHost.OnTabChangeListener() {
         public void onTabChanged(String tabId) {
-            /*Set current tab..*/
+            // Set current tab..
             if(tabId.equals(TAB_A)){
                 pushFragments(tabId, fragmentGeneral);
                 lastFragment = fragmentGeneral;
@@ -126,12 +125,12 @@ public class TabsFragmentActivity extends FragmentActivity {
                 lastFragment = fragmentAlert;
             }
         }
-    };
+    };*/
 
     /*
      * adds the fragment to the FrameLayout
      */
-    public void pushFragments(String tag, Fragment fragment){
+    public void pushFragments(String tag, Fragment fragment) {
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
@@ -145,7 +144,7 @@ public class TabsFragmentActivity extends FragmentActivity {
      */
     private View createTabView(final String text, final int id) {
         View view = LayoutInflater.from(this).inflate(R.layout.tabs_icon, null);
-        ImageView imageView =   (ImageView) view.findViewById(R.id.tab_icon);
+        ImageView imageView = (ImageView) view.findViewById(R.id.tab_icon);
         imageView.setImageDrawable(getResources().getDrawable(id));
         ((TextView) view.findViewById(R.id.tab_text)).setText(text);
         return view;
@@ -158,7 +157,7 @@ public class TabsFragmentActivity extends FragmentActivity {
     public ConnectionFragment getFragmentConnection() {
         return fragmentConnection;
     }
-
+/*
     public Fragment getLastFragment() {
         if (lastFragment == null) {
             lastFragment = fragmentGeneral;
@@ -168,5 +167,5 @@ public class TabsFragmentActivity extends FragmentActivity {
 
     public RentabilitesFragment getFragmentRentabilites() {
         return fragmentRentabilites;
-    }
+    }*/
 }
