@@ -31,6 +31,19 @@
         </EditTextPreference>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Rentabilités">
+        <ListPreference
+            android:title="Interval d'étude"
+            android:key="prefs_rentas_interval"
+            android:entries="@array/rentas_interval"
+            android:entryValues="@array/rentas_interval_values" />
+        <ListPreference
+            android:title="Type de camembert"
+            android:key="prefs_rentas_type"
+            android:entries="@array/rentas_type"
+            android:entryValues="@array/rentas_type_values" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/prefs_title">
         <ListPreference android:title="@string/prefs_timer_hostiles_title" android:key="timer_hostiles" android:entries="@array/prefs_timer_hostiles" android:entryValues="@array/prefs_timer_hostiles_values"/>
     </PreferenceCategory>

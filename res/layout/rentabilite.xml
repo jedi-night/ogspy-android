@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        <RelativeLayout
+            android:id="@+id/pieChartContainer"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:gravity="center_horizontal"
+            android:minHeight="250dp"
+            android:layout_below="@+id/rentabilityTotal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp">
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -15,24 +29,22 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Période"
             android:id="@+id/textView"
-            android:layout_column="0"
-            android:layout_gravity="center_vertical"
-            android:gravity="left"
-            android:layout_marginLeft="5dp" />
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_below="@+id/pieChartContainer"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical|center_horizontal" />
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rentas_interval"
             android:layout_gravity="left|center_vertical"
-            android:layout_column="1"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="25dp" />
-    </TableRow>
+            android:layout_alignTop="@+id/textView"
+            android:layout_alignLeft="@+id/rentas_type"
+            android:layout_alignStart="@+id/rentas_type" />
 
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,23 +52,21 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Type"
             android:id="@+id/textView2"
-            android:layout_column="0"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp" />
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_below="@+id/rentas_interval"
+            android:layout_alignLeft="@+id/textView"
+            android:layout_alignStart="@+id/textView"
+            android:layout_marginTop="5dp" />
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rentas_type"
-            android:layout_column="1"
             android:layout_gravity="left"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="25dp" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+            android:layout_alignTop="@+id/textView2"
+            android:layout_toRightOf="@+id/textView"
+            android:layout_marginLeft="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,24 +74,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Rentabilité : "
             android:id="@+id/rentabilityTotal"
-            android:layout_column="1"
             android:gravity="right"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="center_horizontal|left" />
-    </TableRow>
+            android:layout_gravity="center_horizontal|left"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <LinearLayout
-            android:id="@+id/pieChartContainer"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-        </LinearLayout>
-    </TableRow>
-</TableLayout>
+    </RelativeLayout>
+</ScrollView>

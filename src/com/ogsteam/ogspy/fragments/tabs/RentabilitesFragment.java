@@ -1,16 +1,18 @@
 package com.ogsteam.ogspy.fragments.tabs;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.ogsteam.ogspy.OgspyActivity;
@@ -24,7 +26,7 @@ public class RentabilitesFragment extends Fragment {
     private static Spinner rentabiliteInterval;
     private static Spinner rentabiliteType;
     private static TextView rentabilityTotal;
-    private static LinearLayout pieChartContainer;
+    private static RelativeLayout pieChartContainer;
 
     /**
      * (non-Javadoc)
@@ -43,9 +45,9 @@ public class RentabilitesFragment extends Fragment {
             return null;
         }
 
-        TableLayout layout = (TableLayout) inflater.inflate(R.layout.rentabilite, container, false);
+        ScrollView layout = (ScrollView) inflater.inflate(R.layout.rentabilite, container, false);
 
-        pieChartContainer = (LinearLayout) layout.findViewById(R.id.pieChartContainer);
+        pieChartContainer = (RelativeLayout) layout.findViewById(R.id.pieChartContainer);
 
         rentabilityTotal = (TextView) layout.findViewById(R.id.rentabilityTotal);
 
@@ -67,8 +69,8 @@ public class RentabilitesFragment extends Fragment {
             rentabiliteType.setAdapter(adapterType);
         }
 
-        rentabiliteInterval.setSelection(0);
-        rentabiliteType.setSelection(0);
+        rentabiliteInterval.setSelection(getIntervalPositionFromPrefs());
+        rentabiliteType.setSelection(getTypePositionFromPrefs());
 
         rentabiliteType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -114,7 +116,7 @@ public class RentabilitesFragment extends Fragment {
         return layout;
     }
 
-    public static LinearLayout getPieChartContainer() {
+    public static RelativeLayout getPieChartContainer() {
         return pieChartContainer;
     }
 
@@ -128,5 +130,38 @@ public class RentabilitesFragment extends Fragment {
 
     public static Spinner getRentabiliteType() {
         return rentabiliteType;
+    }
+
+    public int getIntervalPositionFromPrefs() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if (preferences.contains("prefs_rentas_interval")) {
+            String interval = preferences.getString("prefs_rentas_interval", "");
+            String[] intervals = getResources().getStringArray(R.array.rentas_interval_values);
+
+            for (int i = 0; i < intervals.length; i++) {
+                if (intervals[i].equals(interval)) {
+                    return i;
+                }
+            }
+            return 0;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public int getTypePositionFromPrefs() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if (preferences.contains("prefs_rentas_type")) {
+            String type = preferences.getString("prefs_rentas_type", "");
+            String[] types = getResources().getStringArray(R.array.rentas_type_values);
+
+            for (int i = 0; i < types.length; i++) {
+                if (types[i].equals(type)) return i;
+            }
+            return 0;
+        } else {
+            return 0;
+        }
     }
 }

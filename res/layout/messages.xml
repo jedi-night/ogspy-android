@@ -1,58 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableRow
+    <EditText
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="75dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/alertMessage"
+        android:lines="2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_column="0" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="75dp"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/alertMessage"
-            android:lines="2"
-            android:layout_marginLeft="5dp"
-            android:layout_column="0" />
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Envoyer"
+        android:id="@+id/alertSendButton"
+        android:onClick="sendAlert"
+        android:layout_column="0"
+        android:layout_gravity="center_vertical"
+        android:layout_below="@+id/alertMessage"
+        android:layout_centerHorizontal="true" />
 
-    </TableRow>
+    <ListView
+        android:layout_width="367dp"
+        android:layout_height="350dp"
+        android:id="@+id/message_list"
+        android:layout_below="@+id/alertSendButton"
+        android:layout_alignLeft="@+id/alertMessage"
+        android:layout_alignStart="@+id/alertMessage"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true" />
 
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Envoyer"
-            android:id="@+id/alertSendButton"
-            android:onClick="sendAlert"
-            android:layout_column="0"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="25dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_marginLeft="25dp" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_column="0">
-
-            <ListView
-                android:layout_width="367dp"
-                android:layout_height="350dp"
-                android:id="@+id/message_list" />
-        </LinearLayout>
-    </TableRow>
-
-
-</TableLayout>
+</RelativeLayout>

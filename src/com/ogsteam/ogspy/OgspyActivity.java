@@ -630,6 +630,12 @@ public class OgspyActivity extends Activity {
 
     public void pushFragments(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.tabcontent, fragment).commit();
+        if (fragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.tabcontent, fragment).commit();
+        } else if (fragment != lastFragment) {
+            fragmentManager.beginTransaction().replace(R.id.tabcontent, lastFragment).commit();
+        } else {
+            fragmentManager.beginTransaction().replace(R.id.tabcontent, fragments.get(0)).commit();
+        }
     }
 }

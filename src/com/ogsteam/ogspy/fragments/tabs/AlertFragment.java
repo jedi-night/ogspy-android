@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TableLayout;
+import android.widget.RelativeLayout;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
@@ -43,7 +43,7 @@ public class AlertFragment extends Fragment {
             // the view hierarchy; it would just never be used.
             return null;
         }
-        TableLayout layout = (TableLayout) inflater.inflate(R.layout.messages, container, false);
+        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.messages, container, false);
 
         messages = (ListView) layout.findViewById(R.id.message_list);
         message = (EditText) layout.findViewById(R.id.alertMessage);
@@ -68,9 +68,5 @@ public class AlertFragment extends Fragment {
 
     public EditText getMessage() {
         return message;
-    }
-
-    public static ListView getMessagesList() {
-        return messages;
     }
 }

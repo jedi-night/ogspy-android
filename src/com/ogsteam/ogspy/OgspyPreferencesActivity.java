@@ -9,9 +9,6 @@ import com.ogsteam.ogspy.preferences.Accounts;
 import com.ogsteam.ogspy.preferences.Preferences;
 import com.ogsteam.ogspy.ui.DialogHandler;
 
-/**
- * Created by jp.tessier on 16/07/13.
- */
 public class OgspyPreferencesActivity extends PreferenceActivity {
 
     @Override
@@ -37,4 +34,5 @@ public class OgspyPreferencesActivity extends PreferenceActivity {
         CommonUtilities.displayMessage(OgspyActivity.activity, "Préférences enregistrées");
         super.onDestroy();
     }
+
 }
