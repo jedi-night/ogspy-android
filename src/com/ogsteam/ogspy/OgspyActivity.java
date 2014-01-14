@@ -10,7 +10,6 @@ import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -21,7 +20,6 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 import com.ogsteam.ogspy.data.DatabaseAccountHandler;
@@ -39,16 +37,19 @@ import com.ogsteam.ogspy.network.download.DownloadHostilesTask;
 import com.ogsteam.ogspy.network.download.DownloadRentabilitesTask;
 import com.ogsteam.ogspy.network.download.DownloadServerTask;
 import com.ogsteam.ogspy.network.download.DownloadSpysTask;
+import com.ogsteam.ogspy.network.download.DownloadTask;
 import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
 import com.ogsteam.ogspy.sliding.menu.adapter.NavDrawerListAdapter;
 import com.ogsteam.ogspy.sliding.menu.model.NavDrawerItem;
 import com.ogsteam.ogspy.ui.DialogHandler;
+import com.ogsteam.ogspy.ui.displays.GeneralUtils;
+import com.ogsteam.ogspy.ui.displays.HostileUtils;
+import com.ogsteam.ogspy.ui.displays.RentabilitesUtils;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
 
@@ -115,8 +116,9 @@ public class OgspyActivity extends Activity {
     public final String deviceName = retrieveDeviceName();
 
     public static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();
-	public static int timer; // MIN * 60 * 1000 : minutes in seconds then milliseconds
-	public Timer autoUpdateHostiles;
+    //public static int timer; /* MIN * 60 * 1000 : minutes in seconds then milliseconds */
+    public static int selectedMenu = 0;
+    public Timer autoUpdateHostiles;
     protected String regId;
     private static boolean isWaiting = false;
 
@@ -169,24 +171,26 @@ public class OgspyActivity extends Activity {
         commonUtilities = new CommonUtilities(this);
 		notifProvider = new NotificationProvider(this);
 
-		timer = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("timer_hostiles","0"));
-
-        downloadServerTask = new DownloadServerTask(this);
-        downloadAllianceTask = new DownloadAllianceTask(this);
-
-        setAutomaticCheckHostiles();
-        doGcm();
+        //timer = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("timer_hostiles","0"));
 
         setMenuSliding(savedInstanceState);
 
-        downloadServerTask.execute(new String[]{"do"});
-        downloadAllianceTask.execute(new String[]{"do"});
+        //setAutomaticCheckHostiles();
+        doGcm();
 
         // Check if Internet present
         if (!connection.isConnectingToInternet()) {
             showWaiting(false);
             showConnectivityProblem(true);
         }
+
+        downloadServerTask = new DownloadServerTask(this);
+        downloadAllianceTask = new DownloadAllianceTask(this);
+        downloadSpysTask = new DownloadSpysTask(this);
+        downloadHostilesTask = new DownloadHostilesTask(this);
+        downloadRentasTask = new DownloadRentabilitesTask(this);
+
+        downloadDatas();
     }
 
 	@Override
@@ -204,6 +208,9 @@ public class OgspyActivity extends Activity {
         }
         // Handle item selection
 		switch (item.getItemId()) {
+            case R.id.action_refresh:
+                refreshThisDatasFromMenuRefresh();
+                return true;
             case R.id.about:
                 startActivity(new Intent(this, OgspyAboutActivity.class));
                 return true;
@@ -253,8 +260,9 @@ public class OgspyActivity extends Activity {
         doGcm();
 		//notifProvider.deleteNotificationHostile();
 		//updateOgspyDatas();
-        setAutomaticCheckHostiles();
-	}
+        //setAutomaticCheckHostiles();
+        refreshThisDatasFromResume();
+    }
 
 	@Override
 	public void onPause() {
@@ -262,8 +270,13 @@ public class OgspyActivity extends Activity {
 		super.onPause();
 	}
 
-	public void setAutomaticCheckHostiles(){
-		if(timer > 0){
+    private void downloadDatas() {
+        DownloadTask.executeDownload(this, downloadServerTask);
+        DownloadTask.executeDownload(this, downloadAllianceTask);
+    }
+
+	/*public void setAutomaticCheckHostiles(){
+        if(timer > 0){
 			autoUpdateHostiles = new Timer();
             // Check if Internet present
             if(connection==null){ return;}
@@ -272,13 +285,9 @@ public class OgspyActivity extends Activity {
                 // stop executing code by return
                 return;
             }
-
-            downloadHostilesTask = new DownloadHostilesTask(this);
-
-            downloadSpysTask = new DownloadSpysTask(this);
-
-			autoUpdateHostiles.schedule(new TimerTask() {
-				@Override
+*/
+            /*autoUpdateHostiles.schedule(new TimerTask() {
+                @Override
 				public void run() {
 					runOnUiThread(new Runnable() {
 						public void run() {
@@ -291,10 +300,42 @@ public class OgspyActivity extends Activity {
 						}
 					});
 				}
-			}, 0, timer); // updates each timer secs
-		}
+			}, 0, timer); // updates each timer secs*/
+		/*}
 
-	}
+	}*/
+
+    private void refreshThisDatasFromResume() {
+        if (selectedMenu == 0) {
+            if (downloadSpysTask != null && downloadSpysTask.getSpysHelper() == null) {
+                DownloadTask.executeDownload(this, downloadSpysTask);
+            } else {
+                GeneralUtils.showGeneral(null, null, downloadSpysTask.getSpysHelper(), this);
+            }
+        } else if (selectedMenu == 1) {
+            if (downloadHostilesTask != null && downloadHostilesTask.getHelperHostile() == null) {
+                DownloadTask.executeDownload(this, downloadHostilesTask);
+            } else {
+                HostileUtils.showHostiles(downloadHostilesTask.getHelperHostile(), this);
+            }
+        } else if (selectedMenu == 2) {
+            if (downloadRentasTask != null && downloadRentasTask.getHelperRentabilites() == null) {
+                DownloadTask.executeDownload(this, downloadRentasTask);
+            } else {
+                RentabilitesUtils.showRentabilites(downloadRentasTask.getHelperRentabilites(), this, downloadRentasTask.getType());
+            }
+        }
+    }
+
+    private void refreshThisDatasFromMenuRefresh() {
+        if (selectedMenu == 0) {
+            DownloadTask.executeDownload(this, downloadSpysTask);
+        } else if (selectedMenu == 1) {
+            DownloadTask.executeDownload(this, downloadHostilesTask);
+        } else if (selectedMenu == 2) {
+            DownloadTask.executeDownload(this, downloadRentasTask);
+        }
+    }
 
     public void unregisteringOgspy(View view){
         new DialogHandler().confirm(this,
@@ -347,10 +388,11 @@ public class OgspyActivity extends Activity {
 		return notifProvider;
 	}
 
-	public static void setTimer(int timer) {
-		OgspyActivity.timer = timer;
-	}	
-
+    /*
+        public static void setTimer(int timer) {
+            OgspyActivity.timer = timer;
+        }
+    */
     @Override
     protected void onDestroy() {
         if (mRegisterTask != null) {
@@ -426,22 +468,6 @@ public class OgspyActivity extends Activity {
 
     public static String getVersionOgspy() {
         return versionOgspy;
-    }
-
-    public static DownloadHostilesTask getDownloadHostilesTask() {
-        return downloadHostilesTask;
-    }
-
-    public static DownloadAllianceTask getDownloadAllianceTask() {
-        return downloadAllianceTask;
-    }
-
-    public static DownloadSpysTask getDownloadSpysTask() {
-        return downloadSpysTask;
-    }
-
-    public static DownloadRentabilitesTask getDownloadRentasTask() {
-        return downloadRentasTask;
     }
 
     public void sendAlert(View v){
@@ -596,6 +622,7 @@ public class OgspyActivity extends Activity {
      * Diplaying fragment view for selected nav drawer list item
      */
     private void displayView(int position) {
+        this.selectedMenu = position;
         // update the main content by replacing fragments
         Fragment fragment = fragments.get(position);
 
@@ -620,6 +647,34 @@ public class OgspyActivity extends Activity {
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
+    public static DownloadServerTask getDownloadServerTask() {
+        return downloadServerTask;
+    }
+
+    public static DownloadHostilesTask getDownloadHostilesTask() {
+        return downloadHostilesTask;
+    }
+
+    public static DownloadAllianceTask getDownloadAllianceTask() {
+        return downloadAllianceTask;
+    }
+
+    public static DownloadSpysTask getDownloadSpysTask() {
+        return downloadSpysTask;
+    }
+
+    public static DownloadRentabilitesTask getDownloadRentasTask() {
+        return downloadRentasTask;
+    }
+
+    public Fragment getFragmentSpy() {
+        return fragments.get(0);
+    }
+
+    public Fragment getFragmentHostiles() {
+        return fragments.get(1);
+    }
+
     public Fragment getFragmentRentabilites() {
         return fragments.get(2);
     }
@@ -638,4 +693,6 @@ public class OgspyActivity extends Activity {
             fragmentManager.beginTransaction().replace(R.id.tabcontent, fragments.get(0)).commit();
         }
     }
+
+
 }

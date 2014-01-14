@@ -12,7 +12,7 @@ public class Preferences {
 	public static void savePrefs(OgspyActivity activity, SharedPreferences preferences) throws OgspyException {
 		//int selectedId = PrefsFragment.getTimerHostiles().getSelectedItemPosition();
         try{
-            int timer = Integer.parseInt(preferences.getString("timer_hostiles", "0"));
+            //int timer = Integer.parseInt(preferences.getString("timer_hostiles", "0"));
 
             /*if(activity.getHandlerPrefs().getPrefsCount() > 0){
                 activity.getHandlerPrefs().deleteAllPrefs();
@@ -22,13 +22,13 @@ public class Preferences {
             // Affectation du timer
             //OgspyActivity.setTimer(OgspyUtils.getTimerHostiles(activity, activity.getHandlerPrefs()));
 
-            OgspyActivity.setTimer(timer);
+            //OgspyActivity.setTimer(timer);
 
             // Changement du check hostiles suivant le timer
             if(activity.autoUpdateHostiles != null){
                 activity.autoUpdateHostiles.cancel();
                 activity.autoUpdateHostiles.purge();
-                activity.setAutomaticCheckHostiles();
+                //activity.setAutomaticCheckHostiles();
             }
             /*} else {
                 Toast.makeText(activity, activity.getString(R.string.save_prefs_ko), Toast.LENGTH_LONG).show();

@@ -1,24 +1,30 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <!-- item
         android:id="@+id/ogspy_activity"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/hostiles"/-->
     <item
-        android:id="@+id/about"
+        android:id="@+id/action_refresh"
         android:orderInCategory="100"
+        android:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:title="Refresh" />
+    <item
+        android:id="@+id/about"
+        android:icon="@android:drawable/ic_menu_info_details"
         android:showAsAction="never"
-        android:title="A propos"/>
+        android:title="A propos" />
     <item
         android:id="@+id/prefs"
-        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_preferences"
         android:showAsAction="never"
-        android:title="@string/prefs"/>
+        android:title="@string/prefs" />
     <item
         android:id="@+id/quit"
-        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_help"
         android:showAsAction="never"
-        android:title="@string/quit"/>
+        android:title="@string/quit" />
 
 </menu>

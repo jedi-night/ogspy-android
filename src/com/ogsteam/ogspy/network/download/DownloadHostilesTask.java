@@ -46,6 +46,10 @@ public class DownloadHostilesTask extends DownloadTask {
         return null;
     }
 
+    public HostilesHelper getHelperHostile() {
+        return helperHostile;
+    }
+
     protected void onPostExecute(String result) {
         HostileUtils.showHostiles(helperHostile, activity);
         super.onPostExecute(result);

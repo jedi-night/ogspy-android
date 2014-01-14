@@ -1,34 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/account_ogspy_title">
 
         <EditTextPreference
-                android:key="login"
-                android:title="@string/ogspy_user_title"
-                android:summary="@string/ogspy_user_summary">
-        </EditTextPreference>
+            android:key="login"
+            android:title="@string/ogspy_user_title"
+            android:summary="@string/ogspy_user_summary"></EditTextPreference>
 
         <EditTextPreference
-                android:title="@string/ogspy_password_title"
-                android:key="password"
-                android:summary="Entrez votre mot de passe"
-                android:password="true">
-        </EditTextPreference>
+            android:title="@string/ogspy_password_title"
+            android:key="password"
+            android:summary="Entrez votre mot de passe"
+            android:password="true"></EditTextPreference>
 
         <EditTextPreference
-                android:title="@string/ogspy_server_url_title"
-                android:key="serverUrl"
-                android:summary="Entrez la racine de l'URL du server OGSPY">
-        </EditTextPreference>
+            android:title="@string/ogspy_server_url_title"
+            android:key="serverUrl"
+            android:summary="Entrez la racine de l'URL du server OGSPY"></EditTextPreference>
 
         <EditTextPreference
-                android:title="@string/ogspy_server_univers_title"
-                android:key="serverUnivers"
-                android:summary="Entrez l'URL du server de l'univers">
-        </EditTextPreference>
+            android:title="@string/ogspy_server_univers_title"
+            android:key="serverUnivers"
+            android:summary="Entrez l'URL du server de l'univers"></EditTextPreference>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Rentabilités">
@@ -44,7 +39,7 @@
             android:entryValues="@array/rentas_type_values" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/prefs_title">
+    <!--PreferenceCategory android:title="@string/prefs_title">
         <ListPreference android:title="@string/prefs_timer_hostiles_title" android:key="timer_hostiles" android:entries="@array/prefs_timer_hostiles" android:entryValues="@array/prefs_timer_hostiles_values"/>
-    </PreferenceCategory>
+    </PreferenceCategory-->
 </PreferenceScreen>

@@ -10,7 +10,8 @@ import android.widget.ListView;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.network.download.DownloadHostilesTask;
+import com.ogsteam.ogspy.network.download.DownloadTask;
+import com.ogsteam.ogspy.ui.displays.HostileUtils;
 
 
 /**
@@ -39,13 +40,19 @@ public class HostileFragment extends Fragment {
 
         listHostiles = (ListView) layout.findViewById(R.id.list_view_hostiles);
 
+        if (OgspyActivity.activity.getDownloadHostilesTask() != null && OgspyActivity.activity.getDownloadHostilesTask().getHelperHostile() == null) {
+            DownloadTask.executeDownload(OgspyActivity.activity, OgspyActivity.activity.downloadHostilesTask);
+        } else {
+            HostileUtils.showHostiles(OgspyActivity.activity.getDownloadHostilesTask().getHelperHostile(), OgspyActivity.activity);
+        }
+
         return layout;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        new DownloadHostilesTask((OgspyActivity) getActivity()).execute(new String[]{"do"});
+        //new DownloadHostilesTask((OgspyActivity) getActivity()).execute(new String[]{"do"});
     }
 
     public static ListView getListHostiles() {

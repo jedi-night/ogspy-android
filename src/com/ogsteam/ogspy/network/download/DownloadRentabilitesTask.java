@@ -1,10 +1,12 @@
 package com.ogsteam.ogspy.network.download;
 
 import android.util.Log;
+import android.widget.Spinner;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.fragments.tabs.RentabilitesFragment;
 import com.ogsteam.ogspy.ui.displays.RentabilitesUtils;
 import com.ogsteam.ogspy.utils.HttpUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
@@ -31,6 +33,19 @@ public class DownloadRentabilitesTask extends DownloadTask {
         typeDownload = DownloadType.RENTABILITES;
     }
 
+    public DownloadRentabilitesTask(OgspyActivity activity) {
+        this.activity = activity;
+        this.dataJsonFromAsyncTask = null;
+        this.helperRentabilites = null;
+        Spinner rentaInterval = ((RentabilitesFragment) activity.getFragmentRentabilites()).getRentabiliteInterval();
+        Spinner rentatype = ((RentabilitesFragment) activity.getFragmentRentabilites()).getRentabiliteType();
+        int positionSelected = rentaInterval==null?0:rentaInterval.getSelectedItemPosition();
+        int positionSelectedType = rentatype==null?0:rentatype.getSelectedItemPosition();
+        this.interval = activity.getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
+        this.type = activity.getResources().getStringArray(R.array.rentas_type_values)[positionSelectedType];
+        typeDownload = DownloadType.RENTABILITES;
+    }
+
     @Override
     protected String doInBackground(String... params) {
         try {
@@ -48,6 +63,14 @@ public class DownloadRentabilitesTask extends DownloadTask {
             if (!isCancelled()) cancel(true);
         }
         return null;
+    }
+
+    public RentabilitesHelper getHelperRentabilites() {
+        return helperRentabilites;
+    }
+
+    public String getType() {
+        return type;
     }
 
     protected void onPostExecute(String result) {

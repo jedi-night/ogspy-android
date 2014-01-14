@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.network.download.DownloadAllianceTask;
-import com.ogsteam.ogspy.network.download.DownloadSpysTask;
+import com.ogsteam.ogspy.network.download.DownloadTask;
 import com.ogsteam.ogspy.ui.displays.GeneralUtils;
 
 
@@ -44,13 +43,18 @@ public class GeneralFragment extends Fragment {
         mostCuriousAlliances = (ListView) layout.findViewById(R.id.curiousAlliances);
         mostCuriousPlayers = (ListView) layout.findViewById(R.id.curiousPlayers);
 
+        if (OgspyActivity.activity.getDownloadSpysTask() != null && OgspyActivity.activity.getDownloadSpysTask().getSpysHelper() == null) {
+            DownloadTask.executeDownload(OgspyActivity.activity, OgspyActivity.activity.downloadSpysTask);
+        } else {
+            GeneralUtils.showGeneral(null, null, OgspyActivity.activity.getDownloadSpysTask().getSpysHelper(), OgspyActivity.activity);
+        }
         return layout;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (OgspyActivity.getDownloadAllianceTask() != null && OgspyActivity.getDownloadAllianceTask().getAllianceHelper() != null) {
+        /*if (OgspyActivity.getDownloadAllianceTask() != null && OgspyActivity.getDownloadAllianceTask().getAllianceHelper() != null) {
             GeneralUtils.showGeneral(null, OgspyActivity.getDownloadAllianceTask().getAllianceHelper(), null, (OgspyActivity) getActivity());
         } else {
             new DownloadAllianceTask((OgspyActivity) getActivity()).execute(new String[]{"do"});
@@ -59,7 +63,7 @@ public class GeneralFragment extends Fragment {
             GeneralUtils.showGeneral(null, null, OgspyActivity.getDownloadSpysTask().getSpysHelper(), (OgspyActivity) getActivity());
         } else {
             new DownloadSpysTask((OgspyActivity) getActivity()).execute(new String[]{"do"});
-        }
+        }*/
     }
 
     public static TextView getAllianceOwn() {

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.fragments.tabs.RentabilitesFragment;
@@ -59,8 +60,11 @@ public abstract class RentabilitesUtils {
             if (Constants.RENTA_TYPE_MEMBER.equals(type)) {
                 addPieOnClickListener(activity, helperRenta, piechart);
             }
-            ((RentabilitesFragment) activity.getFragmentRentabilites()).getPieChartContainer().removeAllViews();
-            ((RentabilitesFragment) activity.getFragmentRentabilites()).getPieChartContainer().addView(piechart, new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            RelativeLayout piChartContainer = ((RentabilitesFragment) activity.getFragmentRentabilites()).getPieChartContainer();
+            if (piChartContainer != null) {
+                piChartContainer.removeAllViews();
+                piChartContainer.addView(piechart, new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            }
         }
     }
 
@@ -75,7 +79,10 @@ public abstract class RentabilitesUtils {
     }
 
     private static void setRentabiliteText(OgspyActivity activity, float value) {
-        ((RentabilitesFragment) activity.getFragmentRentabilites()).getRentabilityTotal().setText("Rentabilité : " + NumberUtils.format(value));
+        RentabilitesFragment rentaFragment = ((RentabilitesFragment) activity.getFragmentRentabilites());
+        if (rentaFragment != null && rentaFragment.getRentabilityTotal() != null) {
+            ((RentabilitesFragment) activity.getFragmentRentabilites()).getRentabilityTotal().setText("Rentabilité : " + NumberUtils.format(value));
+        }
     }
 
     private static void addPieOnClickListener(final OgspyActivity activity, final RentabilitesHelper helperRenta, GraphicalView piechart) {

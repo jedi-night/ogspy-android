@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,8 @@ import android.widget.TextView;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.network.download.DownloadRentabilitesTask;
+import com.ogsteam.ogspy.network.download.DownloadTask;
+import com.ogsteam.ogspy.ui.displays.RentabilitesUtils;
 
 /**
  * @author mwho
@@ -27,6 +28,9 @@ public class RentabilitesFragment extends Fragment {
     private static Spinner rentabiliteType;
     private static TextView rentabilityTotal;
     private static RelativeLayout pieChartContainer;
+
+    private static int lastSeletedTypePosition = -1;
+    private static int lastSeletedIntervalPosition = -1;
 
     /**
      * (non-Javadoc)
@@ -69,21 +73,33 @@ public class RentabilitesFragment extends Fragment {
             rentabiliteType.setAdapter(adapterType);
         }
 
-        rentabiliteInterval.setSelection(getIntervalPositionFromPrefs());
-        rentabiliteType.setSelection(getTypePositionFromPrefs());
+        int interval = 0;
+        int type = 0;
+        if (lastSeletedTypePosition == -1 && lastSeletedIntervalPosition == -1) {
+            interval = getIntervalPositionFromPrefs();
+            type = getTypePositionFromPrefs();
+            rentabiliteInterval.setSelection(interval);
+            rentabiliteType.setSelection(type);
+            executeDownload(interval, type);
+            lastSeletedIntervalPosition = interval;
+            lastSeletedTypePosition = type;
+        } else {
+            interval = lastSeletedIntervalPosition == -1 ? 0 : lastSeletedIntervalPosition;
+            type = lastSeletedTypePosition == -1 ? 0 : lastSeletedTypePosition;
+            rentabiliteInterval.setSelection(interval);
+            rentabiliteType.setSelection(type);
+        }
 
         rentabiliteType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                int positionSelected = getRentabiliteInterval().getSelectedItemPosition();
-                int positionSelectedType = getRentabiliteType().getSelectedItemPosition();
-                Log.d(RentabilitesFragment.class.getName(), "OnItemSelectedListener de rentabiliteType ! posPeriode=" + positionSelected + " posType=" + positionSelectedType);
-                String interval = getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
-                String type = getResources().getStringArray(R.array.rentas_type_values)[positionSelectedType];
-                if (OgspyActivity.activity.downloadRentasTask == null || OgspyActivity.activity.downloadRentasTask.canExecute()) {
-                    DownloadRentabilitesTask rentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, interval, type);
-                    rentasTask.execute(new String[]{"do"});
+                if (lastSeletedTypePosition >= 0 && lastSeletedTypePosition != position) {
+                    executeDownload();
+                } else {
+                    RentabilitesUtils.showRentabilites(OgspyActivity.activity.getDownloadRentasTask().getHelperRentabilites(), OgspyActivity.activity, OgspyActivity.activity.getDownloadRentasTask().getType());
                 }
+                lastSeletedTypePosition = position;
+                //DownloadTask.executeDownload(OgspyActivity.activity, OgspyActivity.activity.downloadRentasTask);
             }
 
             @Override
@@ -93,18 +109,15 @@ public class RentabilitesFragment extends Fragment {
         });
 
         rentabiliteInterval.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                int positionSelected = getRentabiliteInterval().getSelectedItemPosition();
-                int positionSelectedType = getRentabiliteType().getSelectedItemPosition();
-                Log.d(RentabilitesFragment.class.getName(), "OnItemSelectedListener de rentabiliteInterval ! posPeriode=" + positionSelected + " posType=" + positionSelectedType);
-                String interval = getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
-                String type = getResources().getStringArray(R.array.rentas_type_values)[positionSelectedType];
-                if (OgspyActivity.activity.downloadRentasTask == null || OgspyActivity.activity.downloadRentasTask.canExecute()) {
-                    DownloadRentabilitesTask rentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, interval, type);
-                    rentasTask.execute(new String[]{"do"});
+                if (lastSeletedIntervalPosition >= 0 && lastSeletedIntervalPosition != position) {
+                    executeDownload();
+                } else {
+                    RentabilitesUtils.showRentabilites(OgspyActivity.activity.getDownloadRentasTask().getHelperRentabilites(), OgspyActivity.activity, OgspyActivity.activity.getDownloadRentasTask().getType());
                 }
+                lastSeletedIntervalPosition = position;
+                //DownloadTask.executeDownload(OgspyActivity.activity, OgspyActivity.activity.downloadRentasTask);
             }
 
             @Override
@@ -114,6 +127,15 @@ public class RentabilitesFragment extends Fragment {
         });
 
         return layout;
+    }
+
+    public void executeDownload() {
+        DownloadTask.executeDownload(OgspyActivity.activity, OgspyActivity.activity.downloadRentasTask);
+    }
+
+    public void executeDownload(int interval, int type) {
+        OgspyActivity.activity.downloadRentasTask = new DownloadRentabilitesTask(OgspyActivity.activity, getIntervalFromSelectedPosition(interval), getTypeFromSelectedPosition(type));
+        DownloadTask.executeDownload(OgspyActivity.activity, OgspyActivity.activity.downloadRentasTask);
     }
 
     public static RelativeLayout getPieChartContainer() {
@@ -164,4 +186,14 @@ public class RentabilitesFragment extends Fragment {
             return 0;
         }
     }
+
+    private String getTypeFromSelectedPosition(int positionSelectedType) {
+        return OgspyActivity.activity.getResources().getStringArray(R.array.rentas_type_values)[positionSelectedType];
+    }
+
+    private String getIntervalFromSelectedPosition(int positionSelected) {
+        return OgspyActivity.activity.getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
+    }
+
+
 }

@@ -17,11 +17,11 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
         if (!activity.connection.isConnectingToInternet()) {
             this.cancel(true);
         }
-        if (!canExecute()) {
+        /*if (!canExecute()) {
             activity.showWaiting(false);
             activity.showConnectivityProblem(false);
             Log.d(this.getClass().getSimpleName(), typeDownload.getLibelle() + " non terminé, en cours ou non executé; il est impossible d'en refaire un autre !");
-        }
+        }*/
         activity.showWaiting(true);
     }
 
@@ -52,32 +52,47 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String result) {
         activity.showWaiting(false);
         activity.showConnectivityProblem(!activity.connection.isConnectingToInternet());
+        this.cancel(true);
     }
 
-    public boolean canExecute() {
-        int thisTypeDownload = this.typeDownload.getType();
-        DownloadTask downloadTask = null;
-        if (DownloadType.ALLIANCE.getType() == thisTypeDownload) {
-            downloadTask = activity.downloadAllianceTask;
-        } else if (DownloadType.SERVER.getType() == thisTypeDownload) {
-            downloadTask = activity.downloadServerTask;
-        } else if (DownloadType.SPY.getType() == thisTypeDownload) {
-            downloadTask = activity.downloadSpysTask;
-        } else if (DownloadType.HOSTILES.getType() == thisTypeDownload) {
-            downloadTask = activity.downloadHostilesTask;
-        } else if (DownloadType.RENTABILITES.getType() == thisTypeDownload) {
-            downloadTask = activity.downloadRentasTask;
+    public static void executeDownload(OgspyActivity activity, DownloadTask downloadTask) {
+        boolean finished = true;
+        boolean running = false;
+        boolean pending = false;
+
+        DownloadType downloadType = downloadTask == null ? null : downloadTask.typeDownload;
+        // Le download a déjà été lancé
+        if (downloadType != null) {
+            finished = downloadTask.getStatus().equals(Status.FINISHED); // over
+            running = downloadTask.getStatus().equals(Status.RUNNING); // in progress
+            pending = downloadTask.getStatus().equals(Status.PENDING); // not executed
         }
 
-        if (downloadTask == null) {
-            return true;
-        }
-        boolean finished = downloadTask.getStatus().equals(Status.FINISHED); // over
-        boolean running = downloadTask.getStatus().equals(Status.RUNNING); // in progress
-        boolean pending = downloadTask.getStatus().equals(Status.PENDING); // not executed
+        // Finie ET pas En Cours ET pas En Attente
         if (finished && !running && !pending) {
-            return true;
+            Log.d("DownloadTask", "Lancement de " + downloadType.getLibelle() + " car fini");
+            if (DownloadType.ALLIANCE.getType() == downloadType.getType()) {
+                activity.downloadAllianceTask = new DownloadAllianceTask(activity);
+                activity.downloadAllianceTask.execute(new String[]{"do"});
+            } else if (DownloadType.SERVER.getType() == downloadType.getType()) {
+                activity.downloadServerTask = new DownloadServerTask(activity);
+                activity.downloadServerTask.execute(new String[]{"do"});
+            } else if (DownloadType.SPY.getType() == downloadType.getType()) {
+                activity.downloadSpysTask = new DownloadSpysTask(activity);
+                activity.downloadSpysTask.execute(new String[]{"do"});
+            } else if (DownloadType.HOSTILES.getType() == downloadType.getType()) {
+                activity.downloadHostilesTask = new DownloadHostilesTask(activity);
+                activity.downloadHostilesTask.execute(new String[]{"do"});
+            } else if (DownloadType.RENTABILITES.getType() == downloadType.getType()) {
+                activity.downloadRentasTask = new DownloadRentabilitesTask(activity);
+                activity.downloadRentasTask.execute(new String[]{"do"});
+            }
+            // Non traitée ET pas Finie ET pas En Cours
+        } else if (pending && !finished && !running) {
+            Log.d("DownloadTask", "Lancement de " + downloadType.getLibelle() + " car non traité");
+            downloadTask.execute(new String[]{"do"});
+        } else {
+            Log.d("DownloadTask", "Traitement de " + downloadType.getLibelle() + " ignoré car finished=" + finished + ", running=" + running + ", pending=" + pending);
         }
-        return false;
     }
 }
