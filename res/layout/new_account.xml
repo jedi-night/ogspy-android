@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg"
+    android:minHeight="200dp"
+    android:minWidth="200dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageServer"
+        android:src="@drawable/server"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageUnivers"
+        android:src="@drawable/link"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/imageServer"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageUser"
+        android:src="@drawable/user"
+        android:layout_below="@+id/imagePassword"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imagePassword"
+        android:src="@drawable/password"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/imageUnivers"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="25dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sauvegarder"
+        android:id="@+id/buttonNewAccountSave"
+        android:layout_below="@+id/imageUser"
+        android:layout_alignLeft="@+id/newAccountUserName"
+        android:layout_alignStart="@+id/newAccountUserName"
+        android:layout_marginTop="30dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Annuler"
+        android:id="@+id/buttonNewAccountCancel"
+        android:layout_alignTop="@+id/buttonNewAccountSave"
+        android:layout_toRightOf="@+id/buttonNewAccountSave"
+        android:layout_marginLeft="25dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/newAccountUserName"
+        android:layout_alignTop="@+id/imageUser"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/imageUser"
+        android:layout_marginLeft="20dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newAccountServers"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageServer"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/newAccountPassword"
+        android:layout_alignTop="@+id/imagePassword"
+        android:layout_alignLeft="@+id/newAccountUserName"
+        android:layout_alignStart="@+id/newAccountUserName"
+        android:layout_alignRight="@+id/newAccountUserName"
+        android:layout_alignEnd="@+id/newAccountUserName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newAccountServer"
+        android:layout_alignTop="@+id/imageUnivers"
+        android:layout_alignLeft="@+id/newAccountServers"
+        android:layout_alignStart="@+id/newAccountServers"
+        android:layout_alignRight="@+id/newAccountServers"
+        android:layout_alignEnd="@+id/newAccountServers" />
+</RelativeLayout>

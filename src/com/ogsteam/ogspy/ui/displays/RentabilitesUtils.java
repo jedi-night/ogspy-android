@@ -1,11 +1,13 @@
 package com.ogsteam.ogspy.ui.displays;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.ogsteam.ogspy.DialogActivity;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.fragments.tabs.RentabilitesFragment;
 import com.ogsteam.ogspy.permission.CommonUtilities;
@@ -96,10 +98,17 @@ public abstract class RentabilitesUtils {
                     ArrayList<RentabilitesHelper.Rentabilite> rentas = helperRenta.getRentabilitesSortedByGains();
                     RentabilitesHelper.Rentabilite renta = rentas.get(seriesSelection.getPointIndex());
                     /*"Chart element in series index " + seriesSelection.getSeriesIndex() + " data point index " + seriesSelection.getPointIndex() + " was clicked" + " closest point value X=" + seriesSelection.getXValue() + ", Y=" + seriesSelection.getValue());*/
-                    CommonUtilities.displayMessage(activity, "Détail de la rentabilité du joueur " + renta.getUser() + "\n\n" +
+                    /*CommonUtilities.displayMessage(activity, "Détail de la rentabilité du joueur " + renta.getUser() + "\n\n" +
                             "Métal\t\t\t\t : " + NumberUtils.format(Float.parseFloat(renta.getMetal())) +
                             "\nCristal\t\t\t : " + NumberUtils.format(Float.parseFloat(renta.getCristal())) +
-                            "\nDeutérium\t\t : " + NumberUtils.format(Float.parseFloat(renta.getDeuterium())));
+                            "\nDeutérium\t\t : " + NumberUtils.format(Float.parseFloat(renta.getDeuterium())));*/
+                    Intent dialog = new Intent(activity, DialogActivity.class);
+                    dialog.putExtra("name", renta.getUser());
+                    dialog.putExtra("metal", renta.getMetalInt());
+                    dialog.putExtra("cristal", renta.getCristalInt());
+                    dialog.putExtra("deuterium", renta.getDeuteriumInt());
+                    dialog.putExtra("type", DialogActivity.TYPE_RENTA_DETAIL);
+                    activity.startActivity(dialog);
                 }
             }
         });

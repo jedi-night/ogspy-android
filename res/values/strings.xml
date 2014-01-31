@@ -57,14 +57,14 @@
     </string-array>
 
     <!-- RENTAS-->
-    <string-array name="rentas_interval">
-        <item>Aujourd\'hui</item>
+    <string-array name="interval">
+    <item>Aujourd\'hui</item>
         <item>Hier</item>
         <item>7 derniers jours</item>
         <item>Mois</item>
     </string-array>
-    <string-array name="rentas_interval_values">
-        <item>day</item>
+    <string-array name="interval_values">
+    <item>day</item>
         <item>yesterday</item>
         <item>week</item>
         <item>month</item>
@@ -79,6 +79,116 @@
         <item>us</item>
         <item>member</item>
     </string-array>
+
+    <string-array name="servers">
+        <item>Andromeda</item>
+        <item>Barym</item>
+        <item>Capella</item>
+        <item>Draco</item>
+        <item>Electra</item>
+        <item>Fornax</item>
+        <item>Gemini</item>
+        <item>Hydra</item>
+        <item>Io</item>
+        <item>Jupiter</item>
+        <item>Kassiopeia</item>
+        <item>Leo</item>
+        <item>Mizar</item>
+        <item>Nekkar</item>
+        <item>Orion</item>
+        <item>Pegasus</item>
+        <item>Quantum</item>
+        <item>Rigel</item>
+        <item>Sirius</item>
+        <item>Taurus</item>
+        <item>Ursa</item>
+        <item>Vega</item>
+        <item>Wasat</item>
+        <item>Xalynth</item>
+        <item>Yakini</item>
+        <item>1. univers</item>
+        <item>10. univers</item>
+        <item>50. univers</item>
+        <item>60. univers</item>
+        <item>64. univers</item>
+        <item>65. univers</item>
+        <item>66. univers</item>
+        <item>67. univers</item>
+        <item>68. univers</item>
+    </string-array>
+    <string-array name="servers_values">
+        <item>http://s101-fr.ogame.gameforge.com</item>
+        <item>http://s102-fr.ogame.gameforge.com</item>
+        <item>http://s103-fr.ogame.gameforge.com</item>
+        <item>http://s104-fr.ogame.gameforge.com</item>
+        <item>http://s105-fr.ogame.gameforge.com</item>
+        <item>http://s106-fr.ogame.gameforge.com</item>
+        <item>http://s107-fr.ogame.gameforge.com</item>
+        <item>http://s108-fr.ogame.gameforge.com</item>
+        <item>http://s109-fr.ogame.gameforge.com</item>
+        <item>http://s110-fr.ogame.gameforge.com</item>
+        <item>http://s111-fr.ogame.gameforge.com</item>
+        <item>http://s112-fr.ogame.gameforge.com</item>
+        <item>http://s113-fr.ogame.gameforge.com</item>
+        <item>http://s114-fr.ogame.gameforge.com</item>
+        <item>http://s115-fr.ogame.gameforge.com</item>
+        <item>http://s116-fr.ogame.gameforge.com</item>
+        <item>http://s117-fr.ogame.gameforge.com</item>
+        <item>http://s118-fr.ogame.gameforge.com</item>
+        <item>http://s119-fr.ogame.gameforge.com</item>
+        <item>http://s120-fr.ogame.gameforge.com</item>
+        <item>http://s121-fr.ogame.gameforge.com</item>
+        <item>http://s122-fr.ogame.gameforge.com</item>
+        <item>http://s123-fr.ogame.gameforge.com</item>
+        <item>http://s124-fr.ogame.gameforge.com</item>
+        <item>http://s125-fr.ogame.gameforge.com</item>
+        <item>http://s1-fr.ogame.gameforge.com</item>
+        <item>http://s10-fr.ogame.gameforge.com</item>
+        <item>http://s50-fr.ogame.gameforge.com</item>
+        <item>http://s60-fr.ogame.gameforge.com</item>
+        <item>http://s64-fr.ogame.gameforge.com</item>
+        <item>http://s65-fr.ogame.gameforge.com</item>
+        <item>http://s66-fr.ogame.gameforge.com</item>
+        <item>http://s67-fr.ogame.gameforge.com</item>
+        <item>http://s68-fr.ogame.gameforge.com</item>
+        <item></item>
+    </string-array>
+    <!--
+    serveurs.put("s10-fr.ogame.gameforge.com","10. univers");
+    serveurs.put("s50-fr.ogame.gameforge.com","50. univers");
+    serveurs.put("s60-fr.ogame.gameforge.com","60. univers");
+    serveurs.put("s64-fr.ogame.gameforge.com","64. univers");
+    serveurs.put("s65-fr.ogame.gameforge.com","65. univers");
+    serveurs.put("s66-fr.ogame.gameforge.com","66. univers");
+    serveurs.put("s67-fr.ogame.gameforge.com","67. univers");
+    serveurs.put("s68-fr.ogame.gameforge.com","68. univers");
+    serveurs.put("s101-fr.ogame.gameforge.com","Andromeda");
+    serveurs.put("s102-fr.ogame.gameforge.com", "Barym");
+    serveurs.put("s103-fr.ogame.gameforge.com", "Capella");
+    serveurs.put("s104-fr.ogame.gameforge.com", "Draco");
+    serveurs.put("s105-fr.ogame.gameforge.com", "Electra");
+    serveurs.put("s106-fr.ogame.gameforge.com","Fornax");
+    serveurs.put("s107-fr.ogame.gameforge.com","Gemini");
+    serveurs.put("s108-fr.ogame.gameforge.com","Hydra");
+    serveurs.put("s109-fr.ogame.gameforge.com","Io");
+    serveurs.put("s110-fr.ogame.gameforge.com","Jupiter");
+    serveurs.put("s111-fr.ogame.gameforge.com","Kassiopeia");
+    serveurs.put("s112-fr.ogame.gameforge.com","Leo");
+    serveurs.put("s113-fr.ogame.gameforge.com","Mizar");
+    serveurs.put("s114-fr.ogame.gameforge.com","Nekkar");
+    serveurs.put("s115-fr.ogame.gameforge.com","Orion");
+    serveurs.put("s116-fr.ogame.gameforge.com","Pegasus");
+    serveurs.put("s117-fr.ogame.gameforge.com","Quantum");
+    serveurs.put("s118-fr.ogame.gameforge.com","Rigel");
+    serveurs.put("s119-fr.ogame.gameforge.com","Sirius");
+    serveurs.put("s120-fr.ogame.gameforge.com","Taurus");
+    serveurs.put("s121-fr.ogame.gameforge.com","Ursa");
+    serveurs.put("s122-fr.ogame.gameforge.com","Vega");
+    serveurs.put("s123-fr.ogame.gameforge.com","Wasat");
+    serveurs.put("s124-fr.ogame.gameforge.com","Xalynth");
+    serveurs.put("s125-fr.ogame.gameforge.com","Yakini");
+    -->
+
 
     <!-- Notifs -->
     <string name="notification">Notification OGSPY</string>
@@ -106,15 +216,15 @@
     <string name="download_problem">Problème lors du telechargement !</string>
     <!-- END GCM -->
 
-    <string name="alliance_spys">Top Joueur (mois)</string>
-    <string name="player_spys">Top Alliance (mois)</string>
-    <string name="spy_title_me">Mes espionnages</string>
+    <!-- Espionnages -->
+    <string name="alliance_spys">Top Alliance</string>
+    <string name="player_spys">Top Joueur</string>
 
     <string name="ogspy_user_summary">Entrez votre nom d\'utilisateur</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <item>Général</item>
+        <item>Espionnages</item>
         <item>Hostiles</item>
         <item>Rentabilités</item>
         <item>Messages</item>
@@ -123,7 +233,7 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_tab_general_selected</item>
+        <item>@android:drawable/ic_menu_view</item>
         <item>@drawable/ic_tab_hostiles_selected</item>
         <item>@drawable/ic_tab_rentabilites_selected</item>
         <item>@drawable/ic_tab_alert_selected</item>

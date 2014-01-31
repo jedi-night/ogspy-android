@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg"
+    android:minWidth="350dp"
+    android:minHeight="400dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/destails_highscore_image"
+        android:src="@drawable/destails_highscore_player"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="{0}"
+        android:id="@+id/destails_highscore_title"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/destails_highscore_image"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/destails_highscore_points_images"
+        android:src="@drawable/destails_highscore_points"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_toLeftOf="@+id/textView2"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="35dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/destails_highscore_points_highscore"
+        android:layout_alignBottom="@+id/destails_highscore_points_images"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="1 000 000"
+        android:id="@+id/destails_highscore_points_points"
+        android:layout_alignTop="@+id/destails_highscore_points_highscore"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_marginRight="-10dp" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/destails_highscore_fleet_image"
+        android:src="@drawable/destails_highscore_fleet"
+        android:layout_below="@+id/destails_highscore_points_images"
+        android:layout_alignLeft="@+id/destails_highscore_points_images"
+        android:layout_alignStart="@+id/destails_highscore_points_images"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/destails_highscore_fleet_highscore"
+        android:layout_alignBottom="@+id/destails_highscore_fleet_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="1 000 000"
+        android:id="@+id/destails_highscore_fleet_points"
+        android:layout_alignTop="@+id/destails_highscore_fleet_highscore"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_marginRight="-10dp" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/destails_highscore_research_image"
+        android:src="@drawable/destails_highscore_research"
+        android:layout_below="@+id/destails_highscore_fleet_image"
+        android:layout_alignLeft="@+id/destails_highscore_fleet_image"
+        android:layout_alignStart="@+id/destails_highscore_fleet_image"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/destails_highscore_research_highscore"
+        android:layout_alignBottom="@+id/destails_highscore_research_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="1 000 000"
+        android:id="@+id/destails_highscore_research_points"
+        android:layout_alignTop="@+id/destails_highscore_research_highscore"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_marginRight="-10dp" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/destails_highscore_economic_image"
+        android:src="@drawable/destails_highscore_economic"
+        android:layout_below="@+id/destails_highscore_research_image"
+        android:layout_alignLeft="@+id/destails_highscore_research_image"
+        android:layout_alignStart="@+id/destails_highscore_research_image"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/destails_highscore_economic_highscore"
+        android:layout_alignBottom="@+id/destails_highscore_economic_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="1 000 000"
+        android:id="@+id/destails_highscore_economic_points"
+        android:layout_alignTop="@+id/destails_highscore_economic_highscore"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_marginRight="-10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Place"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/destails_highscore_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Points"
+        android:id="@+id/textView3"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_toLeftOf="@+id/textView"
+        android:layout_marginRight="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="   "
+        android:id="@+id/textView"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

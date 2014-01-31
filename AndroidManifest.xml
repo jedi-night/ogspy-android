@@ -71,6 +71,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ogsteam.ogspy.OgspyActivity" />
         </activity>
+        <activity
+            android:name=".DialogActivity"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+            <!--activity android:name=".DialogActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar.MinWidth"/-->
+        </activity>
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

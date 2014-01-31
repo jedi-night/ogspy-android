@@ -41,7 +41,7 @@ public class DownloadHostilesTask extends DownloadTask {
             }
         } catch (Exception e) {
             Log.e(DEBUG_TAG, activity.getString(R.string.download_problem) + " (" + typeDownload.getLibelle() + ")", e);
-            if (!isCancelled()) cancel(true);
+            if (!isCancelled()) this.cancel(true);
         }
         return null;
     }

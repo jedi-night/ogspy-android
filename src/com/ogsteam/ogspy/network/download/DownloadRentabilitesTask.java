@@ -39,9 +39,9 @@ public class DownloadRentabilitesTask extends DownloadTask {
         this.helperRentabilites = null;
         Spinner rentaInterval = ((RentabilitesFragment) activity.getFragmentRentabilites()).getRentabiliteInterval();
         Spinner rentatype = ((RentabilitesFragment) activity.getFragmentRentabilites()).getRentabiliteType();
-        int positionSelected = rentaInterval==null?0:rentaInterval.getSelectedItemPosition();
-        int positionSelectedType = rentatype==null?0:rentatype.getSelectedItemPosition();
-        this.interval = activity.getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
+        int positionSelected = rentaInterval == null ? 0 : rentaInterval.getSelectedItemPosition();
+        int positionSelectedType = rentatype == null ? 0 : rentatype.getSelectedItemPosition();
+        this.interval = activity.getResources().getStringArray(R.array.interval_values)[positionSelected];
         this.type = activity.getResources().getStringArray(R.array.rentas_type_values)[positionSelectedType];
         typeDownload = DownloadType.RENTABILITES;
     }
@@ -60,7 +60,7 @@ public class DownloadRentabilitesTask extends DownloadTask {
             }
         } catch (Exception e) {
             Log.e(DEBUG_TAG, activity.getString(R.string.download_problem) + " (" + typeDownload.getLibelle() + ")", e);
-            if (!isCancelled()) cancel(true);
+            if (!isCancelled()) this.cancel(true);
         }
         return null;
     }

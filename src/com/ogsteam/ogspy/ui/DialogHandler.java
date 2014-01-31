@@ -2,9 +2,17 @@ package com.ogsteam.ogspy.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.ogsteam.ogspy.OgspyException;
+import com.ogsteam.ogspy.R;
+import com.ogsteam.ogspy.utils.helpers.Pair;
 
 public class DialogHandler {
     public Runnable ans_true = null;
@@ -34,6 +42,35 @@ public class DialogHandler {
         dialog.setIcon(android.R.drawable.ic_dialog_alert);
         dialog.show();
         return true;
+    }
+
+    public static void showCreateAccountDialog(final Pair user, Context context) {
+        // TODO Auto-generated method stub
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.new_account);
+
+        final EditText editTextUser = (EditText) dialog.findViewById(R.id.newAccountUserName);
+
+        Button buttonSave = (Button) dialog.findViewById(R.id.buttonNewAccountSave);
+        Button buttonCancel = (Button) dialog.findViewById(R.id.buttonNewAccountCancel);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                user.value = editTextUser.getText().toString();
+                if (user.value.length() > 0) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     public boolean showException(Activity act, OgspyException ogse) {

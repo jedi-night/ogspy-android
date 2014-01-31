@@ -26,7 +26,7 @@ public class TabsFragmentActivity extends FragmentActivity {
 
     TabHost mTabHost;
 
-    GeneralFragment fragmentGeneral;
+    SpysFragment fragmentGeneral;
     HostileFragment fragmentHostile;
     RentabilitesFragment fragmentRentabilites;
     AlertFragment fragmentAlert;
@@ -47,7 +47,7 @@ public class TabsFragmentActivity extends FragmentActivity {
         TAB_C = getApplicationContext().getResources().getString(R.string.rentabilites);
         TAB_D = "Messages";
 
-        fragmentGeneral = new GeneralFragment();
+        fragmentGeneral = new SpysFragment();
         fragmentHostile = new HostileFragment();
         fragmentRentabilites = new RentabilitesFragment();
         fragmentAlert = new AlertFragment();

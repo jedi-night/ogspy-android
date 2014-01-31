@@ -59,7 +59,7 @@ public class RentabilitesFragment extends Fragment {
         rentabiliteInterval = (Spinner) layout.findViewById(R.id.rentas_interval);
         rentabiliteType = (Spinner) layout.findViewById(R.id.rentas_type);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapterInterval = ArrayAdapter.createFromResource(OgspyActivity.activity, R.array.rentas_interval, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterInterval = ArrayAdapter.createFromResource(OgspyActivity.activity, R.array.interval, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(OgspyActivity.activity, R.array.rentas_type, android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
@@ -158,7 +158,7 @@ public class RentabilitesFragment extends Fragment {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if (preferences.contains("prefs_rentas_interval")) {
             String interval = preferences.getString("prefs_rentas_interval", "");
-            String[] intervals = getResources().getStringArray(R.array.rentas_interval_values);
+            String[] intervals = getResources().getStringArray(R.array.interval_values);
 
             for (int i = 0; i < intervals.length; i++) {
                 if (intervals[i].equals(interval)) {
@@ -192,7 +192,7 @@ public class RentabilitesFragment extends Fragment {
     }
 
     private String getIntervalFromSelectedPosition(int positionSelected) {
-        return OgspyActivity.activity.getResources().getStringArray(R.array.rentas_interval_values)[positionSelected];
+        return OgspyActivity.activity.getResources().getStringArray(R.array.interval_values)[positionSelected];
     }
 
 

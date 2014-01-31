@@ -55,13 +55,13 @@
     </string-array>
 
     <!-- RENTAS-->
-    <string-array name="rentas_interval">
+    <string-array name="interval">
         <item>Today</item>
         <item>Yesterday</item>
         <item>7 last days</item>
         <item>Month</item>
     </string-array>
-    <string-array name="rentas_interval_values">
+    <string-array name="interval_values">
         <item>day</item>
         <item>yesterday</item>
         <item>week</item>
@@ -105,15 +105,15 @@
     <string name="download_problem">Problème lors du telechargement !</string>
     <!-- END GCM -->
 
-    <!-- General -->
-    <string name="alliance_spys">Top Player (month)</string>
-    <string name="player_spys">Top Alliance (month)</string>
-    <string name="spy_title_me">My spys</string>
+    <!-- Spys -->
+    <string name="alliance_spys">Top Alliance</string>
+    <string name="player_spys">Top Player</string>
+
     <string name="ogspy_user_summary">Entrez votre nom d\'utilisateur</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <item>General</item>
+        <item>Spys</item>
         <item>Hostilities</item>
         <item>Profitabilities</item>
         <item>Messages</item>
@@ -122,7 +122,7 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_tab_general_selected</item>
+        <item>@android:drawable/ic_menu_view</item>
         <item>@drawable/ic_tab_hostiles_selected</item>
         <item>@drawable/ic_tab_rentabilites_selected</item>
         <item>@drawable/ic_tab_alert_selected</item>

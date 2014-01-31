@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg"
+    android:minHeight="300dp"
+    android:minWidth="250dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Rentabilité du joueur - {0}"
+        android:id="@+id/details_rentability_title"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/details_rentability_image_metal"
+        android:src="@drawable/ressource_metal"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/details_rentability_title"
+        android:layout_toLeftOf="@+id/details_rentability_value_metal"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/details_rentability_image_cristal"
+        android:src="@drawable/ressource_cristal"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/details_rentability_image_metal"
+        android:layout_alignLeft="@+id/details_rentability_image_metal"
+        android:layout_alignStart="@+id/details_rentability_image_metal"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/details_rentability_image_deuterium"
+        android:src="@drawable/ressource_deuterium"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/details_rentability_image_cristal"
+        android:layout_alignLeft="@+id/details_rentability_image_cristal"
+        android:layout_alignStart="@+id/details_rentability_image_cristal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text plus long"
+        android:id="@+id/details_rentability_value_metal"
+        android:layout_alignBottom="@+id/details_rentability_image_metal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text - long"
+        android:id="@+id/details_rentability_value_cristal"
+        android:layout_above="@+id/details_rentability_image_deuterium"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/details_rentability_value_deuterium"
+        android:layout_alignBottom="@+id/details_rentability_image_deuterium"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp" />
+
+</RelativeLayout>

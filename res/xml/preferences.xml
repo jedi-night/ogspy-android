@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Préférences"
+    android:key="prefs_screen_principal">
 
-    <PreferenceCategory android:title="@string/account_ogspy_title">
+    <com.ogsteam.ogspy.preferences.ListPreferenceShowSummary
+        android:title="Compte sélectionné"
+        android:key="prefs_accounts" />
 
-        <EditTextPreference
-            android:key="login"
-            android:title="@string/ogspy_user_title"
-            android:summary="@string/ogspy_user_summary"></EditTextPreference>
+    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:title="Détail du compte">
+        <PreferenceCategory android:title="@string/account_ogspy_title">
 
-        <EditTextPreference
-            android:title="@string/ogspy_password_title"
-            android:key="password"
-            android:summary="Entrez votre mot de passe"
-            android:password="true"></EditTextPreference>
+            <EditTextPreference
+                android:key="login"
+                android:title="@string/ogspy_user_title"
+                android:summary="@string/ogspy_user_summary"></EditTextPreference>
 
-        <EditTextPreference
-            android:title="@string/ogspy_server_url_title"
-            android:key="serverUrl"
-            android:summary="Entrez la racine de l'URL du server OGSPY"></EditTextPreference>
+            <EditTextPreference
+                android:title="@string/ogspy_password_title"
+                android:key="password"
+                android:summary="Entrez votre mot de passe"
+                android:password="true"></EditTextPreference>
 
-        <EditTextPreference
-            android:title="@string/ogspy_server_univers_title"
-            android:key="serverUnivers"
-            android:summary="Entrez l'URL du server de l'univers"></EditTextPreference>
-    </PreferenceCategory>
+            <EditTextPreference
+                android:title="@string/ogspy_server_url_title"
+                android:key="serverUrl"
+                android:summary="Entrez la racine de l'URL du server OGSPY"></EditTextPreference>
+
+            <EditTextPreference
+                android:title="@string/ogspy_server_univers_title"
+                android:key="serverUnivers"
+                android:summary="Entrez l'URL du server de l'univers"></EditTextPreference>
+        </PreferenceCategory>
+    </PreferenceScreen>
 
     <PreferenceCategory android:title="Rentabilités">
-        <ListPreference
+        <com.ogsteam.ogspy.preferences.ListPreferenceShowSummary
             android:title="Interval d'étude"
             android:key="prefs_rentas_interval"
-            android:entries="@array/rentas_interval"
-            android:entryValues="@array/rentas_interval_values" />
-        <ListPreference
+            android:entries="@array/interval"
+            android:entryValues="@array/interval_values" />
+        <com.ogsteam.ogspy.preferences.ListPreferenceShowSummary
             android:title="Type de camembert"
             android:key="prefs_rentas_type"
             android:entries="@array/rentas_type"

@@ -28,9 +28,9 @@ import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
 import com.ogsteam.ogspy.data.models.Account;
 import com.ogsteam.ogspy.fragments.tabs.AlertFragment;
 import com.ogsteam.ogspy.fragments.tabs.ConnectionFragment;
-import com.ogsteam.ogspy.fragments.tabs.GeneralFragment;
 import com.ogsteam.ogspy.fragments.tabs.HostileFragment;
 import com.ogsteam.ogspy.fragments.tabs.RentabilitesFragment;
+import com.ogsteam.ogspy.fragments.tabs.SpysFragment;
 import com.ogsteam.ogspy.network.ConnectionDetector;
 import com.ogsteam.ogspy.network.download.DownloadAllianceTask;
 import com.ogsteam.ogspy.network.download.DownloadHostilesTask;
@@ -44,9 +44,10 @@ import com.ogsteam.ogspy.permission.ServerUtilities;
 import com.ogsteam.ogspy.sliding.menu.adapter.NavDrawerListAdapter;
 import com.ogsteam.ogspy.sliding.menu.model.NavDrawerItem;
 import com.ogsteam.ogspy.ui.DialogHandler;
-import com.ogsteam.ogspy.ui.displays.GeneralUtils;
 import com.ogsteam.ogspy.ui.displays.HostileUtils;
 import com.ogsteam.ogspy.ui.displays.RentabilitesUtils;
+import com.ogsteam.ogspy.ui.displays.SpysUtils;
+import com.ogsteam.ogspy.utils.OgspyUtils;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -57,7 +58,7 @@ import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
 public class OgspyActivity extends Activity {
     /**
      * Receiving push messages
-     * */
+     */
     /*private BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -123,11 +124,11 @@ public class OgspyActivity extends Activity {
     private static boolean isWaiting = false;
 
     // Variables
-	public static DatabaseAccountHandler handlerAccount;
-	public static DatabasePreferencesHandler handlerPrefs;
+    public static DatabaseAccountHandler handlerAccount;
+    public static DatabasePreferencesHandler handlerPrefs;
     public static DatabaseMessagesHandler handlerMessages;
 
-	public static NotificationProvider notifProvider;
+    public static NotificationProvider notifProvider;
     public static CommonUtilities commonUtilities;
 
     public static DownloadServerTask downloadServerTask;
@@ -136,40 +137,42 @@ public class OgspyActivity extends Activity {
     public static DownloadSpysTask downloadSpysTask;
     public static DownloadRentabilitesTask downloadRentasTask;
 
-	// Connection detector
+    // Connection detector
     public static ConnectionDetector connection;
-    
+
     // Asyntask
     AsyncTask<Void, Void, Void> mRegisterTask;
-     
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_CONTEXT_MENU);
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.ogspy_tab_host);
+
+        OgspyUtils.init();
 
         activity = this;
         fragments = new ArrayList<Fragment>();
 
-        try{
+        try {
             versionOgspy = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (Exception e) {
-            Log.e(DEBUG_TAG,"Impossible de recuperer la version ogspy",e);
+            Log.e(DEBUG_TAG, "Impossible de recuperer la version ogspy", e);
         }
 
         connection = new ConnectionDetector(getApplicationContext());
 
-		handlerAccount = new DatabaseAccountHandler(this);
-		handlerPrefs = new DatabasePreferencesHandler(this);
+        handlerAccount = new DatabaseAccountHandler(this);
+        handlerPrefs = new DatabasePreferencesHandler(this);
         handlerMessages = new DatabaseMessagesHandler(this);
 
-        fragments.add(new GeneralFragment());
+        fragments.add(new SpysFragment());
         fragments.add(new HostileFragment());
         fragments.add(new RentabilitesFragment());
         fragments.add(new AlertFragment());
 
         commonUtilities = new CommonUtilities(this);
-		notifProvider = new NotificationProvider(this);
+        notifProvider = new NotificationProvider(this);
 
         //timer = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("timer_hostiles","0"));
 
@@ -193,21 +196,21 @@ public class OgspyActivity extends Activity {
         downloadDatas();
     }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         // Handle item selection
-		switch (item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.action_refresh:
                 refreshThisDatasFromMenuRefresh();
                 return true;
@@ -221,8 +224,8 @@ public class OgspyActivity extends Activity {
             case R.id.quit:
                 this.finish();
         }
-		return super.onOptionsItemSelected(item);
-	}
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Called when invalidateOptionsMenu() is triggered
@@ -256,19 +259,19 @@ public class OgspyActivity extends Activity {
 
     @Override
     public void onResume() {
-		super.onResume();
+        super.onResume();
         doGcm();
-		//notifProvider.deleteNotificationHostile();
-		//updateOgspyDatas();
+        //notifProvider.deleteNotificationHostile();
+        //updateOgspyDatas();
         //setAutomaticCheckHostiles();
         refreshThisDatasFromResume();
     }
 
-	@Override
-	public void onPause() {
-        if(autoUpdateHostiles != null) autoUpdateHostiles.cancel();
-		super.onPause();
-	}
+    @Override
+    public void onPause() {
+        if (autoUpdateHostiles != null) autoUpdateHostiles.cancel();
+        super.onPause();
+    }
 
     private void downloadDatas() {
         DownloadTask.executeDownload(this, downloadServerTask);
@@ -301,7 +304,7 @@ public class OgspyActivity extends Activity {
 					});
 				}
 			}, 0, timer); // updates each timer secs*/
-		/*}
+        /*}
 
 	}*/
 
@@ -310,7 +313,7 @@ public class OgspyActivity extends Activity {
             if (downloadSpysTask != null && downloadSpysTask.getSpysHelper() == null) {
                 DownloadTask.executeDownload(this, downloadSpysTask);
             } else {
-                GeneralUtils.showGeneral(null, null, downloadSpysTask.getSpysHelper(), this);
+                SpysUtils.showSpys(null, null, downloadSpysTask.getSpysHelper(), this);
             }
         } else if (selectedMenu == 1) {
             if (downloadHostilesTask != null && downloadHostilesTask.getHelperHostile() == null) {
@@ -337,56 +340,56 @@ public class OgspyActivity extends Activity {
         }
     }
 
-    public void unregisteringOgspy(View view){
+    public void unregisteringOgspy(View view) {
         new DialogHandler().confirm(this,
-                                    "Désincription aux notifications",
-                                    "Etes-vous sûr de vouloir vous désinscrire des notifications du serveur OGSPY ?",
-                                    "Non",
-                                    "Oui",
-                                    new Runnable() {
-                                        public void run() {
-                                            processUnregistering();
-                                        }
-                                    },
-                                    new Runnable() {
-                                        public void run() {
-                                        }
-                                    }
+                "Désincription aux notifications",
+                "Etes-vous sûr de vouloir vous désinscrire des notifications du serveur OGSPY ?",
+                "Non",
+                "Oui",
+                new Runnable() {
+                    public void run() {
+                        processUnregistering();
+                    }
+                },
+                new Runnable() {
+                    public void run() {
+                    }
+                }
         );
     }
 
-    public void processUnregistering(){
-        if(getFirstAccount() != null){
-            if(GCMRegistrar.isRegisteredOnServer(this) && !regId.equals("")) {
+    public void processUnregistering() {
+        if (getFirstAccount() != null) {
+            if (GCMRegistrar.isRegisteredOnServer(this) && !regId.equals("")) {
                 ServerUtilities.unregister(this, getFirstAccount().getUsername(), regId);
-                CommonUtilities.displayMessage(this,"Désinscription envoyée");
+                CommonUtilities.displayMessage(this, "Désinscription envoyée");
             } else {
-                CommonUtilities.displayMessage(this,"Vous n'etes pas enregistré, désincription impossible");
+                CommonUtilities.displayMessage(this, "Vous n'etes pas enregistré, désincription impossible");
             }
         } else {
-            CommonUtilities.displayMessage(this,getString(R.string.account_not_configured));
+            CommonUtilities.displayMessage(this, getString(R.string.account_not_configured));
         }
     }
 
-	public static DatabaseAccountHandler getHandlerAccount() {
-		return handlerAccount;
-	}
+    public static DatabaseAccountHandler getHandlerAccount() {
+        return handlerAccount;
+    }
 
-	public static Account getFirstAccount() {
-		Account account = null;
-		if(handlerAccount.getAllAccounts() != null && handlerAccount.getAllAccounts().size() > 0){
-			account = handlerAccount.getAllAccounts().get(0);
-		}
-		return account;
-	}
-	
-	public DatabasePreferencesHandler getHandlerPrefs() {
-		return handlerPrefs;
-	}
+    public static Account getFirstAccount() {
+        Account account = null;
+        if (handlerAccount.getAllAccounts() != null && handlerAccount.getAllAccounts().size() > 0) {
+            account = handlerAccount.getAllAccounts().get(0);
+        }
+        return account;
+    }
 
-	public static NotificationProvider getNotifProvider() {
-		return notifProvider;
-	}
+    public DatabasePreferencesHandler getHandlerPrefs() {
+        return handlerPrefs;
+    }
+
+    public static NotificationProvider getNotifProvider() {
+        return notifProvider;
+    }
 
     /*
         public static void setTimer(int timer) {
@@ -407,7 +410,7 @@ public class OgspyActivity extends Activity {
         super.onDestroy();
     }
 
-    private boolean doGcm(){
+    private boolean doGcm() {
         boolean retour = false;
         // Make sure the device has the proper dependencies.
         try {
@@ -440,11 +443,11 @@ public class OgspyActivity extends Activity {
 
                         @Override
                         protected Void doInBackground(Void... params) {*/
-                            // Register on our server
-                            // On server creates a new user
-                            if(account != null){
-                                ServerUtilities.register(context, account.getUsername(), regId);
-                            }
+                    // Register on our server
+                    // On server creates a new user
+                    if (account != null) {
+                        ServerUtilities.register(context, account.getUsername(), regId);
+                    }
                             /*return null;
                         }
 
@@ -470,30 +473,30 @@ public class OgspyActivity extends Activity {
         return versionOgspy;
     }
 
-    public void sendAlert(View v){
-        if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
+    public void sendAlert(View v) {
+        if (!activity.getHandlerAccount().getAllAccounts().isEmpty()) {
             EditText messageEditText = ((AlertFragment) getFragmentAlert()).getMessage();
             if (messageEditText.getText() != null && messageEditText.getText().length() > 0) {
                 ServerUtilities.sendAlertMesage(this, regId, activity.getHandlerAccount().getAccountById(0).getUsername(), messageEditText.getText().toString());
                 messageEditText.setText("");
             } else {
-                CommonUtilities.displayMessage(this,"Le message d'alerte est vide, il n'a donc pas été envoyé.");
+                CommonUtilities.displayMessage(this, "Le message d'alerte est vide, il n'a donc pas été envoyé.");
             }
         }
     }
 
-    public void showWaiting(boolean visible){
-            if(visible){
-                if(!isWaiting){
-                    findViewById(R.id.tabcontent).setVisibility(View.GONE);
-                    findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
-                    isWaiting=true;
-                }
-            } else {
-                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-                findViewById(R.id.tabcontent).setVisibility(View.VISIBLE);
-                isWaiting=false;
+    public void showWaiting(boolean visible) {
+        if (visible) {
+            if (!isWaiting) {
+                findViewById(R.id.tabcontent).setVisibility(View.GONE);
+                findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                isWaiting = true;
             }
+        } else {
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            findViewById(R.id.tabcontent).setVisibility(View.VISIBLE);
+            isWaiting = false;
+        }
     }
 
     private void setMenuSliding(Bundle savedInstanceState) {

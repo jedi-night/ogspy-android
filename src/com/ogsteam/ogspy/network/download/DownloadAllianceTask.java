@@ -5,7 +5,6 @@ import android.util.Log;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
-import com.ogsteam.ogspy.ui.displays.GeneralUtils;
 import com.ogsteam.ogspy.utils.HttpUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
 import com.ogsteam.ogspy.utils.StringUtils;
@@ -41,13 +40,13 @@ public class DownloadAllianceTask extends DownloadTask {
             }
         } catch (Exception e) {
             Log.e(DEBUG_TAG, activity.getString(R.string.download_problem) + " (" + typeDownload.getLibelle() + ")", e);
-            if (!isCancelled()) cancel(true);
+            if (!isCancelled()) this.cancel(true);
         }
         return null;
     }
 
     protected void onPostExecute(String result) {
-        GeneralUtils.showGeneral(null, allianceHelper, null, activity);
+        //SpysUtils.showGeneral(null, allianceHelper, null, activity);
     }
 
     public AllianceHelper getAllianceHelper() {
