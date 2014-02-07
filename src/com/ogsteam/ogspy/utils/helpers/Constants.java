@@ -23,4 +23,5 @@ public interface Constants {
     /* EXEPTIONS */
     public static final Pair EXCEPTION_SAISIE = new Pair(0, "Problème de saisie");
     public static final Pair EXCEPTION_DATA_SAVE = new Pair(1, "Problème de sauvegarde");
+    public static final Pair EXCEPTION_DATA_DELETE = new Pair(2, "Problème de suppression");
 }

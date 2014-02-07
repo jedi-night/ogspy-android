@@ -2,6 +2,7 @@ package com.ogsteam.ogspy;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -11,25 +12,37 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.ogsteam.ogspy.data.DatabaseAccountHandler;
+import com.ogsteam.ogspy.data.models.Account;
 import com.ogsteam.ogspy.permission.CommonUtilities;
+import com.ogsteam.ogspy.preferences.Accounts;
+import com.ogsteam.ogspy.ui.DialogHandler;
 import com.ogsteam.ogspy.utils.NumberUtils;
+import com.ogsteam.ogspy.utils.OgspyUtils;
 import com.ogsteam.ogspy.utils.StringUtils;
 import com.ogsteam.ogspy.utils.helpers.Constants;
 import com.ogsteam.ogspy.utils.objects.HighScore;
 
 public class DialogActivity extends Activity {
+    public static DialogActivity activity;
+
     public static final int TYPE_HIGHSCORE_PLAYER = 1;
     public static final int TYPE_HIGHSCORE_ALLY = 2;
     public static final int TYPE_RENTA_DETAIL = 3;
-    public static final int TYPE_NEW_ACCOUNT = TYPE_RENTA_DETAIL + 1;
+    public static final int TYPE_ACCOUNT = TYPE_RENTA_DETAIL + 1;
+
+    public static final String ACCOUNT_NEW = "NEW";
+    public static final String ACCOUNT_MODIFY = "MODIFY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         final Bundle b = getIntent().getExtras();
         int type = b.getInt("type");
         if (TYPE_HIGHSCORE_PLAYER == type || TYPE_HIGHSCORE_ALLY == type) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+
             setContentView(R.layout.details_highscore);
             HighScore highscore = (HighScore) b.get("highscore");
             String name = b.getString("name");
@@ -65,6 +78,8 @@ public class DialogActivity extends Activity {
             economicRank.setText(highscore.getPtsEconomic() > 0 ? highscore.getRankEconomic() : "  -  ");
 
         } else if (TYPE_RENTA_DETAIL == type) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+
             setContentView(R.layout.details_rentability);
 
             String name = b.getString("name");
@@ -82,29 +97,72 @@ public class DialogActivity extends Activity {
             metalView.setText(NumberUtils.format(metal));
             cristalView.setText(NumberUtils.format(cristal));
             deuteriumView.setText(NumberUtils.format(deuterium));
-        } else if (TYPE_NEW_ACCOUNT == type) {
+        } else if (TYPE_ACCOUNT == type) {
             setContentView(R.layout.new_account);
-            final EditText editTextUser = (EditText) findViewById(R.id.newAccountUserName);
+            this.setFinishOnTouchOutside(false);
 
-            Spinner accountsList = (Spinner) findViewById(R.id.newAccountServers);
+            final DatabaseAccountHandler accountHandler = OgspyActivity.activity.getHandlerAccount();
+            final String creation = b.getString("creation");
+            final String accountId = b.getString("accountId");
+
+            final EditText user = (EditText) findViewById(R.id.newAccountUserName);
+            final EditText password = (EditText) findViewById(R.id.newAccountPassword);
+            final EditText serverOgspy = (EditText) findViewById(R.id.newAccountServerOgspy);
+
+            final Spinner serversUniversList = (Spinner) findViewById(R.id.newAccountServers);
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(OgspyPreferencesActivity.activity, R.array.servers, android.R.layout.simple_spinner_item);
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             // Apply the adapter to the spinner
-            if (accountsList != null && adapter != null) {
-                accountsList.setAdapter(adapter);
+            if (serversUniversList != null && adapter != null) {
+                serversUniversList.setAdapter(adapter);
             }
 
+
+            Button buttonDelete = (Button) findViewById(R.id.buttonNewAccountDelete);
+            if (ACCOUNT_NEW.equals(creation)) {
+                setTitle("Nouveau compte");
+                buttonDelete.setVisibility(Button.INVISIBLE);
+            } else {
+                Account account = accountHandler.getAccountById(Integer.parseInt(accountId));
+                setTitle(account.getUsername() + " - " + OgspyUtils.getUniversNameFromUrl(account.getServerUnivers()));
+
+                user.setText(account.getUsername());
+                password.setText(account.getPassword());
+                serverOgspy.setText(account.getServerUrl());
+                serversUniversList.setSelection(OgspyUtils.getUniversPositionFromUrl(account.getServerUnivers()));
+
+                buttonDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DialogHandler.confirm(DialogActivity.activity, "Suppression de compte", "Voulez-vous réellement supprimer le compte ?", "Annuler", "Ok",
+                                new Runnable() {
+                                    public void run() {
+                                        deleteAccount(accountHandler, accountId);
+                                    }
+                                },
+                                new Runnable() {
+                                    public void run() {
+                                    }
+                                }
+                        );
+
+                    }
+                });
+            }
             Button buttonSave = (Button) findViewById(R.id.buttonNewAccountSave);
             Button buttonCancel = (Button) findViewById(R.id.buttonNewAccountCancel);
             buttonSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (editTextUser.getText().length() > 0) {
-                        CommonUtilities.displayMessage(OgspyPreferencesActivity.activity, "Création du nouveau compte : " + editTextUser.getText());
+                    if (OgspyUtils.checkUserAccount(user.getText().toString(), password.getText().toString(), serverOgspy.getText().toString())) {
+                        if (ACCOUNT_NEW.equals(creation)) {
+                            Accounts.saveAccount(OgspyActivity.activity, user.getText().toString(), password.getText().toString(), serverOgspy.getText().toString(), getServerUrlFromSelectedPosition(serversUniversList.getSelectedItemPosition()));
+                        } else {
+                            Accounts.updateAccount(OgspyActivity.activity, accountId, user.getText().toString(), password.getText().toString(), serverOgspy.getText().toString(), getServerUrlFromSelectedPosition(serversUniversList.getSelectedItemPosition()));
+                        }
+                        OgspyPreferencesActivity.activity.refreshAcountsList((ListPreference) OgspyPreferencesActivity.activity.findPreference("prefs_accounts"));
                         finish();
-                    } else {
-                        CommonUtilities.displayMessage(OgspyPreferencesActivity.activity, "Problème lors de la saisie du compte !");
                     }
                 }
             });
@@ -115,33 +173,20 @@ public class DialogActivity extends Activity {
                 }
             });
         }
+        activity = this;
     }
 
-    private static boolean check(String username, String password, String serverUrl) throws OgspyException {
-        boolean status = true;
-        StringBuilder sb = new StringBuilder();
+    private void deleteAccount(DatabaseAccountHandler accountHandler, String accountId) {
+        if (accountHandler.deleteAccountById(accountId) != -1) {
+            CommonUtilities.displayMessage(OgspyActivity.activity, "Le compte a été supprimé");
+            OgspyPreferencesActivity.activity.refreshAcountsList((ListPreference) OgspyPreferencesActivity.activity.findPreference("prefs_accounts"));
+        } else {
+            new DialogHandler().showException(OgspyActivity.activity, new OgspyException("Le compte n'a pu être supprimé", Constants.EXCEPTION_DATA_DELETE));
+        }
+        finish();
+    }
 
-        if (username == null || username.length() == 0) {
-            status = false;
-            sb.append("Le nom d'utilisateur est obligatoire !");
-        }
-        if (password == null || password.length() == 0) {
-            status = false;
-            if (sb.toString().length() > 0) {
-                sb.append("\n");
-            }
-            sb.append("Le mot de passe est obligatoire !");
-        }
-        if (serverUrl == null || !serverUrl.matches("http://.*")) {
-            status = false;
-            if (sb.toString().length() > 0) {
-                sb.append("\n");
-            }
-            sb.append("L'adresse du serveur OGSPY est obligatoire et doit être cohérente (http://....)!");
-        }
-        if (sb.toString().length() > 0) {
-            throw new OgspyException(sb.toString(), Constants.EXCEPTION_SAISIE);
-        }
-        return status;
+    private String getServerUrlFromSelectedPosition(int positionSelected) {
+        return OgspyActivity.activity.getResources().getStringArray(R.array.servers_values)[positionSelected];
     }
 }

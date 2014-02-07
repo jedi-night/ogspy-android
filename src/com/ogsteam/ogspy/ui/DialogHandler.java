@@ -15,10 +15,10 @@ import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.utils.helpers.Pair;
 
 public class DialogHandler {
-    public Runnable ans_true = null;
-    public Runnable ans_false = null;
+    public static Runnable ans_true = null;
+    public static Runnable ans_false = null;
 
-    public boolean confirm(Activity act, String title, String confirmText, String cancelBtn, String okBtn, Runnable okProcedure, Runnable koProcedure) {
+    public static boolean confirm(Activity act, String title, String confirmText, String cancelBtn, String okBtn, Runnable okProcedure, Runnable koProcedure) {
         ans_true = okProcedure;
         ans_false= koProcedure;
         AlertDialog dialog = new AlertDialog.Builder(act).create();

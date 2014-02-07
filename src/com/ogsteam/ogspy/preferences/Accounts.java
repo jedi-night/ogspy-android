@@ -6,7 +6,9 @@ import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.OgspyException;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.ui.DialogHandler;
+import com.ogsteam.ogspy.utils.StringUtils;
 import com.ogsteam.ogspy.utils.helpers.Constants;
 
 public class Accounts {
@@ -49,7 +51,7 @@ public class Accounts {
      * Called when the user clicks the Save button in account
      */
     /*public static void saveAccount(OgspyActivity activity) {
-		String username = AccountFragment.getUser().getText().toString();
+        String username = AccountFragment.getUser().getText().toString();
 		String password = AccountFragment.getPassword().getText().toString();
 		String serverUrl = AccountFragment.getServerUrl().getText().toString();
 		String serverUnivers = AccountFragment.getServerUniverse().getText().toString();
@@ -84,6 +86,33 @@ public class Accounts {
                 //CommonUtilities.displayMessage(activity, activity.getString(R.string.save_account_ko));
                 //Toast.makeText(activity, activity.getString(R.string.save_account_ko), Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    public static void saveAccount(OgspyActivity activity, String username, String password, String serverUrl, String serverUnivers) {
+        Account lastAccount = activity.getHandlerAccount().getLastAccount();
+        if (lastAccount != null) {
+            if (activity.getHandlerAccount().addAccount(new Account((lastAccount.getId() + 1), username, password, serverUrl, serverUnivers)) != -1) {
+                CommonUtilities.displayMessage(activity, StringUtils.formatPattern(activity.getString(R.string.save_account_ok), username));
+            } else {
+                new DialogHandler().showException(OgspyActivity.activity, new OgspyException("Le compte n'a pu être sauvegardé", Constants.EXCEPTION_DATA_SAVE));
+            }
+        } else {
+            if (activity.getHandlerAccount().addAccount(new Account(0, username, password, serverUrl, serverUnivers)) != -1) {
+                CommonUtilities.displayMessage(activity, StringUtils.formatPattern(activity.getString(R.string.save_account_ok), username));
+            } else {
+                new DialogHandler().showException(OgspyActivity.activity, new OgspyException("Le compte n'a pu être sauvegardé", Constants.EXCEPTION_DATA_SAVE));
+            }
+        }
+
+    }
+
+
+    public static void updateAccount(OgspyActivity activity, String id, String username, String password, String serverUrl, String serverUnivers) {
+        if (activity.getHandlerAccount().updateAccount(new Account(Integer.parseInt(id), username, password, serverUrl, serverUnivers)) != -1) {
+            CommonUtilities.displayMessage(activity, StringUtils.formatPattern(activity.getString(R.string.save_account_ok), username));
+        } else {
+            new DialogHandler().showException(OgspyActivity.activity, new OgspyException("Le compte n'a pu être sauvegardé", Constants.EXCEPTION_DATA_SAVE));
         }
     }
 

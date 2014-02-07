@@ -30,7 +30,7 @@
     <string name="save_account_server_url_ko">Wrong Server URL, may be malformed</string>
     <string name="save_account_server_univers_ko">Wrong Universe URL, may be malformed</string>
 
-    <string name="save_account_ok">Account saved</string>
+    <string name="save_account_ok">Account "{0}" saved</string>
     <string name="save_account_ko">Save of account failed</string>
 
     <!-- Pref -->

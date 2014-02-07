@@ -1,5 +1,7 @@
 package com.ogsteam.ogspy.data.models;
 
+import com.ogsteam.ogspy.utils.OgspyUtils;
+
 public class Account {
 	
 	private int id;
@@ -65,5 +67,10 @@ public class Account {
 	public void setServerUnivers(String serverUnivers) {
 		this.serverUnivers = serverUnivers;
 	}
+
+    @Override
+    public String toString() {
+        return (username + " - " + OgspyUtils.getUniversNameFromUrl(serverUnivers));
+    }
 
 }

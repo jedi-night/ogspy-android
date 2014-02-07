@@ -4,7 +4,7 @@
     android:versionCode="16"
     android:versionName="1.5.1">
 
-<uses-sdk
+    <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
@@ -73,7 +73,7 @@
         </activity>
         <activity
             android:name=".DialogActivity"
-            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
             android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

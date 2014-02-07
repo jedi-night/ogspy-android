@@ -6,6 +6,13 @@
         android:showAsAction="never"
         android:title="@string/hostiles"/-->
     <item
+        android:id="@+id/action_compte"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:actionViewClass="android.widget.Spinner"
+        android:icon="@android:drawable/btn_dropdown"
+        android:title="Compte" />
+    <item
         android:id="@+id/action_refresh"
         android:orderInCategory="100"
         android:showAsAction="always"

@@ -18,8 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.google.android.gcm.GCMRegistrar;
 import com.ogsteam.ogspy.data.DatabaseAccountHandler;
@@ -50,6 +52,7 @@ import com.ogsteam.ogspy.ui.displays.SpysUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 
 import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
@@ -140,6 +143,8 @@ public class OgspyActivity extends Activity {
     // Connection detector
     public static ConnectionDetector connection;
 
+    private static int lastSeletedAccountPosition = -1;
+
     // Asyntask
     AsyncTask<Void, Void, Void> mRegisterTask;
 
@@ -200,6 +205,9 @@ public class OgspyActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        //Spinner accounts = (Spinner) menu.findItem(R.id.action_compte).getActionView(); // find the spinner
+        Spinner accounts = (Spinner) menu.findItem(R.id.action_compte).getActionView();
+        refreshAcountsList(accounts);
         return true;
     }
 
@@ -697,5 +705,45 @@ public class OgspyActivity extends Activity {
         }
     }
 
+
+    public void refreshAcountsList(Spinner accountsList) {
+
+        List<String> entries = new ArrayList<String>();
+        List<String> entryValues = new ArrayList<String>();
+
+        final List<Account> accounts = OgspyActivity.activity.getHandlerAccount().getAllAccounts();
+        ArrayAdapter<Account> dataAdapter = new ArrayAdapter<Account>(this, android.R.layout.simple_spinner_item, accounts);
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter to spinner
+        accountsList.setAdapter(dataAdapter);
+        accountsList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (lastSeletedAccountPosition >= 0 && lastSeletedAccountPosition != position) {
+                    Account accSelect = accounts.get(position);
+                    CommonUtilities.displayMessage(OgspyActivity.activity, "Selection du compte " + accSelect.getUsername() + " - " + OgspyUtils.getUniversNameFromUrl(accSelect.getServerUnivers()));
+                }
+                lastSeletedAccountPosition = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        /*
+        for (Account acc : accounts) {
+            entryValues.add(String.valueOf(acc.getId()));
+            entries.add(acc.getUsername() + " - " + OgspyUtils.getUniversNameFromUrl(acc.getServerUnivers()));
+        }
+        Account lastAccount = OgspyActivity.activity.getHandlerAccount().getLastAccount();
+
+
+
+        accountsList.setEntries(entries.toArray(new CharSequence[entries.size()]));
+        accountsList.setEntryValues(entryValues.toArray(new CharSequence[entryValues.size()]));*/
+    }
 
 }

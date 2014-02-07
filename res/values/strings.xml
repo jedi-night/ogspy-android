@@ -30,7 +30,7 @@
     <string name="save_account_server_url_ko">L\'URL du serveur n\'est pas une URL</string>
     <string name="save_account_server_univers_ko">L\'URL de l\'univers n\'est pas une URL</string>
 
-    <string name="save_account_ok">Sauvegarde du compte effectué</string>
+    <string name="save_account_ok">Sauvegarde du compte "{0}" effectué</string>
     <string name="save_account_ko">Echec de la sauvegarde du compte</string>
 
     <!-- Pref -->
@@ -58,13 +58,13 @@
 
     <!-- RENTAS-->
     <string-array name="interval">
-    <item>Aujourd\'hui</item>
+        <item>Aujourd\'hui</item>
         <item>Hier</item>
         <item>7 derniers jours</item>
         <item>Mois</item>
     </string-array>
     <string-array name="interval_values">
-    <item>day</item>
+        <item>day</item>
         <item>yesterday</item>
         <item>week</item>
         <item>month</item>

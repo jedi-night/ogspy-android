@@ -8,7 +8,7 @@
         android:title="Compte sélectionné"
         android:key="prefs_accounts" />
 
-    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    <!--PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="Détail du compte">
         <PreferenceCategory android:title="@string/account_ogspy_title">
 
@@ -33,7 +33,7 @@
                 android:key="serverUnivers"
                 android:summary="Entrez l'URL du server de l'univers"></EditTextPreference>
         </PreferenceCategory>
-    </PreferenceScreen>
+    </PreferenceScreen-->
 
     <PreferenceCategory android:title="Rentabilités">
         <com.ogsteam.ogspy.preferences.ListPreferenceShowSummary

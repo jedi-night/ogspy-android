@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 
 import com.ogsteam.ogspy.data.models.Account;
 import com.ogsteam.ogspy.permission.CommonUtilities;
-import com.ogsteam.ogspy.preferences.Accounts;
 import com.ogsteam.ogspy.preferences.Preferences;
 import com.ogsteam.ogspy.ui.DialogHandler;
 import com.ogsteam.ogspy.utils.OgspyUtils;
@@ -31,33 +30,26 @@ public class OgspyPreferencesActivity extends PreferenceActivity {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         ListPreference accountsList = (ListPreference) findPreference("prefs_accounts");
-        List<String> entries = new ArrayList<String>();
-        List<String> entryValues = new ArrayList<String>();
+        refreshAcountsList(accountsList);
 
-        List<Account> accounts = OgspyActivity.activity.getHandlerAccount().getAllAccounts();
-        for (Account acc : accounts) {
-            entryValues.add(String.valueOf(acc.getId()));
-            entries.add(acc.getUsername() + " - " + OgspyUtils.getUniversNameFromUrl(acc.getServerUnivers()));
-        }
-        // Ajout de la ligne de creation
-        entryValues.add(String.valueOf(OgspyActivity.activity.getHandlerAccount().getAccountsCount()));
-        entries.add(LIBELLE_NOUVEAU_COMPTE);
-
-        accountsList.setEntries(entries.toArray(new CharSequence[entries.size()]));
-        accountsList.setEntryValues(entryValues.toArray(new CharSequence[entryValues.size()]));
         accountsList.setOnPreferenceChangeListener(
                 new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        //CommonUtilities.displayMessage(OgspyActivity.activity, preference.getKey() + " new value=" + newValue);
-                        if (Integer.parseInt((String) newValue) == OgspyActivity.activity.getHandlerAccount().getAccountsCount()) {
-                            //CommonUtilities.displayMessage(OgspyActivity.activity, " Création d'un nouveau compte !");
-                            Intent dialog = new Intent(activity, DialogActivity.class);
-                            dialog.putExtra("type", DialogActivity.TYPE_NEW_ACCOUNT);
-                            activity.startActivity(dialog);
+                        Account lastAccount = OgspyActivity.activity.getHandlerAccount().getLastAccount();
+                        Intent dialog = new Intent(activity, DialogActivity.class);
+                        // New account
+                        if (lastAccount == null || (Integer.parseInt((String) newValue) > lastAccount.getId())) {
+                            dialog.putExtra("type", DialogActivity.TYPE_ACCOUNT);
+                            dialog.putExtra("creation", DialogActivity.ACCOUNT_NEW);
+                            // Display account
                         } else {
-                            Accounts.showAccount(OgspyActivity.activity, sharedPreferences);
+                            dialog.putExtra("type", DialogActivity.TYPE_ACCOUNT);
+                            dialog.putExtra("creation", DialogActivity.ACCOUNT_MODIFY);
+                            dialog.putExtra("accountId", (String) newValue);
+                            //Accounts.showAccount(OgspyActivity.activity, sharedPreferences);
                         }
+                        activity.startActivity(dialog);
                         return true;
                     }
                 });
@@ -67,11 +59,11 @@ public class OgspyPreferencesActivity extends PreferenceActivity {
 
     @Override
     protected void onDestroy() {
-        try {
+        /*try {
             Accounts.saveAccount(OgspyActivity.activity, PreferenceManager.getDefaultSharedPreferences(this));
         } catch (OgspyException ogse){
             new DialogHandler().showException(OgspyActivity.activity, ogse);
-        }
+        }*/
         try {
             Preferences.savePrefs(OgspyActivity.activity, PreferenceManager.getDefaultSharedPreferences(this));
         } catch (OgspyException ogse){
@@ -79,6 +71,25 @@ public class OgspyPreferencesActivity extends PreferenceActivity {
         }
         CommonUtilities.displayMessage(OgspyActivity.activity, "Préférences enregistrées");
         super.onDestroy();
+    }
+
+    public void refreshAcountsList(ListPreference accountsList) {
+
+        List<String> entries = new ArrayList<String>();
+        List<String> entryValues = new ArrayList<String>();
+
+        List<Account> accounts = OgspyActivity.activity.getHandlerAccount().getAllAccounts();
+        for (Account acc : accounts) {
+            entryValues.add(String.valueOf(acc.getId()));
+            entries.add(acc.getUsername() + " - " + OgspyUtils.getUniversNameFromUrl(acc.getServerUnivers()));
+        }
+        Account lastAccount = OgspyActivity.activity.getHandlerAccount().getLastAccount();
+        // Ajout de la ligne de creation
+        entryValues.add(String.valueOf(lastAccount == null ? "0" : lastAccount.getId() + 1));
+        entries.add(LIBELLE_NOUVEAU_COMPTE);
+
+        accountsList.setEntries(entries.toArray(new CharSequence[entries.size()]));
+        accountsList.setEntryValues(entryValues.toArray(new CharSequence[entryValues.size()]));
     }
 
 }

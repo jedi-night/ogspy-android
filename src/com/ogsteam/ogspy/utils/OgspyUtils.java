@@ -3,6 +3,7 @@ package com.ogsteam.ogspy.utils;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.notification.NotificationProvider;
+import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.utils.helpers.HostilesHelper;
 import com.ogsteam.ogspy.utils.security.MD5;
 import com.ogsteam.ogspy.utils.security.SHA1;
@@ -10,23 +11,15 @@ import com.ogsteam.ogspy.utils.security.SHA1;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class OgspyUtils {
-    private static HashMap<String, String> serveurs = new HashMap<String, String>();
+    private static LinkedHashMap<String, String> serveurs = new LinkedHashMap<String, String>();
 
     public static void init() {
-        serveurs.put("s1-fr.ogame.gameforge.com", "1. univers");
-        serveurs.put("s10-fr.ogame.gameforge.com", "10. univers");
-        serveurs.put("s50-fr.ogame.gameforge.com", "50. univers");
-        serveurs.put("s60-fr.ogame.gameforge.com", "60. univers");
-        serveurs.put("s64-fr.ogame.gameforge.com", "64. univers");
-        serveurs.put("s65-fr.ogame.gameforge.com", "65. univers");
-        serveurs.put("s66-fr.ogame.gameforge.com", "66. univers");
-        serveurs.put("s67-fr.ogame.gameforge.com", "67. univers");
-        serveurs.put("s68-fr.ogame.gameforge.com", "68. univers");
         serveurs.put("s101-fr.ogame.gameforge.com", "Andromeda");
         serveurs.put("s102-fr.ogame.gameforge.com", "Barym");
         serveurs.put("s103-fr.ogame.gameforge.com", "Capella");
@@ -52,10 +45,48 @@ public class OgspyUtils {
         serveurs.put("s123-fr.ogame.gameforge.com", "Wasat");
         serveurs.put("s124-fr.ogame.gameforge.com", "Xalynth");
         serveurs.put("s125-fr.ogame.gameforge.com", "Yakini");
+        serveurs.put("s1-fr.ogame.gameforge.com", "1. univers");
+        serveurs.put("s10-fr.ogame.gameforge.com", "10. univers");
+        serveurs.put("s50-fr.ogame.gameforge.com", "50. univers");
+        serveurs.put("s60-fr.ogame.gameforge.com", "60. univers");
+        serveurs.put("s64-fr.ogame.gameforge.com", "64. univers");
+        serveurs.put("s65-fr.ogame.gameforge.com", "65. univers");
+        serveurs.put("s66-fr.ogame.gameforge.com", "66. univers");
+        serveurs.put("s67-fr.ogame.gameforge.com", "67. univers");
+        serveurs.put("s68-fr.ogame.gameforge.com", "68. univers");
     }
 
     public static String enryptPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         return MD5.toMD5(SHA1.toSHA1(password));
+    }
+
+    public static boolean checkUserAccount(String username, String password, String serverUrl) {
+        boolean status = true;
+        StringBuilder sb = new StringBuilder();
+
+        if (username == null || username.length() == 0) {
+            status = false;
+            sb.append("Le nom d'utilisateur est obligatoire !");
+        }
+        if (password == null || password.length() == 0) {
+            status = false;
+            if (sb.toString().length() > 0) {
+                sb.append("\n");
+            }
+            sb.append("Le mot de passe est obligatoire !");
+        }
+        if (serverUrl == null || !serverUrl.matches("http://.*")) {
+            status = false;
+            if (sb.toString().length() > 0) {
+                sb.append("\n");
+            }
+            sb.append("L'adresse du serveur OGSPY est obligatoire, doit être cohérente (http://monserveur/monogspy) !");
+        }
+        if (sb.toString().length() > 0) {
+            CommonUtilities.displayMessage(OgspyActivity.activity, sb.toString());
+            //throw new OgspyException(sb.toString(), Constants.EXCEPTION_SAISIE);
+        }
+        return status;
     }
 
     public static String traiterReponseHostiles(HostilesHelper helperHostile, OgspyActivity activity) {
@@ -90,7 +121,18 @@ public class OgspyUtils {
         return serveurs.get(url.replace("http://", ""));
     }
 
-	/*
+    public static int getUniversPositionFromUrl(String url) {
+        int compteur = 0;
+        for (Map.Entry<String, String> entry : serveurs.entrySet()) {
+            String key = entry.getKey();
+            if (url.replace("http://", "").equals(key)) {
+                return compteur;
+            }
+            compteur++;
+        }
+        return 0;
+    }
+    /*
     public static int getTimerHostiles(Activity activity, DatabasePreferencesHandler handlerPrefs){
 		int timer = (Constants.TIMER_DEFAULT_VALUE * 60 * 1000);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.prefs_timer_hostiles, android.R.layout.simple_spinner_item);
