@@ -4,9 +4,15 @@
     android:title="Préférences"
     android:key="prefs_screen_principal">
 
-    <com.ogsteam.ogspy.preferences.ListPreferenceShowSummary
-        android:title="Compte sélectionné"
-        android:key="prefs_accounts" />
+    <PreferenceCategory android:title="Comptes OGSpy">
+        <ListPreference
+            android:title="Gestion des comptes"
+            android:key="prefs_accounts" />
+        <com.ogsteam.ogspy.preferences.ListPreferenceShowSummary
+            android:title="Compte par défaut"
+            android:key="prefs_account_selected" />
+    </PreferenceCategory>
+
 
     <!--PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="Détail du compte">

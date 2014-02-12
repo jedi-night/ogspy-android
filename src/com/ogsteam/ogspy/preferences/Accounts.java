@@ -20,9 +20,8 @@ public class Accounts {
             if (positionAccount != null) {
                 account = activity.getHandlerAccount().getAccountById(Integer.parseInt(positionAccount));
             } else {
-                account = activity.getHandlerAccount().getAccountById(0);
+                account = activity.getHandlerAccount().getAllAccounts().get(0);
             }
-            //Account account = activity.getHandlerAccount().getAccountById(0);
             if (account != null) {
                 SharedPreferences.Editor editor = preferences.edit();
                 int accountId = account.getId();

@@ -49,8 +49,8 @@ public class DownloadRentabilitesTask extends DownloadTask {
     @Override
     protected String doInBackground(String... params) {
         try {
-            if (!activity.getHandlerAccount().getAllAccounts().isEmpty()) {
-                Account account = activity.getHandlerAccount().getAccountById(0);
+            Account account = activity.getSelectedAccount();
+            if (!activity.getHandlerAccount().getAllAccounts().isEmpty() && account != null) {
                 String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), activity.versionAndroid, activity.getVersionOgspy(), activity.getDeviceName(), Constants.XTENSE_TYPE_RENTABILITES).concat("&interval=" + interval).concat("&typerenta=" + type);
                 String data = HttpUtils.getUrl(url);
                 if (data != null) {

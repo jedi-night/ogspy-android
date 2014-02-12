@@ -1,12 +1,9 @@
 package com.ogsteam.ogspy;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 /**
@@ -49,7 +46,7 @@ public class OgspyAboutActivity extends Activity {
         email.setText(Html.fromHtml(emailText));
         email.setMovementMethod(LinkMovementMethod.getInstance());
     }
-
+/*
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -65,14 +62,14 @@ public class OgspyAboutActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
+        switch (item.getItemId()) {*/
         /*case R.id.ogspy_activity:
-			//setContentView(R.layout.hostiles);
+            //setContentView(R.layout.hostiles);
 			// Step 1: Inflate layout
 	        setContentView(R.layout.ogspy_tab_host);
 	        mTabHost.setCurrentTab(0); //set the tab as per the saved state
 			return true;*/
-            case R.id.about:
+            /*case R.id.about:
                 startActivity(new Intent(this, OgspyAboutActivity.class));
                 return true;
             case R.id.prefs:
@@ -84,4 +81,5 @@ public class OgspyAboutActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+                */
 }

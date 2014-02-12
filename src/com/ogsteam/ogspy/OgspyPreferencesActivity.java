@@ -83,6 +83,11 @@ public class OgspyPreferencesActivity extends PreferenceActivity {
             entryValues.add(String.valueOf(acc.getId()));
             entries.add(acc.getUsername() + " - " + OgspyUtils.getUniversNameFromUrl(acc.getServerUnivers()));
         }
+
+        ListPreference accountSelectedList = (ListPreference) findPreference("prefs_account_selected");
+        accountSelectedList.setEntries(entries.toArray(new CharSequence[entries.size()]));
+        accountSelectedList.setEntryValues(entryValues.toArray(new CharSequence[entryValues.size()]));
+
         Account lastAccount = OgspyActivity.activity.getHandlerAccount().getLastAccount();
         // Ajout de la ligne de creation
         entryValues.add(String.valueOf(lastAccount == null ? "0" : lastAccount.getId() + 1));
@@ -90,6 +95,7 @@ public class OgspyPreferencesActivity extends PreferenceActivity {
 
         accountsList.setEntries(entries.toArray(new CharSequence[entries.size()]));
         accountsList.setEntryValues(entryValues.toArray(new CharSequence[entryValues.size()]));
+
     }
 
 }

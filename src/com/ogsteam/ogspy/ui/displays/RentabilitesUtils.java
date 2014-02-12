@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.ogsteam.ogspy.DialogActivity;
 import com.ogsteam.ogspy.OgspyActivity;
+import com.ogsteam.ogspy.data.models.Account;
 import com.ogsteam.ogspy.fragments.tabs.RentabilitesFragment;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.utils.NumberUtils;
@@ -34,8 +35,9 @@ public abstract class RentabilitesUtils {
         final RentabilitesHelper helperRenta = helperRentabilites;
         CategorySeries categories = new CategorySeries("Rentabilité");
         if (helperRentabilites != null && helperRentabilites.getRentabilites() != null && helperRentabilites.getRentabilites().size() > 0) {
-            if (Constants.RENTA_TYPE_ME.equals(type) && helperRentabilites.getRentabilites().containsKey(activity.getHandlerAccount().getAccountById(0).getUsername())) {
-                RentabilitesHelper.Rentabilite renta = helperRentabilites.getRentabilites().get(activity.getHandlerAccount().getAccountById(0).getUsername());
+            Account account = activity.getSelectedAccount();
+            if (Constants.RENTA_TYPE_ME.equals(type) && helperRentabilites.getRentabilites().containsKey(account.getUsername())) {
+                RentabilitesHelper.Rentabilite renta = helperRentabilites.getRentabilites().get(account.getUsername());
                 addCategories(type, categories, renta);
                 setRentabiliteText(activity, Float.parseFloat(String.valueOf(categories.getValue(0) + categories.getValue(1) + categories.getValue(2))));
             } else if (Constants.RENTA_TYPE_ALLY.equals(type)) {
@@ -57,15 +59,19 @@ public abstract class RentabilitesUtils {
         } else {
             setRentabiliteText(activity, 0);
         }
+        RelativeLayout piChartContainer = ((RentabilitesFragment) activity.getFragmentRentabilites()).getPieChartContainer();
         if (categories.getItemCount() > 0) {
             GraphicalView piechart = ChartFactory.getPieChartView(activity, categories, getDefaultRenderer(categories.getItemCount()));
             if (Constants.RENTA_TYPE_MEMBER.equals(type)) {
                 addPieOnClickListener(activity, helperRenta, piechart);
             }
-            RelativeLayout piChartContainer = ((RentabilitesFragment) activity.getFragmentRentabilites()).getPieChartContainer();
             if (piChartContainer != null) {
                 piChartContainer.removeAllViews();
                 piChartContainer.addView(piechart, new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            }
+        } else {
+            if (piChartContainer != null) {
+                piChartContainer.removeAllViews();
             }
         }
     }

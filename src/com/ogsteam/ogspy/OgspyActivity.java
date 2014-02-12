@@ -5,11 +5,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -140,6 +142,7 @@ public class OgspyActivity extends Activity {
     public static DownloadSpysTask downloadSpysTask;
     public static DownloadRentabilitesTask downloadRentasTask;
 
+    public static Spinner accountsList;
     // Connection detector
     public static ConnectionDetector connection;
 
@@ -152,7 +155,10 @@ public class OgspyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_CONTEXT_MENU);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.ogspy_tab_host);
+
+        getActionBar().setDisplayShowTitleEnabled(false);
 
         OgspyUtils.init();
 
@@ -176,29 +182,13 @@ public class OgspyActivity extends Activity {
         fragments.add(new RentabilitesFragment());
         fragments.add(new AlertFragment());
 
-        commonUtilities = new CommonUtilities(this);
-        notifProvider = new NotificationProvider(this);
-
-        //timer = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("timer_hostiles","0"));
-
         setMenuSliding(savedInstanceState);
-
-        //setAutomaticCheckHostiles();
-        doGcm();
 
         // Check if Internet present
         if (!connection.isConnectingToInternet()) {
             showWaiting(false);
             showConnectivityProblem(true);
         }
-
-        downloadServerTask = new DownloadServerTask(this);
-        downloadAllianceTask = new DownloadAllianceTask(this);
-        downloadSpysTask = new DownloadSpysTask(this);
-        downloadHostilesTask = new DownloadHostilesTask(this);
-        downloadRentasTask = new DownloadRentabilitesTask(this);
-
-        downloadDatas();
     }
 
     @Override
@@ -206,8 +196,35 @@ public class OgspyActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         //Spinner accounts = (Spinner) menu.findItem(R.id.action_compte).getActionView(); // find the spinner
-        Spinner accounts = (Spinner) menu.findItem(R.id.action_compte).getActionView();
-        refreshAcountsList(accounts);
+        if (accountsList == null) {
+            accountsList = (Spinner) menu.findItem(R.id.action_compte).getActionView();
+            refreshAcountsList(accountsList);
+
+
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            if (preferences.contains("prefs_account_selected")) {
+                String idAccount = preferences.getString("prefs_account_selected", "");
+                for (int i = 0; i < accountsList.getCount(); i++) {
+                    Account acc = (Account) accountsList.getItemAtPosition(i);
+                    if (String.valueOf(acc.getId()).equals(idAccount)) {
+                        accountsList.setSelection(i);
+                        break;
+                    }
+                }
+            }
+
+            commonUtilities = new CommonUtilities(this);
+            notifProvider = new NotificationProvider(this);
+            doGcm();
+
+            initializeDatas();
+            downloadDatas();
+            refreshThisDatasFromResume();
+        } else {
+            accountsList = (Spinner) menu.findItem(R.id.action_compte).getActionView();
+            refreshAcountsList(accountsList);
+        }
+
         return true;
     }
 
@@ -286,7 +303,15 @@ public class OgspyActivity extends Activity {
         DownloadTask.executeDownload(this, downloadAllianceTask);
     }
 
-	/*public void setAutomaticCheckHostiles(){
+
+    private void downloadAllDatas() {
+        DownloadTask.executeDownload(this, downloadServerTask);
+        DownloadTask.executeDownload(this, downloadAllianceTask);
+        DownloadTask.executeDownload(this, downloadSpysTask);
+        DownloadTask.executeDownload(this, downloadHostilesTask);
+        DownloadTask.executeDownload(this, downloadRentasTask);
+    }
+    /*public void setAutomaticCheckHostiles(){
         if(timer > 0){
 			autoUpdateHostiles = new Timer();
             // Check if Internet present
@@ -367,9 +392,9 @@ public class OgspyActivity extends Activity {
     }
 
     public void processUnregistering() {
-        if (getFirstAccount() != null) {
+        if (getSelectedAccount() != null) {
             if (GCMRegistrar.isRegisteredOnServer(this) && !regId.equals("")) {
-                ServerUtilities.unregister(this, getFirstAccount().getUsername(), regId);
+                ServerUtilities.unregister(this, getSelectedAccount().getUsername(), regId);
                 CommonUtilities.displayMessage(this, "Désinscription envoyée");
             } else {
                 CommonUtilities.displayMessage(this, "Vous n'etes pas enregistré, désincription impossible");
@@ -383,13 +408,13 @@ public class OgspyActivity extends Activity {
         return handlerAccount;
     }
 
-    public static Account getFirstAccount() {
+    /*public static Account getFirstAccount() {
         Account account = null;
         if (handlerAccount.getAllAccounts() != null && handlerAccount.getAllAccounts().size() > 0) {
             account = handlerAccount.getAllAccounts().get(0);
         }
         return account;
-    }
+    }*/
 
     public DatabasePreferencesHandler getHandlerPrefs() {
         return handlerPrefs;
@@ -397,6 +422,14 @@ public class OgspyActivity extends Activity {
 
     public static NotificationProvider getNotifProvider() {
         return notifProvider;
+    }
+
+    private void initializeDatas() {
+        downloadServerTask = new DownloadServerTask(this);
+        downloadAllianceTask = new DownloadAllianceTask(this);
+        downloadSpysTask = new DownloadSpysTask(this);
+        downloadHostilesTask = new DownloadHostilesTask(this);
+        downloadRentasTask = new DownloadRentabilitesTask(this);
     }
 
     /*
@@ -434,7 +467,7 @@ public class OgspyActivity extends Activity {
             regId = GCMRegistrar.getRegistrationId(this);
 
             // Check if regid already presents
-            if (regId.equals("") && getFirstAccount() != null) {
+            if (regId.equals("") && getSelectedAccount() != null) {
                 // Registration is not present, register now with GCM
                 GCMRegistrar.register(this, SENDER_ID);
             } else {
@@ -445,7 +478,7 @@ public class OgspyActivity extends Activity {
                     // It's also necessary to cancel the thread onDestroy(),
                     // hence the use of AsyncTask instead of a raw thread.
                     final Context context = this;
-                    final Account account = getFirstAccount();
+                    final Account account = getSelectedAccount();
 
                     /*mRegisterTask = new AsyncTask<Void, Void, Void>() {
 
@@ -485,7 +518,7 @@ public class OgspyActivity extends Activity {
         if (!activity.getHandlerAccount().getAllAccounts().isEmpty()) {
             EditText messageEditText = ((AlertFragment) getFragmentAlert()).getMessage();
             if (messageEditText.getText() != null && messageEditText.getText().length() > 0) {
-                ServerUtilities.sendAlertMesage(this, regId, activity.getHandlerAccount().getAccountById(0).getUsername(), messageEditText.getText().toString());
+                ServerUtilities.sendAlertMesage(this, regId, activity.getSelectedAccount().getUsername(), messageEditText.getText().toString());
                 messageEditText.setText("");
             } else {
                 CommonUtilities.displayMessage(this, "Le message d'alerte est vide, il n'a donc pas été envoyé.");
@@ -707,10 +740,6 @@ public class OgspyActivity extends Activity {
 
 
     public void refreshAcountsList(Spinner accountsList) {
-
-        List<String> entries = new ArrayList<String>();
-        List<String> entryValues = new ArrayList<String>();
-
         final List<Account> accounts = OgspyActivity.activity.getHandlerAccount().getAllAccounts();
         ArrayAdapter<Account> dataAdapter = new ArrayAdapter<Account>(this, android.R.layout.simple_spinner_item, accounts);
         // Drop down layout style - list view with radio button
@@ -722,7 +751,9 @@ public class OgspyActivity extends Activity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (lastSeletedAccountPosition >= 0 && lastSeletedAccountPosition != position) {
                     Account accSelect = accounts.get(position);
-                    CommonUtilities.displayMessage(OgspyActivity.activity, "Selection du compte " + accSelect.getUsername() + " - " + OgspyUtils.getUniversNameFromUrl(accSelect.getServerUnivers()));
+                    CommonUtilities.displayMessage(OgspyActivity.activity, "Chargement du compte " + accSelect.getUsername() + " - " + OgspyUtils.getUniversNameFromUrl(accSelect.getServerUnivers()));
+                    initializeDatas();
+                    downloadAllDatas();
                 }
                 lastSeletedAccountPosition = position;
             }
@@ -732,18 +763,10 @@ public class OgspyActivity extends Activity {
 
             }
         });
-
-        /*
-        for (Account acc : accounts) {
-            entryValues.add(String.valueOf(acc.getId()));
-            entries.add(acc.getUsername() + " - " + OgspyUtils.getUniversNameFromUrl(acc.getServerUnivers()));
-        }
-        Account lastAccount = OgspyActivity.activity.getHandlerAccount().getLastAccount();
-
-
-
-        accountsList.setEntries(entries.toArray(new CharSequence[entries.size()]));
-        accountsList.setEntryValues(entryValues.toArray(new CharSequence[entryValues.size()]));*/
     }
 
+    public Account getSelectedAccount() {
+        if (accountsList == null || accountsList.getSelectedItem() == null) return null;
+        return (Account) accountsList.getSelectedItem();
+    }
 }

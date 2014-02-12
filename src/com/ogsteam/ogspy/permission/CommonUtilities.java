@@ -5,38 +5,38 @@ import android.widget.Toast;
 
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.data.models.Account;
- 
+
 public final class CommonUtilities {
-     
+
     // give your server registration url here
     //static final String SERVER_URL_REGISTER = "http://10.0.2.2/gcm_server_php/register.php";
-	static String SERVER_URL_REGISTER = "gcm/register.php?name={0}&regId={1}";
+    static String SERVER_URL_REGISTER = "gcm/register.php?name={0}&regId={1}";
     static String SERVER_URL_ALERT = "gcm/send_alert.php?regId={0}&username={1}&message={2}";
 
     // Google project id
     static final public String SENDER_ID = "990785741190";
- 
+
     /**
      * Tag used on log messages.
      */
     static final String TAG = "OGSpy";
- 
+
     static final public String DISPLAY_MESSAGE_ACTION = "com.ogsteam.ogspy.permission.DISPLAY_MESSAGE";
- 
+
     static final public String EXTRA_MESSAGE = "message";
- 
-    
+
+
     public CommonUtilities(OgspyActivity activity) {
-    	if(!activity.getHandlerAccount().getAllAccounts().isEmpty()){
-			Account account = activity.getHandlerAccount().getAccountById(0);
-			SERVER_URL_REGISTER = account.getServerUrl() + "/" + SERVER_URL_REGISTER;
+        if (!activity.getHandlerAccount().getAllAccounts().isEmpty()) {
+            Account account = activity.getSelectedAccount();
+            SERVER_URL_REGISTER = account.getServerUrl() + "/" + SERVER_URL_REGISTER;
             SERVER_URL_ALERT = account.getServerUrl() + "/" + SERVER_URL_ALERT;
-    	}
-	}
-    
+        }
+    }
+
     /**
      * Notifies UI to display a message.
-     * <p>
+     * <p/>
      * This method is defined in the common helper because it's used both by
      * the UI and the background service.
      *

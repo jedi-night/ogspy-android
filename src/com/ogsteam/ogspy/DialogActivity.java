@@ -14,8 +14,9 @@ import android.widget.TextView;
 
 import com.ogsteam.ogspy.data.DatabaseAccountHandler;
 import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.network.download.DownloadServerConnection;
+import com.ogsteam.ogspy.network.download.DownloadTask;
 import com.ogsteam.ogspy.permission.CommonUtilities;
-import com.ogsteam.ogspy.preferences.Accounts;
 import com.ogsteam.ogspy.ui.DialogHandler;
 import com.ogsteam.ogspy.utils.NumberUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
@@ -156,13 +157,14 @@ public class DialogActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     if (OgspyUtils.checkUserAccount(user.getText().toString(), password.getText().toString(), serverOgspy.getText().toString())) {
+                        Account account;
                         if (ACCOUNT_NEW.equals(creation)) {
-                            Accounts.saveAccount(OgspyActivity.activity, user.getText().toString(), password.getText().toString(), serverOgspy.getText().toString(), getServerUrlFromSelectedPosition(serversUniversList.getSelectedItemPosition()));
+                            account = new Account(user.getText().toString(), password.getText().toString(), serverOgspy.getText().toString(), getServerUrlFromSelectedPosition(serversUniversList.getSelectedItemPosition()));
                         } else {
-                            Accounts.updateAccount(OgspyActivity.activity, accountId, user.getText().toString(), password.getText().toString(), serverOgspy.getText().toString(), getServerUrlFromSelectedPosition(serversUniversList.getSelectedItemPosition()));
+                            account = new Account(Integer.parseInt(accountId), user.getText().toString(), password.getText().toString(), serverOgspy.getText().toString(), getServerUrlFromSelectedPosition(serversUniversList.getSelectedItemPosition()));
                         }
-                        OgspyPreferencesActivity.activity.refreshAcountsList((ListPreference) OgspyPreferencesActivity.activity.findPreference("prefs_accounts"));
-                        finish();
+                        DownloadServerConnection serverConnection = new DownloadServerConnection(OgspyActivity.activity, account, creation);
+                        DownloadTask.executeDownload(OgspyActivity.activity, serverConnection);
                     }
                 }
             });

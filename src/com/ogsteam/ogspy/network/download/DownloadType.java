@@ -8,7 +8,8 @@ public enum DownloadType {
     ALLIANCE(1, "Download des données d'espionage"),
     SPY(2, "Download des données d'espionage"),
     HOSTILES(3, "Download des données Hostiles"),
-    RENTABILITES(4, "Download des données de Rentabilité");
+    RENTABILITES(4, "Download des données de Rentabilité"),
+    SERVER_CONNECTION(5, "Download des données de connexion au server");
 
     private final int type;
     private final String libelle;

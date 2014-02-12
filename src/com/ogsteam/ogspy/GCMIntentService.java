@@ -14,57 +14,57 @@ import com.ogsteam.ogspy.utils.helpers.Constants;
 import java.util.Date;
 
 import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
- 
+
 public class GCMIntentService extends GCMBaseIntentService {
- 
+
     private static final String TAG = "GCMIntentService";
- 
+
     public GCMIntentService() {
         super(SENDER_ID);
         setIntentRedelivery(true);
     }
- 
+
     /**
      * Method called on device registered
-     **/
+     */
     @Override
     protected void onRegistered(Context context, String registrationId) {
         Log.i(TAG, "Device registered: regId = " + registrationId);
         CommonUtilities.displayMessage(context, "Your device registred with GCM");
-        if(OgspyActivity.getFirstAccount() != null){
-        	ServerUtilities.register(context, OgspyActivity.getFirstAccount().getUsername(), registrationId);
+        if (OgspyActivity.activity.getSelectedAccount() != null) {
+            ServerUtilities.register(context, OgspyActivity.activity.getSelectedAccount().getUsername(), registrationId);
         }
     }
- 
+
     /**
      * Method called on device un registred
-     * */
+     */
     @Override
     protected void onUnregistered(Context context, String registrationId) {
         Log.i(TAG, "Device unregistered");
-        if(OgspyActivity.getFirstAccount() != null){
-            ServerUtilities.unregister(context, OgspyActivity.getFirstAccount().getUsername(), registrationId);
+        if (OgspyActivity.activity.getSelectedAccount() != null) {
+            ServerUtilities.unregister(context, OgspyActivity.activity.getSelectedAccount().getUsername(), registrationId);
         }
     }
- 
+
     /**
      * Method called on Receiving a new message
-     * */
+     */
     @Override
     protected void onMessage(Context context, Intent intent) {
         Log.i(TAG, "Received message");
         String message = intent.getExtras().getString("message");
         String messagetype = intent.getExtras().getString("messagetype");
         String sender = intent.getExtras().getString("sender");
-         
+
         //CommonUtilities.displayMessage(context, message);
         // notifies user
         generateNotification(context, message, messagetype, sender);
     }
- 
+
     /**
      * Method called on receiving a deleted message
-     * */
+     */
     @Override
     protected void onDeletedMessages(Context context, int total) {
         Log.i(TAG, "Received deleted messages notification");
@@ -73,16 +73,16 @@ public class GCMIntentService extends GCMBaseIntentService {
         // notifies user
         generateNotification(context, message, null, null);
     }
- 
+
     /**
      * Method called on Error
-     * */
+     */
     @Override
     public void onError(Context context, String errorId) {
         Log.i(TAG, "Received error: " + errorId);
         CommonUtilities.displayMessage(context, getString(R.string.gcm_error, errorId));
     }
- 
+
     @Override
     protected boolean onRecoverableError(Context context, String errorId) {
         // log message
@@ -91,18 +91,18 @@ public class GCMIntentService extends GCMBaseIntentService {
                 errorId));
         return super.onRecoverableError(context, errorId);
     }
- 
+
     /**
      * Issues a notification to inform the user that server has sent a message.
      */
     private static void generateNotification(Context context, String message, String messageType, String sender) {
         NotificationProvider notifProvider = OgspyActivity.getNotifProvider();
-        if(notifProvider != null){
-            if(messageType != null && Constants.NOTIFICATION_TYPE_HOSTILES.equals(messageType)){
+        if (notifProvider != null) {
+            if (messageType != null && Constants.NOTIFICATION_TYPE_HOSTILES.equals(messageType)) {
                 notifProvider.createNotificationHostile(message);
-            } else if(messageType != null && Constants.NOTIFICATION_TYPE_MESSAGE.equals(messageType)){
+            } else if (messageType != null && Constants.NOTIFICATION_TYPE_MESSAGE.equals(messageType)) {
                 notifProvider.createNotificationMessage(message, sender);
-                OgspyActivity.handlerMessages.addMessage(new Message(OgspyActivity.handlerMessages.getNextMessageId(),String.valueOf(new Date().getTime()), sender, message));
+                OgspyActivity.handlerMessages.addMessage(new Message(OgspyActivity.handlerMessages.getNextMessageId(), String.valueOf(new Date().getTime()), sender, message));
             }
         }
 
@@ -130,7 +130,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         // Vibrate if vibrate is enabled
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification);     */
- 
+
     }
- 
+
 }

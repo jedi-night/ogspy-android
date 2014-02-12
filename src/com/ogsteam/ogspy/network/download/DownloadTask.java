@@ -87,6 +87,8 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
                 } else if (DownloadType.RENTABILITES.getType() == downloadType.getType()) {
                     activity.downloadRentasTask = new DownloadRentabilitesTask(activity);
                     activity.downloadRentasTask.execute(new String[]{"do"});
+                } else {
+                    downloadTask.execute(new String[]{"do"});
                 }
                 // Non traitée ET pas Finie ET pas En Cours
             } else if (pending && !finished && !running) {
