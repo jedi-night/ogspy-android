@@ -24,7 +24,7 @@ import com.ogsteam.ogspy.ui.displays.SpysUtils;
 public class SpysFragment extends Fragment {
     private static ScrollView layout;
 
-    private static Spinner rentabiliteInterval;
+    private static Spinner spysInterval;
     private static ListView mostCuriousAlliances;
     private static ListView mostCuriousPlayers;
 
@@ -42,31 +42,31 @@ public class SpysFragment extends Fragment {
             return null;
         }
         layout = (ScrollView) inflater.inflate(R.layout.spys, container, false);
-        rentabiliteInterval = (Spinner) layout.findViewById(R.id.spys_interval);
+        spysInterval = (Spinner) layout.findViewById(R.id.spys_interval);
 
         ArrayAdapter<CharSequence> adapterInterval = ArrayAdapter.createFromResource(OgspyActivity.activity, R.array.interval, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapterInterval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        if (rentabiliteInterval != null && adapterInterval != null) {
-            rentabiliteInterval.setAdapter(adapterInterval);
+        if (spysInterval != null && adapterInterval != null) {
+            spysInterval.setAdapter(adapterInterval);
         }
 
         int interval = 3; // month
         if (lastSeletedIntervalPosition == -1) {
             //interval = getIntervalPositionFromPrefs();
-            rentabiliteInterval.setSelection(interval);
+            spysInterval.setSelection(interval);
             executeDownload(interval);
             lastSeletedIntervalPosition = interval;
         } else {
             interval = lastSeletedIntervalPosition == -1 ? 3 : lastSeletedIntervalPosition;
-            rentabiliteInterval.setSelection(interval);
+            spysInterval.setSelection(interval);
         }
 
-        rentabiliteInterval.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spysInterval.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (lastSeletedIntervalPosition >= 0 && lastSeletedIntervalPosition != position) {
+                if ((lastSeletedIntervalPosition >= 0 && lastSeletedIntervalPosition != position) || OgspyActivity.activity.getDownloadSpysTask().getSpysHelper() == null) {
                     executeDownload();
                 } else {
                     SpysUtils.showSpys(null, null, OgspyActivity.activity.getDownloadSpysTask().getSpysHelper(), OgspyActivity.activity);
@@ -112,7 +112,7 @@ public class SpysFragment extends Fragment {
     }
 
     public static Spinner getInterval() {
-        return rentabiliteInterval;
+        return spysInterval;
     }
 
     public static ListView getMostCuriousAlliances() {

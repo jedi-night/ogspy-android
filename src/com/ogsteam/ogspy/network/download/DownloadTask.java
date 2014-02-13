@@ -51,6 +51,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         activity.showWaiting(false);
+        Log.d(DownloadTask.class.getSimpleName(), "Fin de l'affichage de chargement (" + this.typeDownload.getLibelle() + ")");
         activity.showConnectivityProblem(!activity.connection.isConnectingToInternet());
         this.cancel(true);
     }

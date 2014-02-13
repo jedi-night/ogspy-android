@@ -182,6 +182,8 @@ public class OgspyActivity extends Activity {
         fragments.add(new RentabilitesFragment());
         fragments.add(new AlertFragment());
 
+        initializeDatas();
+
         setMenuSliding(savedInstanceState);
 
         // Check if Internet present
@@ -217,9 +219,8 @@ public class OgspyActivity extends Activity {
             notifProvider = new NotificationProvider(this);
             doGcm();
 
-            initializeDatas();
-            downloadDatas();
-            refreshThisDatasFromResume();
+            //downloadDatas();
+            //refreshThisDatasFromResume();
         } else {
             accountsList = (Spinner) menu.findItem(R.id.action_compte).getActionView();
             refreshAcountsList(accountsList);
@@ -602,6 +603,7 @@ public class OgspyActivity extends Activity {
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
+            getActionBar().setIcon(((NavDrawerItem) mDrawerList.getItemAtPosition(0)).getIcon());
             displayView(0);
         }
     }
@@ -659,6 +661,7 @@ public class OgspyActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // display view for selected nav drawer item
             displayView(position);
+            getActionBar().setIcon(((NavDrawerItem) mDrawerList.getItemAtPosition(position)).getIcon());
         }
     }
 
@@ -678,6 +681,7 @@ public class OgspyActivity extends Activity {
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
             setTitle(navMenuTitles[position]);
+            //getActionBar().setIcon(((NavDrawerItem)mDrawerList.getSelectedItem()).getIcon());
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             // error in creating fragment
@@ -688,6 +692,7 @@ public class OgspyActivity extends Activity {
         mDrawerList.setItemChecked(position, true);
         mDrawerList.setSelection(position);
         setTitle(navMenuTitles[position]);
+        //getActionBar().setIcon(((NavDrawerItem)mDrawerList.getSelectedItem()).getIcon());
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 

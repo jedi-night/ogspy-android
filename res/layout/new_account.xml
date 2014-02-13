@@ -8,142 +8,156 @@
     android:minHeight="400dp"
     android:minWidth="300dp">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageServer"
-        android:src="@drawable/server"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="10dp" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/GenericProgressBackground"
+        android:id="@+id/loadingPanel">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageUnivers"
-        android:src="@drawable/link"
-        android:layout_alignBottom="@+id/newAccountServerOgspy"
-        android:layout_alignRight="@+id/imageServer"
-        android:layout_alignEnd="@+id/imageServer" />
+        <ProgressBar style="@style/GenericProgressIndicator" />
+    </RelativeLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageUser"
-        android:src="@drawable/user"
-        android:layout_alignTop="@+id/newAccountUserName"
-        android:layout_alignLeft="@+id/imageServer"
-        android:layout_alignStart="@+id/imageServer" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tabcontent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imagePassword"
-        android:src="@drawable/password"
-        android:layout_alignTop="@+id/newAccountPassword"
-        android:layout_alignRight="@+id/imageUnivers"
-        android:layout_alignEnd="@+id/imageUnivers" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:id="@+id/newAccountUserName"
-        android:minWidth="200dp"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/imageUnivers"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="25dp"
-        android:layout_alignLeft="@+id/newAccountServers"
-        android:layout_alignStart="@+id/newAccountServers" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newAccountServers"
-        android:minWidth="250dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="50dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/newAccountPassword"
-        android:minWidth="200dp"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/newAccountUserName"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="25dp"
-        android:layout_alignLeft="@+id/newAccountServers"
-        android:layout_alignStart="@+id/newAccountServers" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newAccountServerOgspy"
-        android:minWidth="200dp"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/newAccountServers"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="25dp"
-        android:layout_alignLeft="@+id/newAccountServers"
-        android:layout_alignStart="@+id/newAccountServers" />
-
-    <GridLayout
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/newAccountPassword"
-        android:layout_alignRight="@+id/newAccountServers"
-        android:layout_alignEnd="@+id/newAccountServers"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp">
-
-        <Button
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@android:drawable/ic_menu_save"
-            android:id="@+id/buttonNewAccountSave"
-            android:minWidth="10dp"
-            android:layout_alignTop="@+id/buttonNewAccountCancel"
-            android:layout_toLeftOf="@+id/buttonNewAccountDelete"
-            android:layout_marginRight="5dp"
-            android:text="Sauvegarder"
-            android:layout_row="0"
-            android:layout_column="0" />
+            android:id="@+id/imageServer"
+            android:src="@drawable/server"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="10dp" />
 
-        <Button
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@android:drawable/ic_menu_delete"
-            android:id="@+id/buttonNewAccountDelete"
+            android:id="@+id/imageUnivers"
+            android:src="@drawable/link"
+            android:layout_alignBottom="@+id/newAccountServerOgspy"
+            android:layout_alignRight="@+id/imageServer"
+            android:layout_alignEnd="@+id/imageServer" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageUser"
+            android:src="@drawable/user"
+            android:layout_alignTop="@+id/newAccountUserName"
+            android:layout_alignLeft="@+id/imageServer"
+            android:layout_alignStart="@+id/imageServer" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imagePassword"
+            android:src="@drawable/password"
+            android:layout_alignTop="@+id/newAccountPassword"
+            android:layout_alignRight="@+id/imageUnivers"
+            android:layout_alignEnd="@+id/imageUnivers" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/newAccountUserName"
+            android:minWidth="200dp"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/imageUnivers"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="25dp"
+            android:layout_alignLeft="@+id/newAccountServers"
+            android:layout_alignStart="@+id/newAccountServers" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/newAccountServers"
+            android:minWidth="250dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="50dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/newAccountPassword"
+            android:minWidth="200dp"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/newAccountUserName"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="25dp"
+            android:layout_alignLeft="@+id/newAccountServers"
+            android:layout_alignStart="@+id/newAccountServers" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/newAccountServerOgspy"
+            android:minWidth="200dp"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/newAccountServers"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="25dp"
+            android:layout_alignLeft="@+id/newAccountServers"
+            android:layout_alignStart="@+id/newAccountServers" />
+
+        <GridLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
             android:layout_below="@+id/newAccountPassword"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:text="Supprimer"
-            android:layout_row="0"
-            android:layout_column="1" />
+            android:layout_alignRight="@+id/newAccountServers"
+            android:layout_alignEnd="@+id/newAccountServers"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@android:drawable/ic_menu_close_clear_cancel"
-            android:id="@+id/buttonNewAccountCancel"
-            android:layout_alignTop="@+id/buttonNewAccountDelete"
-            android:layout_toRightOf="@+id/buttonNewAccountDelete"
-            android:text="Annuler"
-            android:layout_marginLeft="5dp"
-            android:layout_row="0"
-            android:layout_column="2" />
-    </GridLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@android:drawable/ic_menu_save"
+                android:id="@+id/buttonNewAccountSave"
+                android:minWidth="10dp"
+                android:layout_alignTop="@+id/buttonNewAccountCancel"
+                android:layout_toLeftOf="@+id/buttonNewAccountDelete"
+                android:layout_marginRight="5dp"
+                android:text="Sauvegarder"
+                android:layout_row="0"
+                android:layout_column="0" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@android:drawable/ic_menu_delete"
+                android:id="@+id/buttonNewAccountDelete"
+                android:layout_below="@+id/newAccountPassword"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:text="Supprimer"
+                android:layout_row="0"
+                android:layout_column="1" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@android:drawable/ic_menu_close_clear_cancel"
+                android:id="@+id/buttonNewAccountCancel"
+                android:layout_alignTop="@+id/buttonNewAccountDelete"
+                android:layout_toRightOf="@+id/buttonNewAccountDelete"
+                android:text="Annuler"
+                android:layout_marginLeft="5dp"
+                android:layout_row="0"
+                android:layout_column="2" />
+        </GridLayout>
+    </RelativeLayout>
 </RelativeLayout>

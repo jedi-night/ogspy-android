@@ -5,6 +5,13 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/hostiles"/-->
+    <!--item
+        android:id="@+id/action_page"
+        android:orderInCategory="50"
+        android:showAsAction="always"
+        android:actionViewClass="android.widget.ImageView"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="page" /-->
     <item
         android:id="@+id/action_compte"
         android:orderInCategory="100"

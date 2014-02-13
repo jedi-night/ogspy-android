@@ -21,18 +21,33 @@ import org.json.JSONObject;
 public class DownloadServerConnection extends DownloadTask {
     public static final String DEBUG_TAG = DownloadServerConnection.class.getSimpleName();
 
+    protected DialogActivity dialogActivity;
     protected static JSONObject dataJsonFromAsyncTask;
     protected ServerHelper serverHelper;
     protected Account account = null;
     protected String accountCreation;
 
-    public DownloadServerConnection(OgspyActivity activity, Account account, String accoutnCreation) {
+    public DownloadServerConnection(OgspyActivity activity, DialogActivity dialogActivity, Account account, String accoutnCreation) {
         this.activity = activity;
+        this.dialogActivity = dialogActivity;
         this.dataJsonFromAsyncTask = null;
         this.serverHelper = null;
         typeDownload = DownloadType.SERVER_CONNECTION;
         this.account = account;
         this.accountCreation = accoutnCreation;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        if (!activity.connection.isConnectingToInternet()) {
+            this.cancel(true);
+        }
+        /*if (!canExecute()) {
+            activity.showWaiting(false);
+            activity.showConnectivityProblem(false);
+            Log.d(this.getClass().getSimpleName(), typeDownload.getLibelle() + " non terminé, en cours ou non executé; il est impossible d'en refaire un autre !");
+        }*/
+        if (dialogActivity != null) dialogActivity.showWaiting(true);
     }
 
     @Override
@@ -56,6 +71,7 @@ public class DownloadServerConnection extends DownloadTask {
     protected void onPostExecute(String result) {
         //SpysUtils.showGeneral(serverHelper, null, null, activity);
         //super.onPostExecute(result);
+        if (dialogActivity != null) dialogActivity.showWaiting(false);
         if (serverHelper == null) {
             CommonUtilities.displayMessage(DialogActivity.activity, "La connexion n'a pu être établie avec ce compte, veuillez vérifier les informations saisies !");
         } else {

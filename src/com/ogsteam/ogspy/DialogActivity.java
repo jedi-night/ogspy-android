@@ -26,6 +26,7 @@ import com.ogsteam.ogspy.utils.objects.HighScore;
 
 public class DialogActivity extends Activity {
     public static DialogActivity activity;
+    private static boolean isWaiting = false;
 
     public static final int TYPE_HIGHSCORE_PLAYER = 1;
     public static final int TYPE_HIGHSCORE_ALLY = 2;
@@ -38,6 +39,7 @@ public class DialogActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
 
         final Bundle b = getIntent().getExtras();
         int type = b.getInt("type");
@@ -101,6 +103,7 @@ public class DialogActivity extends Activity {
         } else if (TYPE_ACCOUNT == type) {
             setContentView(R.layout.new_account);
             this.setFinishOnTouchOutside(false);
+            showWaiting(false);
 
             final DatabaseAccountHandler accountHandler = OgspyActivity.activity.getHandlerAccount();
             final String creation = b.getString("creation");
@@ -163,7 +166,7 @@ public class DialogActivity extends Activity {
                         } else {
                             account = new Account(Integer.parseInt(accountId), user.getText().toString(), password.getText().toString(), serverOgspy.getText().toString(), getServerUrlFromSelectedPosition(serversUniversList.getSelectedItemPosition()));
                         }
-                        DownloadServerConnection serverConnection = new DownloadServerConnection(OgspyActivity.activity, account, creation);
+                        DownloadServerConnection serverConnection = new DownloadServerConnection(OgspyActivity.activity, DialogActivity.activity, account, creation);
                         DownloadTask.executeDownload(OgspyActivity.activity, serverConnection);
                     }
                 }
@@ -175,7 +178,6 @@ public class DialogActivity extends Activity {
                 }
             });
         }
-        activity = this;
     }
 
     private void deleteAccount(DatabaseAccountHandler accountHandler, String accountId) {
@@ -191,4 +193,19 @@ public class DialogActivity extends Activity {
     private String getServerUrlFromSelectedPosition(int positionSelected) {
         return OgspyActivity.activity.getResources().getStringArray(R.array.servers_values)[positionSelected];
     }
+
+    public void showWaiting(boolean visible) {
+        if (visible) {
+            if (!isWaiting) {
+                activity.findViewById(R.id.tabcontent).setVisibility(View.GONE);
+                activity.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                isWaiting = true;
+            }
+        } else {
+            activity.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            activity.findViewById(R.id.tabcontent).setVisibility(View.VISIBLE);
+            isWaiting = false;
+        }
+    }
+
 }
