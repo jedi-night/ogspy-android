@@ -72,7 +72,7 @@ public class DownloadServerConnection extends DownloadTask {
         //SpysUtils.showGeneral(serverHelper, null, null, activity);
         //super.onPostExecute(result);
         if (dialogActivity != null) dialogActivity.showWaiting(false);
-        if (serverHelper == null) {
+        if (serverHelper == null || serverHelper.getServerName().isEmpty()) {
             CommonUtilities.displayMessage(DialogActivity.activity, "La connexion n'a pu être établie avec ce compte, veuillez vérifier les informations saisies !");
         } else {
             if (DialogActivity.ACCOUNT_NEW.equals(accountCreation)) {

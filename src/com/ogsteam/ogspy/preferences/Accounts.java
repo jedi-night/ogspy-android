@@ -93,13 +93,13 @@ public class Accounts {
         Account lastAccount = activity.getHandlerAccount().getLastAccount();
         if (lastAccount != null) {
             if (activity.getHandlerAccount().addAccount(new Account((lastAccount.getId() + 1), username, password, serverUrl, serverUnivers)) != -1) {
-                CommonUtilities.displayMessage(activity, StringUtils.formatPattern(activity.getString(R.string.save_account_ok), username + " - " + OgspyUtils.getUniversNameFromUrl(serverUrl)));
+                CommonUtilities.displayMessage(activity, StringUtils.formatPattern(activity.getString(R.string.save_account_ok), username + " - " + OgspyUtils.getUniversNameFromUrl(serverUnivers)));
             } else {
                 new DialogHandler().showException(OgspyActivity.activity, new OgspyException("Le compte n'a pu être créé", Constants.EXCEPTION_DATA_SAVE));
             }
         } else {
             if (activity.getHandlerAccount().addAccount(new Account(0, username, password, serverUrl, serverUnivers)) != -1) {
-                CommonUtilities.displayMessage(activity, StringUtils.formatPattern(activity.getString(R.string.save_account_ok), username + " - " + OgspyUtils.getUniversNameFromUrl(serverUrl)));
+                CommonUtilities.displayMessage(activity, StringUtils.formatPattern(activity.getString(R.string.save_account_ok), username + " - " + OgspyUtils.getUniversNameFromUrl(serverUnivers)));
             } else {
                 new DialogHandler().showException(OgspyActivity.activity, new OgspyException("Le compte n'a pu être créé", Constants.EXCEPTION_DATA_SAVE));
             }
@@ -110,7 +110,7 @@ public class Accounts {
 
     public static void updateAccount(OgspyActivity activity, String id, String username, String password, String serverUrl, String serverUnivers) {
         if (activity.getHandlerAccount().updateAccount(new Account(Integer.parseInt(id), username, password, serverUrl, serverUnivers)) != -1) {
-            CommonUtilities.displayMessage(activity, StringUtils.formatPattern(activity.getString(R.string.save_account_ok), username + " - " + OgspyUtils.getUniversNameFromUrl(serverUrl)));
+            CommonUtilities.displayMessage(activity, StringUtils.formatPattern(activity.getString(R.string.save_account_ok), username + " - " + OgspyUtils.getUniversNameFromUrl(serverUnivers)));
         } else {
             new DialogHandler().showException(OgspyActivity.activity, new OgspyException("Le compte n'a pu être sauvegardé", Constants.EXCEPTION_DATA_SAVE));
         }
