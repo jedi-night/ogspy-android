@@ -1,5 +1,7 @@
 package com.ogsteam.ogspy.fragments.tabs.items;
 
+import com.ogsteam.ogspy.utils.helpers.HostilesHelper;
+
 import java.util.ArrayList;
 
 /**
@@ -14,6 +16,9 @@ public class HostileItem {
     private static ArrayList<String> detailsAg;
     private boolean isAg;
     private String compo;
+
+    private HostilesHelper.Cible cible;
+    HostilesHelper.AG ag;
 
         public HostileItem(boolean isAg){
             this.isAg=isAg;
@@ -37,7 +42,7 @@ public class HostileItem {
         }
 
         public void setTitle(String cible, String ciblePlanet, String cibleCoords) {
-            this.title = cible + " est attaqué sur  " + ciblePlanet  +" (" + cibleCoords + ")";
+            this.title = cible + " -  " + ciblePlanet + " (" + cibleCoords + ")";
         }
 
         public String getDetail() {
@@ -53,7 +58,7 @@ public class HostileItem {
         }
 
         public static String getDetail(String originPlanet, String originCoords, String attaquant,boolean isAg,String compo) {
-            StringBuffer retour = new StringBuffer(attaquant).append(" de ").append(originPlanet).append(" (").append(originCoords).append(")");
+            StringBuffer retour = new StringBuffer(attaquant).append(" - ").append(originPlanet).append(" (").append(originCoords).append(")");
             if(isAg){
                 StringBuffer retourAg = new StringBuffer(retour);
                 detailsAg.add(retourAg.append(" :\n\n").append(compo).toString());
@@ -73,7 +78,23 @@ public class HostileItem {
         this.compo = compo;
     }
 
-        @Override
+    public void setCible(HostilesHelper.Cible cible) {
+        this.cible = cible;
+    }
+
+    public void setAg(HostilesHelper.AG ag) {
+        this.ag = ag;
+    }
+
+    public HostilesHelper.AG getAg() {
+        return ag;
+    }
+
+    public HostilesHelper.Cible getCible() {
+        return cible;
+    }
+
+    @Override
         public String toString() {
             StringBuffer retour = new StringBuffer(detail).append(" :\n\n").append(compo);
             if(this.isAg()){

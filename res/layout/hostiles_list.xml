@@ -12,8 +12,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/hostile_list_image"
         android:minWidth="100px"  android:minHeight="100px" android:src="@drawable/hostiles_simple_attack"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_below="@+id/hostile_list_date"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
             android:layout_width="wrap_content"
@@ -22,9 +23,9 @@
             android:text="Titre attaque"
             android:textStyle="bold"
             android:id="@+id/hostile_list_title"
-            android:layout_alignTop="@+id/hostile_list_image"
-            android:layout_toRightOf="@+id/hostile_list_image"
-            android:layout_marginLeft="11dp"/>
+        android:layout_above="@+id/hostile_list_image"
+        android:layout_toRightOf="@+id/hostile_list_date"
+        android:layout_marginLeft="15dp" />
 
     <TextView
             android:layout_width="wrap_content"
@@ -38,10 +39,13 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="00:00:00"
             android:id="@+id/hostile_list_date"
-        android:layout_below="@+id/hostile_list_image"
-        android:textColor="@color/emerald"
-        android:gravity="center_vertical|center_horizontal" />
+        android:textColor="@color/silver"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
