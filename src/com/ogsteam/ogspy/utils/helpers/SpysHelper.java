@@ -5,6 +5,7 @@ import android.util.Log;
 import com.ogsteam.ogspy.utils.objects.HighScore;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class SpysHelper {
                             playerLibelle.append(" [").append(player.getString(1)).append("]");
                         }
                         mostCuriousPlayers.add(new Triplet(player.getString(0), playerLibelle.toString(), player.getString(2)));
-                        highscores.put(player.getString(0), new HighScore(player.getString(3), player.getString(4), player.getString(5), player.getString(6), player.getInt(7), player.getInt(8), player.getInt(9), player.getInt(10)));
+                        highscores.put(player.getString(0), new HighScore(getValueJSON(player, 3), getValueJSON(player, 4), getValueJSON(player, 5), getValueJSON(player, 6), getIntValueJSON(player, 7), getIntValueJSON(player, 8), getIntValueJSON(player, 9), getIntValueJSON(player, 10)));
                     }
                 }
             }
@@ -52,7 +53,7 @@ public class SpysHelper {
                             allianceLibelle.append(" -NC- ");
                         }
                         mostCuriousAlliances.add(new Pair(allianceLibelle.toString(), alliance.getString(1)));
-                        highscoresAlliance.put(alliance.getString(0), new HighScore(alliance.getString(2), alliance.getString(3), alliance.getString(4), alliance.getString(5), alliance.getInt(6), alliance.getInt(7), alliance.getInt(8), alliance.getInt(9)));
+                        highscoresAlliance.put(alliance.getString(0), new HighScore(getValueJSON(alliance, 2), getValueJSON(alliance, 3), getValueJSON(alliance, 4), getValueJSON(alliance, 5), getIntValueJSON(alliance, 6), getIntValueJSON(alliance, 7), getIntValueJSON(alliance, 8), getIntValueJSON(alliance, 9)));
                     }
                 }
             }
@@ -77,4 +78,11 @@ public class SpysHelper {
         return highscoresAlliance.get(name);
     }
 
+    public String getValueJSON(JSONArray array, int position) throws JSONException {
+        return array.isNull(position) ? "0" : array.getString(position);
+    }
+
+    public int getIntValueJSON(JSONArray array, int position) throws JSONException {
+        return array.isNull(position) ? 0 : array.getInt(position);
+    }
 }

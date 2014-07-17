@@ -74,15 +74,15 @@ public class DialogActivity extends Activity {
             TextView economicRank = (TextView) findViewById(R.id.destails_highscore_economic_highscore);
 
 
-            generalPoints.setText(highscore.getPtsGeneral() > 0 ? NumberUtils.format(highscore.getPtsGeneral()) : "  -  ");
-            militaryPoints.setText(highscore.getPtsMilitary() > 0 ? NumberUtils.format(highscore.getPtsMilitary()) : "  -  ");
-            researchPoints.setText(highscore.getPtsResearch() > 0 ? NumberUtils.format(highscore.getPtsResearch()) : "  -  ");
-            economicPoints.setText(highscore.getPtsEconomic() > 0 ? NumberUtils.format(highscore.getPtsEconomic()) : "  -  ");
+            generalPoints.setText(highscore != null && highscore.getPtsGeneral() > 0 ? NumberUtils.format(highscore.getPtsGeneral()) : "  -  ");
+            militaryPoints.setText(highscore != null && highscore.getPtsMilitary() > 0 ? NumberUtils.format(highscore.getPtsMilitary()) : "  -  ");
+            researchPoints.setText(highscore != null && highscore.getPtsResearch() > 0 ? NumberUtils.format(highscore.getPtsResearch()) : "  -  ");
+            economicPoints.setText(highscore != null && highscore.getPtsEconomic() > 0 ? NumberUtils.format(highscore.getPtsEconomic()) : "  -  ");
 
-            generalRank.setText(highscore.getPtsGeneral() > 0 ? highscore.getRankGeneral() : "  -  ");
-            militaryRank.setText(highscore.getPtsMilitary() > 0 ? highscore.getRankMilitary() : "  -  ");
-            researchRank.setText(highscore.getPtsResearch() > 0 ? highscore.getRankResearch() : "  -  ");
-            economicRank.setText(highscore.getPtsEconomic() > 0 ? highscore.getRankEconomic() : "  -  ");
+            generalRank.setText(highscore != null && highscore.getPtsGeneral() > 0 ? highscore.getRankGeneral() : "  -  ");
+            militaryRank.setText(highscore != null && highscore.getPtsMilitary() > 0 ? highscore.getRankMilitary() : "  -  ");
+            researchRank.setText(highscore != null && highscore.getPtsResearch() > 0 ? highscore.getRankResearch() : "  -  ");
+            economicRank.setText(highscore != null && highscore.getPtsEconomic() > 0 ? highscore.getRankEconomic() : "  -  ");
 
         } else if (TYPE_RENTA_DETAIL == type) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
