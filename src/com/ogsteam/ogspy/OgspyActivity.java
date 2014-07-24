@@ -61,36 +61,7 @@ import static com.ogsteam.ogspy.permission.CommonUtilities.SENDER_ID;
 
 //public class OgspyActivity extends TabsFragmentActivity {
 public class OgspyActivity extends Activity {
-    /**
-     * Receiving push messages
-     */
-    /*private BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                //String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
-                // Waking up mobile if it is sleeping
-                //WakeLocker.acquire(getApplicationContext());
-                PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP, "OGSpy wakelock");
-                // This will make the screen and power stay on
-                // This will release the wakelook after 2000 ms
-                wakeLock.acquire(5000);
 
-                // Showing received message
-                //lblMessage.append(newMessage + "\n");
-                //Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
-
-                // Releasing wake lock
-                if(wakeLock!= null && wakeLock.isHeld()) {
-                    wakeLock.release();
-                }
-            } catch (Exception e) {
-                Log.e(DEBUG_TAG,"Problème avec le wakelock OGSpy !",e);
-            }
-        }
-    };
-*/
     public static OgspyActivity activity;
 
     private DrawerLayout mDrawerLayout;
@@ -122,7 +93,6 @@ public class OgspyActivity extends Activity {
     public final String deviceName = retrieveDeviceName();
 
     public static final String DEBUG_TAG = OgspyActivity.class.getSimpleName();
-    //public static int timer; /* MIN * 60 * 1000 : minutes in seconds then milliseconds */
     public static int selectedMenu = 0;
     public Timer autoUpdateHostiles;
     protected String regId;
@@ -171,7 +141,7 @@ public class OgspyActivity extends Activity {
             Log.e(DEBUG_TAG, "Impossible de recuperer la version ogspy", e);
         }
 
-        connection = new ConnectionDetector(getApplicationContext());
+        connection = new ConnectionDetector(this);
 
         handlerAccount = new DatabaseAccountHandler(this);
         handlerPrefs = new DatabasePreferencesHandler(this);
@@ -188,8 +158,12 @@ public class OgspyActivity extends Activity {
 
         // Check if Internet present
         if (!connection.isConnectingToInternet()) {
-            showWaiting(false);
-            showConnectivityProblem(true);
+            connection = new ConnectionDetector(this);
+            if (!connection.isConnectingToInternet()) {
+                CommonUtilities.displayMessage(this, "Problem de connection : " + connection.getInfos());
+                showWaiting(false);
+                showConnectivityProblem(true);
+            }
         }
     }
 
@@ -312,35 +286,6 @@ public class OgspyActivity extends Activity {
         DownloadTask.executeDownload(this, downloadHostilesTask);
         DownloadTask.executeDownload(this, downloadRentasTask);
     }
-    /*public void setAutomaticCheckHostiles(){
-        if(timer > 0){
-			autoUpdateHostiles = new Timer();
-            // Check if Internet present
-            if(connection==null){ return;}
-            if ( !connection.isConnectingToInternet()) {
-                Toast.makeText(this, getString(R.string.connexion_ko), Toast.LENGTH_LONG).show();
-                // stop executing code by return
-                return;
-            }
-*/
-            /*autoUpdateHostiles.schedule(new TimerTask() {
-                @Override
-				public void run() {
-					runOnUiThread(new Runnable() {
-						public void run() {
-                            if (downloadHostilesTask.getStatus().equals(AsyncTask.Status.FINISHED)){
-                                downloadHostilesTask.execute(new String[] { "do"});
-                            }
-                            if (downloadSpysTask.getStatus().equals(AsyncTask.Status.FINISHED)){
-                                downloadSpysTask.execute(new String[] { "do"});
-                            }
-						}
-					});
-				}
-			}, 0, timer); // updates each timer secs*/
-        /*}
-
-	}*/
 
     private void refreshThisDatasFromResume() {
         if (selectedMenu == 0) {
@@ -409,14 +354,6 @@ public class OgspyActivity extends Activity {
         return handlerAccount;
     }
 
-    /*public static Account getFirstAccount() {
-        Account account = null;
-        if (handlerAccount.getAllAccounts() != null && handlerAccount.getAllAccounts().size() > 0) {
-            account = handlerAccount.getAllAccounts().get(0);
-        }
-        return account;
-    }*/
-
     public DatabasePreferencesHandler getHandlerPrefs() {
         return handlerPrefs;
     }
@@ -433,11 +370,6 @@ public class OgspyActivity extends Activity {
         downloadRentasTask = new DownloadRentabilitesTask(this);
     }
 
-    /*
-        public static void setTimer(int timer) {
-            OgspyActivity.timer = timer;
-        }
-    */
     @Override
     protected void onDestroy() {
         if (mRegisterTask != null) {
@@ -603,7 +535,7 @@ public class OgspyActivity extends Activity {
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-            getActionBar().setIcon(((NavDrawerItem) mDrawerList.getItemAtPosition(0)).getIcon());
+            //getActionBar().setIcon(((NavDrawerItem) mDrawerList.getItemAtPosition(0)).getIcon());
             displayView(0);
         }
     }
@@ -611,7 +543,7 @@ public class OgspyActivity extends Activity {
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(new StringBuilder(mTitle).append(" - ").append(mServerName));
+        //getActionBar().setTitle(new StringBuilder(mTitle).append(" - ").append(mServerName));
     }
 
     public void showConnectivityProblem(boolean visible) {
@@ -661,7 +593,7 @@ public class OgspyActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // display view for selected nav drawer item
             displayView(position);
-            getActionBar().setIcon(((NavDrawerItem) mDrawerList.getItemAtPosition(position)).getIcon());
+            //getActionBar().setIcon(((NavDrawerItem) mDrawerList.getItemAtPosition(position)).getIcon());
         }
     }
 
@@ -734,12 +666,16 @@ public class OgspyActivity extends Activity {
 
     public void pushFragments(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
-        if (fragment != null) {
-            fragmentManager.beginTransaction().replace(R.id.tabcontent, fragment).commit();
-        } else if (fragment != lastFragment) {
-            fragmentManager.beginTransaction().replace(R.id.tabcontent, lastFragment).commit();
-        } else {
-            fragmentManager.beginTransaction().replace(R.id.tabcontent, fragments.get(0)).commit();
+        try {
+            if (fragment != null) {
+                fragmentManager.beginTransaction().replace(R.id.tabcontent, fragment).commit();
+            } else if (fragment != lastFragment) {
+                fragmentManager.beginTransaction().replace(R.id.tabcontent, lastFragment).commit();
+            } else {
+                fragmentManager.beginTransaction().replace(R.id.tabcontent, fragments.get(0)).commit();
+            }
+        } catch (Exception e) {
+            CommonUtilities.displayMessage(this, "Problem d'affichage de la page : " + fragment.toString());
         }
     }
 

@@ -3,24 +3,19 @@
     <!-- state selected -->
     <item android:state_selected="true">
         <shape android:shape="rectangle">
-            <gradient
-                    android:startColor="#555555"
-                    android:centerColor="#444444"
-                    android:endColor="#333333"
-                    android:angle="90"/>
-            <padding android:left="7dp"
-                     android:top="7dp"
-                     android:right="7dp"
-                     android:bottom="7dp" />
-            <stroke
-                    android:width="2dip"
-                    android:color="#555555" />
+            <gradient android:startColor="#555555" android:centerColor="#444444" android:endColor="#333333" android:angle="90" />
+
+            <padding android:left="7dp" android:top="7dp" android:right="7dp" android:bottom="7dp" />
+
+            <corners android:radius="2dp" android:topRightRadius="0dp" android:bottomLeftRadius="0dp" android:bottomRightRadius="0dp" />
+
+            <stroke android:width="1dp" android:color="@android:color/holo_red_light" />
         </shape>
     </item>
     <!-- state normal -->
     <item>
         <shape android:shape="rectangle">
-            <gradient
+            <!--gradient
                     android:startColor="#222222"
                     android:centerColor="#181818"
                     android:endColor="#111111"
@@ -31,7 +26,7 @@
                      android:bottom="7dp" />
             <stroke
                     android:width="2dip"
-                    android:color="#222222" />
+                    android:color="#222222" /-->
         </shape>
     </item>
 </selector>

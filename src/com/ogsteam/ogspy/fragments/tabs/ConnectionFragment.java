@@ -17,7 +17,6 @@ import com.ogsteam.ogspy.R;
 public class ConnectionFragment extends Fragment {
     private static TextView connectionProblem;
 
-
     /**
      * (non-Javadoc)
      *

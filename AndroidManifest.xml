@@ -4,7 +4,7 @@
     android:versionCode="17"
     android:versionName="1.6.0">
 
-<uses-sdk
+    <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
@@ -82,7 +82,7 @@
         </activity>
 
         <receiver
-            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:name=".GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <!-- Receives the actual messages. -->
