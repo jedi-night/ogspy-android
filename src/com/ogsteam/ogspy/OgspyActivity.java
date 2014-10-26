@@ -668,14 +668,14 @@ public class OgspyActivity extends Activity {
         FragmentManager fragmentManager = getFragmentManager();
         try {
             if (fragment != null) {
-                fragmentManager.beginTransaction().replace(R.id.tabcontent, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.tabcontent, fragment).commitAllowingStateLoss();
             } else if (fragment != lastFragment) {
-                fragmentManager.beginTransaction().replace(R.id.tabcontent, lastFragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.tabcontent, lastFragment).commitAllowingStateLoss();
             } else {
-                fragmentManager.beginTransaction().replace(R.id.tabcontent, fragments.get(0)).commit();
+                fragmentManager.beginTransaction().replace(R.id.tabcontent, fragments.get(0)).commitAllowingStateLoss();
             }
         } catch (Exception e) {
-            CommonUtilities.displayMessage(this, "Problem d'affichage de la page : " + fragment.toString());
+            CommonUtilities.displayMessage(this, "Problem d'affichage de la page : " + fragment.getClass().getSimpleName() + "\n(" + e.getMessage() + ")");
         }
     }
 

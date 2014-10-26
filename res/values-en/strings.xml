@@ -108,6 +108,7 @@
     <!-- Spys -->
     <string name="alliance_spys">Top Alliance</string>
     <string name="player_spys">Top Player</string>
+    <string name="spy.period">Period</string>
 
     <string name="ogspy_user_summary">Entrez votre nom d\'utilisateur</string>
 
@@ -133,4 +134,28 @@
 
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
+
+    <!-- About Activity-->
+    <string name="about.forum.name">OGSteam\'s forum</string>
+    <string name="about.bugs">Deposit bug</string>
+    <string name="about.google.playstore">Google Play Store</string>
+    <string name="about.help">Aide en ligne</string>
+    <string name="about.develop.by">Application developed volunteer by</string>
+
+    <string name="connection.limited">Little or no connection to the network, please try again later.</string>
+
+    <string name="details.highscore.position">Position</string>
+    <string name="details.highscore.points">Points</string>
+    <string name="details.rentability.title">Player\'s rentability - {0}</string>
+
+    <string name="messages.send">Send</string>
+
+    <string name="account.save">Save</string>
+    <string name="account.delete">Delete</string>
+    <string name="account.cancel">Cancel</string>
+
+    <string name="rentability.title">Rentability : </string>
+    <string name="rentability.period">Period</string>
+    <string name="rentability.type">Type</string>
+
 </resources>

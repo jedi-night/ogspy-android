@@ -1,7 +1,6 @@
 package com.ogsteam.ogspy.network.download;
 
 import android.preference.ListPreference;
-import android.util.Log;
 
 import com.ogsteam.ogspy.DialogActivity;
 import com.ogsteam.ogspy.OgspyActivity;
@@ -39,6 +38,7 @@ public class DownloadServerConnection extends DownloadTask {
 
     @Override
     protected void onPreExecute() {
+        CommonUtilities.displayMessageDebug(activity, this.getClass(), "Connecté à internet ? => " + activity.connection.isConnectingToInternet() + "\nInfos : " + activity.connection.getInfos());
         if (!activity.connection.isConnectingToInternet()) {
             this.cancel(true);
         }
@@ -54,15 +54,19 @@ public class DownloadServerConnection extends DownloadTask {
     protected String doInBackground(String... params) {
         try {
             if (account != null) {
+                CommonUtilities.displayMessageDebug(activity, this.getClass(), "Récupération des informations de connection du compte (" + account.getUsername() + ")");
                 String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), activity.versionAndroid, activity.getVersionOgspy(), activity.getDeviceName(), Constants.XTENSE_TYPE_SERVER) + "&gcmRegid=" + activity.getRegId();
                 String data = HttpUtils.getUrlWithoutDisplayConnectivityProblem(url);
                 if (data != null) {
                     dataJsonFromAsyncTask = new JSONObject(data.replaceAll("[(]", "").replaceAll("[)]", ""));
                     serverHelper = new ServerHelper(dataJsonFromAsyncTask);
+                    CommonUtilities.displayMessageDebug(activity, this.getClass(), "Serveur Ogspy : " + serverHelper.getServerName());
+                } else {
+                    CommonUtilities.displayMessageDebug(activity, this.getClass(), "Aucune donnée récupérée concernant le compte (" + account.getUsername() + ")");
                 }
             }
         } catch (Exception e) {
-            Log.e(DEBUG_TAG, activity.getString(R.string.download_problem) + " (" + typeDownload.getLibelle() + ")", e);
+            CommonUtilities.displayMessageDebugAndLog(activity, this.getClass(), activity.getString(R.string.download_problem), e, " (" + typeDownload.getLibelle() + ")");
             if (!isCancelled()) this.cancel(true);
         }
         return null;
@@ -76,11 +80,15 @@ public class DownloadServerConnection extends DownloadTask {
             CommonUtilities.displayMessage(DialogActivity.activity, "La connexion n'a pu être établie avec ce compte, veuillez vérifier les informations saisies !");
         } else {
             if (DialogActivity.ACCOUNT_NEW.equals(accountCreation)) {
+                CommonUtilities.displayMessageDebug(activity, this.getClass(), "Création du compte en cours ...");
                 Accounts.saveAccount(OgspyActivity.activity, account.getUsername(), account.getPassword(), account.getServerUrl(), account.getServerUnivers());
             } else {
+                CommonUtilities.displayMessageDebug(activity, this.getClass(), "Mise à jour du compte en cours ...");
                 Accounts.updateAccount(OgspyActivity.activity, String.valueOf(account.getId()), account.getUsername(), account.getPassword(), account.getServerUrl(), account.getServerUnivers());
             }
+            CommonUtilities.displayMessageDebug(activity, this.getClass(), "Refresh des comptes en cours");
             OgspyPreferencesActivity.activity.refreshAcountsList((ListPreference) OgspyPreferencesActivity.activity.findPreference("prefs_accounts"));
+            CommonUtilities.displayMessageDebug(activity, this.getClass(), "Refresh des comptes terminé");
             DialogActivity.activity.finish();
         }
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ogsteam.ogspy"
-    android:versionCode="17"
-    android:versionName="1.6.0">
+    android:versionCode="22"
+    android:versionName="1.6.5">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -71,6 +71,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ogsteam.ogspy.OgspyActivity" />
         </activity>
+
+        <!-- Dialogs -->
         <activity
             android:name=".DialogActivity"
             android:theme="@android:style/Theme.DeviceDefault.Dialog"
@@ -80,9 +82,45 @@
                 android:value="com.ogsteam.ogspy.OgspyActivity" />
             <!--activity android:name=".DialogActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar.MinWidth"/-->
         </activity>
+        <activity
+            android:name=".dialogs.DialogAccount"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
+            android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+            <!--activity android:name=".DialogActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar.MinWidth"/-->
+        </activity>
+        <activity
+            android:name=".dialogs.DialogHighscores"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
+            android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+            <!--activity android:name=".DialogActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar.MinWidth"/-->
+        </activity>
+        <activity
+            android:name=".dialogs.DialogHostiles"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
+            android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+            <!--activity android:name=".DialogActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar.MinWidth"/-->
+        </activity>
+        <activity
+            android:name=".dialogs.DialogRentability"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
+            android:parentActivityName="com.ogsteam.ogspy.OgspyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+            <!--activity android:name=".DialogActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar.MinWidth"/-->
+        </activity>
 
         <receiver
-            android:name=".GCMBroadcastReceiver"
+            android:name=".GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <!-- Receives the actual messages. -->

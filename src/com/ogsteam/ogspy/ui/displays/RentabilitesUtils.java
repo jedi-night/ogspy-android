@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import com.ogsteam.ogspy.DialogActivity;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.dialogs.DialogRentability;
 import com.ogsteam.ogspy.fragments.tabs.RentabilitesFragment;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.utils.NumberUtils;
@@ -108,7 +109,7 @@ public abstract class RentabilitesUtils {
                             "Métal\t\t\t\t : " + NumberUtils.format(Float.parseFloat(renta.getMetal())) +
                             "\nCristal\t\t\t : " + NumberUtils.format(Float.parseFloat(renta.getCristal())) +
                             "\nDeutérium\t\t : " + NumberUtils.format(Float.parseFloat(renta.getDeuterium())));*/
-                    Intent dialog = new Intent(activity, DialogActivity.class);
+                    Intent dialog = new Intent(activity, DialogRentability.class);
                     dialog.putExtra("name", renta.getUser());
                     dialog.putExtra("metal", renta.getMetalInt());
                     dialog.putExtra("cristal", renta.getCristalInt());

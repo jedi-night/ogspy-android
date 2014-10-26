@@ -9,6 +9,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.dialogs.DialogAccount;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.preferences.Preferences;
 import com.ogsteam.ogspy.ui.DialogHandler;
@@ -37,7 +38,7 @@ public class OgspyPreferencesActivity extends PreferenceActivity {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         Account lastAccount = OgspyActivity.activity.getHandlerAccount().getLastAccount();
-                        Intent dialog = new Intent(activity, DialogActivity.class);
+                        Intent dialog = new Intent(activity, DialogAccount.class);
                         // New account
                         if (lastAccount == null || (Integer.parseInt((String) newValue) > lastAccount.getId())) {
                             dialog.putExtra("type", DialogActivity.TYPE_ACCOUNT);

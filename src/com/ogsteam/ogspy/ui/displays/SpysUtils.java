@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.ogsteam.ogspy.DialogActivity;
 import com.ogsteam.ogspy.OgspyActivity;
+import com.ogsteam.ogspy.dialogs.DialogHighscores;
 import com.ogsteam.ogspy.fragments.tabs.SpysFragment;
 import com.ogsteam.ogspy.fragments.tabs.items.GeneralSpyItem;
 import com.ogsteam.ogspy.fragments.tabs.items.GeneralSpyListAdapter;
@@ -46,7 +47,7 @@ public class SpysUtils {
                     @Override
                     public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
                         GeneralSpyItem item = (GeneralSpyItem) adapterPlayer.getItem(position);
-                        Intent dialog = new Intent(activity, DialogActivity.class);
+                        Intent dialog = new Intent(activity, DialogHighscores.class);
                         dialog.putExtra("name", item.getName());
                         dialog.putExtra("type", DialogActivity.TYPE_HIGHSCORE_PLAYER);
                         dialog.putExtra("highscore", item.getHighscore());
@@ -78,7 +79,7 @@ public class SpysUtils {
                     @Override
                     public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
                         GeneralSpyItem item = (GeneralSpyItem) adapterAlly.getItem(position);
-                        Intent dialog = new Intent(activity, DialogActivity.class);
+                        Intent dialog = new Intent(activity, DialogHighscores.class);
                         dialog.putExtra("name", item.getShortName());
                         dialog.putExtra("type", DialogActivity.TYPE_HIGHSCORE_ALLY);
                         dialog.putExtra("highscore", item.getHighscore());

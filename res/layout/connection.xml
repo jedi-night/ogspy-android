@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Connection au réseau limitée ou inexistante, veuillez renouveler votre demande ultérieurement."
+        android:text="@string/connection.limited"
         android:id="@+id/connexionProblemTexte"
         android:layout_alignParentTop="false"
         android:layout_centerInParent="true"

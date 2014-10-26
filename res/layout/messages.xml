@@ -18,7 +18,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:text="Envoyer"
+        android:text="@string/messages.send"
         android:id="@+id/alertSendButton"
         android:onClick="sendAlert"
         android:layout_column="0"

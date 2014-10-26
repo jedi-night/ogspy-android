@@ -7,7 +7,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+        android:layout_height="fill_parent">
 
         <RelativeLayout
             android:id="@+id/pieChartContainer"
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Période"
+            android:text="@string/rentability.period"
             android:id="@+id/textView"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_below="@+id/pieChartContainer"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Type"
+            android:text="@string/rentability.type"
             android:id="@+id/textView2"
             android:gravity="center_vertical|center_horizontal"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Rentabilité : "
+            android:text="@string/rentability.title"
             android:id="@+id/rentabilityTotal"
             android:gravity="right"
             android:layout_gravity="center_horizontal|left"

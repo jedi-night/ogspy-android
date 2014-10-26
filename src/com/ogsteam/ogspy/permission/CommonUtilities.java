@@ -1,9 +1,12 @@
 package com.ogsteam.ogspy.permission;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.ogsteam.ogspy.OgspyActivity;
+import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
 
 public final class CommonUtilities {
@@ -49,4 +52,37 @@ public final class CommonUtilities {
         //intent.putExtra(EXTRA_MESSAGE, message);
         //context.sendBroadcast(intent);
     }
+
+    public static void displayMessageDebug(Context context, String message) {
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("prefs_debug_messages", false)) {
+            displayMessage(context, message);
+        }
+        //Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);
+        //intent.putExtra(EXTRA_MESSAGE, message);
+        //context.sendBroadcast(intent);
+    }
+
+    public static void displayMessageDebug(Context context, Class c, String message) {
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("prefs_debug_messages", false)) {
+            displayMessage(context, c.getSimpleName() + " : " + message);
+        }
+        //Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);
+        //intent.putExtra(EXTRA_MESSAGE, message);
+        //context.sendBroadcast(intent);
+    }
+
+    public static void displayMessageDebugAndLog(Context context, Class c, String message, Exception e, String... extras) {
+        StringBuilder debugMessage = new StringBuilder(message);
+        for (String extra : extras) {
+            debugMessage.append(" ").append(extra);
+        }
+        Log.e(c.getSimpleName(), context.getString(R.string.download_problem), e);
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("prefs_debug_messages", false)) {
+            displayMessage(context, c.getClass().getSimpleName() + " : " + message);
+        }
+        //Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);
+        //intent.putExtra(EXTRA_MESSAGE, message);
+        //context.sendBroadcast(intent);
+    }
+
 }

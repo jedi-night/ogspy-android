@@ -25,7 +25,7 @@ public class ConnectionDetector {
             if (info != null) {
                 for (int i = 0; i < info.length; i++) {
                     this.infos.append(info[i].getDetailedState());
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED || info[i].getState() == NetworkInfo.State.CONNECTING) {
                         return true;
                     }
                     this.infos.append(" ");

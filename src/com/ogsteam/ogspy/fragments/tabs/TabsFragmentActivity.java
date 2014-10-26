@@ -136,7 +136,7 @@ public class TabsFragmentActivity extends FragmentActivity {
         FragmentTransaction ft = manager.beginTransaction();
 
         ft.replace(android.R.id.tabcontent, fragment);
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
 
     /*

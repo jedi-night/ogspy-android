@@ -131,7 +131,7 @@
                 android:layout_alignTop="@+id/buttonNewAccountCancel"
                 android:layout_toLeftOf="@+id/buttonNewAccountDelete"
                 android:layout_marginRight="5dp"
-                android:text="Sauvegarder"
+                android:text="@string/account.save"
                 android:layout_row="0"
                 android:layout_column="0" />
 
@@ -143,7 +143,7 @@
                 android:layout_below="@+id/newAccountPassword"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:text="Supprimer"
+                android:text="@string/account.delete"
                 android:layout_row="0"
                 android:layout_column="1" />
 
@@ -154,7 +154,7 @@
                 android:id="@+id/buttonNewAccountCancel"
                 android:layout_alignTop="@+id/buttonNewAccountDelete"
                 android:layout_toRightOf="@+id/buttonNewAccountDelete"
-                android:text="Annuler"
+                android:text="@string/account.cancel"
                 android:layout_marginLeft="5dp"
                 android:layout_row="0"
                 android:layout_column="2" />
