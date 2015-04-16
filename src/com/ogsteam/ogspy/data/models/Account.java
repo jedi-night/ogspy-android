@@ -2,6 +2,9 @@ package com.ogsteam.ogspy.data.models;
 
 import com.ogsteam.ogspy.utils.OgspyUtils;
 
+/**
+ * Customer Account
+ */
 public class Account {
 	
 	private int id;
