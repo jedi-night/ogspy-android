@@ -25,7 +25,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.google.android.gcm.GCMRegistrar;
+import com.google.android.gcm.GCMRegistrar; //TODO This is completly deprecated : To be replaced by com.google.android.gms.gcm.GoogleCloudMessaging https://developers.google.com/cloud-messaging/android/client#sample-register
 import com.ogsteam.ogspy.data.DatabaseAccountHandler;
 import com.ogsteam.ogspy.data.DatabaseMessagesHandler;
 import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
