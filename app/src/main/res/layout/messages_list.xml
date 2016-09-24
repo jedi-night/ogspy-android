@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:orientation="horizontal"
+                android:padding="5dip" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="00:00:00"
+        android:id="@+id/message_time"
+        android:textColor="@color/emerald"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Auteur"
+        android:id="@+id/message_sender"
+        android:layout_above="@+id/message_time"
+        android:layout_alignParentLeft="false"
+        android:layout_marginBottom="25dp"
+        android:textColor="#ff880a" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="message"
+        android:id="@+id/message_content"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/message_time"
+        android:layout_alignParentRight="true"
+        android:inputType="textMultiLine"
+        android:textColor="@android:color/white"
+        android:lines="4"
+        android:layout_alignBottom="@+id/message_time" />
+</RelativeLayout>

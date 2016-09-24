@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OGSpy</string>
+    <string name="account">Compte</string>
+    <string name="hostiles">Hostiles</string>
+    <string name="prefs">Préférences</string>
+    <string name="general">General</string>
+    <string name="rentabilites">Rentabilites</string>
+    <string name="quit">Quitter</string>
+
+    <string name="hello_world">Bonjour le monde !</string>
+    <string name="button_send">Envoyer</string>
+
+    <!-- Hostiles -->
+    <string name="hostiles_none">Aucun membre de la communauté n\'est attaqué</string>
+    <string name="hostiles_attack">Flottes hostiles en approche sur le(s) joueur(s) : </string>
+
+    <!-- Account -->
+    <string name="account_ogspy_title">Paramètres du compte OGSPY</string>
+    <string name="ogspy_user_title">Utilisateur : </string>
+    <string name="ogspy_password_title">Mot de passe : </string>
+    <string name="ogspy_server_url_title">URL du serveur : </string>
+    <string name="ogspy_server_univers_title">URL de l\'univers : </string>
+    <string name="save_button">Sauvegarder</string>
+    <string name="gcm_unregister">Forcer desinscription notifications</string>
+
+    <string name="save_account_username_ko">Le nom d\'utilisateur est obligatoire</string>
+    <string name="save_account_password_ko">Le mot de passe est obligatoire</string>
+    <string name="save_account_server_url_ko">L\'URL du serveur n\'est pas une URL</string>
+    <string name="save_account_server_univers_ko">L\'URL de l\'univers n\'est pas une URL</string>
+
+    <string name="save_account_ok">Sauvegarde du compte "{0}" effectué</string>
+    <string name="save_account_ko">Echec de la sauvegarde du compte</string>
+
+    <!-- Pref -->
+    <string name="prefs_title">Préférences</string>
+    <string name="prefs_timer_hostiles_title">Rafraichissement hostiles</string>
+    <string name="save_button_prefs">Sauvegarder</string>
+
+    <string name="save_prefs_ok">Sauvegarde des préférences effectuée</string>
+    <string name="save_prefs_ko">Echec de la sauvegarde des préférences</string>
+
+    <string-array name="prefs_timer_hostiles">
+        <item>Jamais</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>60 minutes</item>
+    </string-array>
+    <string-array name="prefs_timer_hostiles_values">
+        <item>0</item>
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+
+    <!-- RENTAS-->
+    <string-array name="interval">
+        <item>Aujourd\'hui</item>
+        <item>Hier</item>
+        <item>7 derniers jours</item>
+        <item>Mois</item>
+    </string-array>
+    <string-array name="interval_values">
+        <item>day</item>
+        <item>yesterday</item>
+        <item>week</item>
+        <item>month</item>
+    </string-array>
+    <string-array name="rentas_type">
+        <item>Mes stats</item>
+        <item>Stats de l\'alliance</item>
+        <item>Stats par membre</item>
+    </string-array>
+    <string-array name="rentas_type_values">
+        <item>me</item>
+        <item>us</item>
+        <item>member</item>
+    </string-array>
+
+    <string-array name="servers">
+        <item>Andromeda</item>
+        <item>Barym</item>
+        <item>Capella</item>
+        <item>Draco</item>
+        <item>Electra</item>
+        <item>Fornax</item>
+        <item>Gemini</item>
+        <item>Hydra</item>
+        <item>Io</item>
+        <item>Jupiter</item>
+        <item>Kassiopeia</item>
+        <item>Leo</item>
+        <item>Mizar</item>
+        <item>Nekkar</item>
+        <item>Orion</item>
+        <item>Pegasus</item>
+        <item>Quantum</item>
+        <item>Rigel</item>
+        <item>Sirius</item>
+        <item>Taurus</item>
+        <item>Ursa</item>
+        <item>Vega</item>
+        <item>Wasat</item>
+        <item>Xalynth</item>
+        <item>Yakini</item>
+        <item>1. univers</item>
+        <item>10. univers</item>
+        <item>50. univers</item>
+        <item>60. univers</item>
+        <item>64. univers</item>
+        <item>65. univers</item>
+        <item>66. univers</item>
+        <item>67. univers</item>
+        <item>68. univers</item>
+    </string-array>
+    <string-array name="servers_values">
+        <item>http://s101-fr.ogame.gameforge.com</item>
+        <item>http://s102-fr.ogame.gameforge.com</item>
+        <item>http://s103-fr.ogame.gameforge.com</item>
+        <item>http://s104-fr.ogame.gameforge.com</item>
+        <item>http://s105-fr.ogame.gameforge.com</item>
+        <item>http://s106-fr.ogame.gameforge.com</item>
+        <item>http://s107-fr.ogame.gameforge.com</item>
+        <item>http://s108-fr.ogame.gameforge.com</item>
+        <item>http://s109-fr.ogame.gameforge.com</item>
+        <item>http://s110-fr.ogame.gameforge.com</item>
+        <item>http://s111-fr.ogame.gameforge.com</item>
+        <item>http://s112-fr.ogame.gameforge.com</item>
+        <item>http://s113-fr.ogame.gameforge.com</item>
+        <item>http://s114-fr.ogame.gameforge.com</item>
+        <item>http://s115-fr.ogame.gameforge.com</item>
+        <item>http://s116-fr.ogame.gameforge.com</item>
+        <item>http://s117-fr.ogame.gameforge.com</item>
+        <item>http://s118-fr.ogame.gameforge.com</item>
+        <item>http://s119-fr.ogame.gameforge.com</item>
+        <item>http://s120-fr.ogame.gameforge.com</item>
+        <item>http://s121-fr.ogame.gameforge.com</item>
+        <item>http://s122-fr.ogame.gameforge.com</item>
+        <item>http://s123-fr.ogame.gameforge.com</item>
+        <item>http://s124-fr.ogame.gameforge.com</item>
+        <item>http://s125-fr.ogame.gameforge.com</item>
+        <item>http://s1-fr.ogame.gameforge.com</item>
+        <item>http://s10-fr.ogame.gameforge.com</item>
+        <item>http://s50-fr.ogame.gameforge.com</item>
+        <item>http://s60-fr.ogame.gameforge.com</item>
+        <item>http://s64-fr.ogame.gameforge.com</item>
+        <item>http://s65-fr.ogame.gameforge.com</item>
+        <item>http://s66-fr.ogame.gameforge.com</item>
+        <item>http://s67-fr.ogame.gameforge.com</item>
+        <item>http://s68-fr.ogame.gameforge.com</item>
+        <item></item>
+    </string-array>
+    <!--
+    serveurs.put("s10-fr.ogame.gameforge.com","10. univers");
+    serveurs.put("s50-fr.ogame.gameforge.com","50. univers");
+    serveurs.put("s60-fr.ogame.gameforge.com","60. univers");
+    serveurs.put("s64-fr.ogame.gameforge.com","64. univers");
+    serveurs.put("s65-fr.ogame.gameforge.com","65. univers");
+    serveurs.put("s66-fr.ogame.gameforge.com","66. univers");
+    serveurs.put("s67-fr.ogame.gameforge.com","67. univers");
+    serveurs.put("s68-fr.ogame.gameforge.com","68. univers");
+    serveurs.put("s101-fr.ogame.gameforge.com","Andromeda");
+    serveurs.put("s102-fr.ogame.gameforge.com", "Barym");
+    serveurs.put("s103-fr.ogame.gameforge.com", "Capella");
+    serveurs.put("s104-fr.ogame.gameforge.com", "Draco");
+    serveurs.put("s105-fr.ogame.gameforge.com", "Electra");
+    serveurs.put("s106-fr.ogame.gameforge.com","Fornax");
+    serveurs.put("s107-fr.ogame.gameforge.com","Gemini");
+    serveurs.put("s108-fr.ogame.gameforge.com","Hydra");
+    serveurs.put("s109-fr.ogame.gameforge.com","Io");
+    serveurs.put("s110-fr.ogame.gameforge.com","Jupiter");
+    serveurs.put("s111-fr.ogame.gameforge.com","Kassiopeia");
+    serveurs.put("s112-fr.ogame.gameforge.com","Leo");
+    serveurs.put("s113-fr.ogame.gameforge.com","Mizar");
+    serveurs.put("s114-fr.ogame.gameforge.com","Nekkar");
+    serveurs.put("s115-fr.ogame.gameforge.com","Orion");
+    serveurs.put("s116-fr.ogame.gameforge.com","Pegasus");
+    serveurs.put("s117-fr.ogame.gameforge.com","Quantum");
+    serveurs.put("s118-fr.ogame.gameforge.com","Rigel");
+    serveurs.put("s119-fr.ogame.gameforge.com","Sirius");
+    serveurs.put("s120-fr.ogame.gameforge.com","Taurus");
+    serveurs.put("s121-fr.ogame.gameforge.com","Ursa");
+    serveurs.put("s122-fr.ogame.gameforge.com","Vega");
+    serveurs.put("s123-fr.ogame.gameforge.com","Wasat");
+    serveurs.put("s124-fr.ogame.gameforge.com","Xalynth");
+    serveurs.put("s125-fr.ogame.gameforge.com","Yakini");
+    -->
+
+
+    <!-- Notifs -->
+    <string name="notification">Notification OGSPY</string>
+    <string name="notification_title_hostiles">Flottes hostiles</string>
+    <string name="notification_title_message">Message de {0}</string>
+    <string name="notification_desc">{0}</string>
+
+    <!-- GCM -->
+    <string name="gcm_registered">GCM: appareil correctement enregistré !</string>
+    <string name="gcm_unregistered">GCM: appareil correctement supprimé !</string>
+    <string name="gcm_message">GCM: vous avez un message !</string>
+    <string name="gcm_error">GCM: erreur (%1$s).</string>
+    <string name="gcm_recoverable_error">GCM: erreur récupérable (%1$s).</string>
+    <string name="gcm_deleted">GCM: serveur supprimé %1$d message(s) en attente !</string>
+    <string name="server_registering">Tentative (%1$d/%2$d) d\'enregistrement de l\'appareil sur le serveur OGSPY.</string>
+    <string name="server_registered">OGSpy : appareil ajouté !</string>
+    <string name="server_unregistered">OGSpy : appareil supprimé !</string>
+    <string name="server_register_error">Impossible d\'enregistrer l\'appareil sur le serveur OGSPY après %1$d tentatives.</string>
+    <string name="server_unregister_error">Impossible d\'enregistrer l\'appareil sur le serveur OGSPY (%1$s).</string>
+    <string name="options_register">S\'enregistrer</string>
+    <string name="options_unregister">Supprimer</string>
+    <string name="account_not_configured">Votre compte n\'est pas encore configuré !</string>
+    <string name="connexion_ko">Connexion internet inexistante</string>
+    <string name="gcm_problem">Problème avec GCM !</string>
+    <string name="download_problem">Problème lors du telechargement !</string>
+    <!-- END GCM -->
+
+    <!-- Espionnages -->
+    <string name="alliance_spys">Top Alliance</string>
+    <string name="player_spys">Top Joueur</string>
+    <string name="spy.period">Période</string>
+
+    <string name="ogspy_user_summary">Entrez votre nom d\'utilisateur</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Espionnages</item>
+        <item>Hostiles</item>
+        <item>Rentabilités</item>
+        <item>Messages</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@android:drawable/ic_menu_view</item>
+        <!--item>@drawable/ic_tab_hostiles_selected</item-->
+        <item>@android:drawable/ic_dialog_alert</item>
+        <!--item>@drawable/ic_tab_rentabilites_selected</item-->
+        <item>@android:drawable/ic_dialog_map</item>
+        <!--item>@drawable/ic_tab_alert_selected</item-->
+        <item>@android:drawable/sym_action_email</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+
+    <!-- About Activity-->
+    <string name="about.forum.name">Forum de l\'OGSteam</string>
+    <string name="about.bugs">Déclaration de bugs</string>
+    <string name="about.google.playstore">Google Play Store</string>
+    <string name="about.help">Aide en ligne</string>
+    <string name="about.develop.by">Application développée bénévolement par</string>
+    <string name="connection.limited">Connection au réseau limitée ou inexistante, veuillez renouveler votre demande ultérieurement.</string>
+    <string name="details.highscore.position">Place</string>
+    <string name="details.highscore.points">Points</string>
+    <string name="details.rentability.title">Rentabilité du joueur - {0}</string>
+    <string name="messages.send">Envoyer</string>
+    <string name="account.save">Sauvegarder</string>
+    <string name="account.delete">Supprimer</string>
+    <string name="account.cancel">Annuler</string>
+    <string name="rentability.title">Rentabilité : </string>
+    <string name="rentability.period">Période</string>
+    <string name="rentability.type">Type</string>
+
+</resources>

@@ -1,0 +1,113 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ogsteam.ogspy">
+
+    <!-- INTERNET -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- NOTIFS -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Creates a custom permission so only this app can receive its messages. -->
+    <permission
+        android:name="com.ogsteam.ogspy.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.ogsteam.ogspy.permission.C2D_MESSAGE" />
+
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".OgspyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/OgspyTheme">
+
+        <activity
+            android:name=".OgspyActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".fragments.tabs.TabsFragmentActivity"
+            android:parentActivityName=".OgspyActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+        </activity>
+        <activity
+            android:name=".OgspyPreferencesActivity"
+            android:parentActivityName=".OgspyActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+        </activity>
+        <activity
+            android:name=".OgspyAboutActivity"
+            android:parentActivityName=".OgspyActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+        </activity>
+
+        <!-- Dialogs -->
+        <activity
+            android:name=".DialogActivity"
+            android:parentActivityName=".OgspyActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+        </activity>
+        <activity
+            android:name=".dialogs.DialogAccount"
+            android:parentActivityName=".OgspyActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+        </activity>
+        <activity
+            android:name=".dialogs.DialogHighscores"
+            android:parentActivityName=".OgspyActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+        </activity>
+        <activity
+            android:name=".dialogs.DialogHostiles"
+            android:parentActivityName=".OgspyActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+        </activity>
+        <activity
+            android:name=".dialogs.DialogRentability"
+            android:parentActivityName=".OgspyActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ogsteam.ogspy.OgspyActivity" />
+        </activity>
+
+    </application>
+
+</manifest>
