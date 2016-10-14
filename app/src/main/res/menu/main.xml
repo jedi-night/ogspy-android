@@ -28,5 +28,3 @@
         android:icon="@android:drawable/ic_menu_help"
         app:showAsAction="never"
         android:title="@string/quit" />
-
-</menu>
