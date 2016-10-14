@@ -1,12 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_compte"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom"
-        android:actionViewClass="android.widget.Spinner"
-        android:icon="@android:drawable/btn_dropdown"
-        android:title="Compte" />
     <item
         android:id="@+id/action_refresh"
         android:orderInCategory="100"
@@ -28,3 +22,11 @@
         android:icon="@android:drawable/ic_menu_help"
         app:showAsAction="never"
         android:title="@string/quit" />
+    <item
+        android:id="@+id/action_compte"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:actionViewClass="android.widget.Spinner"
+        android:icon="@android:drawable/btn_dropdown"
+        android:title="Compte" />
+    </menu>

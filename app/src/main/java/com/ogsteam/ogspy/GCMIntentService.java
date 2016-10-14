@@ -73,15 +73,15 @@ public class GCMIntentService extends IntentService {
      * Issues a notification to inform the user that server has sent a message.
      */
     private static void generateNotification(String message, String messageType, String sender) {
-        NotificationProvider notifProvider = OgspyActivity.getNotifProvider();
-        if (notifProvider != null) {
+        //NotificationProvider notifProvider = OgspyActivity.getNotifProvider();
+        /*if (notifProvider != null) {
             if (messageType != null && Constants.NOTIFICATION_TYPE_HOSTILES.equals(messageType)) {
                 notifProvider.createNotificationHostile(message);
             } else if (messageType != null && Constants.NOTIFICATION_TYPE_MESSAGE.equals(messageType)) {
                 notifProvider.createNotificationMessage(message, sender);
                 OgspyActivity.handlerMessages.addMessage(new Message(OgspyActivity.handlerMessages.getNextMessageId(), String.valueOf(new Date().getTime()), sender, message));
             }
-        }
+        }*/
     }
 
 }
