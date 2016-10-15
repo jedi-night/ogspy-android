@@ -1,21 +1,14 @@
 package com.ogsteam.ogspy.utils;
 
-import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.OgspyApplication;
-import com.ogsteam.ogspy.R;
-import com.ogsteam.ogspy.notification.NotificationProvider;
 import com.ogsteam.ogspy.permission.CommonUtilities;
-import com.ogsteam.ogspy.utils.helpers.HostilesHelper;
 import com.ogsteam.ogspy.utils.security.MD5;
 import com.ogsteam.ogspy.utils.security.SHA1;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class OgspyUtils {
     private static LinkedHashMap<String, String> serveurs = new LinkedHashMap<String, String>();
@@ -76,7 +69,7 @@ public class OgspyUtils {
             }
             sb.append("Le mot de passe est obligatoire !");
         }
-        if (serverUrl == null || !serverUrl.matches("http://.*")) {
+        if (serverUrl == null || !(serverUrl.matches("http://.*") && serverUrl.matches("https://.*"))) {
             status = false;
             if (sb.toString().length() > 0) {
                 sb.append("\n");
@@ -119,14 +112,14 @@ public class OgspyUtils {
 //    }
 
     public static String getUniversNameFromUrl(String url) {
-        return serveurs.get(url.replace("http://", ""));
+        return serveurs.get(url.replace("https://", ""));
     }
 
     public static int getUniversPositionFromUrl(String url) {
         int compteur = 0;
         for (Map.Entry<String, String> entry : serveurs.entrySet()) {
             String key = entry.getKey();
-            if (url.replace("http://", "").equals(key)) {
+            if (url.replace("https://", "").equals(key)) {
                 return compteur;
             }
             compteur++;

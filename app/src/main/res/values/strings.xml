@@ -81,114 +81,59 @@
     </string-array>
 
     <string-array name="servers">
-        <item>Andromeda</item>
-        <item>Barym</item>
-        <item>Capella</item>
-        <item>Draco</item>
-        <item>Electra</item>
+        <item>Serveur évènement</item>
+        <item>Antares</item>
+        <item>Betelgeuse</item>
+        <item>Eridanus</item>
+        <item>Ganimed</item>
+        <item>Hyperion</item>
+        <item>Izar</item>
+        <item>Japetus</item>
+        <item>Jupiter Ascending</item>
+        <item>Kallisto</item>
+        <item>Libra</item>
+        <item>Merkur</item>
+        <item>Nusakan</item>
+        <item>Oberon</item>
+        <item>Polaris</item>
+        <item>Quaoar</item>
         <item>Fornax</item>
-        <item>Gemini</item>
-        <item>Hydra</item>
-        <item>Io</item>
-        <item>Jupiter</item>
-        <item>Kassiopeia</item>
-        <item>Leo</item>
-        <item>Mizar</item>
-        <item>Nekkar</item>
-        <item>Orion</item>
-        <item>Pegasus</item>
-        <item>Quantum</item>
-        <item>Rigel</item>
         <item>Sirius</item>
         <item>Taurus</item>
-        <item>Ursa</item>
         <item>Vega</item>
         <item>Wasat</item>
-        <item>Xalynth</item>
-        <item>Yakini</item>
+        <item>Zagadra</item>
         <item>1. univers</item>
         <item>10. univers</item>
-        <item>50. univers</item>
-        <item>60. univers</item>
-        <item>64. univers</item>
-        <item>65. univers</item>
-        <item>66. univers</item>
         <item>67. univers</item>
-        <item>68. univers</item>
     </string-array>
     <string-array name="servers_values">
-        <item>http://s101-fr.ogame.gameforge.com</item>
-        <item>http://s102-fr.ogame.gameforge.com</item>
-        <item>http://s103-fr.ogame.gameforge.com</item>
-        <item>http://s104-fr.ogame.gameforge.com</item>
-        <item>http://s105-fr.ogame.gameforge.com</item>
-        <item>http://s106-fr.ogame.gameforge.com</item>
-        <item>http://s107-fr.ogame.gameforge.com</item>
-        <item>http://s108-fr.ogame.gameforge.com</item>
-        <item>http://s109-fr.ogame.gameforge.com</item>
-        <item>http://s110-fr.ogame.gameforge.com</item>
-        <item>http://s111-fr.ogame.gameforge.com</item>
-        <item>http://s112-fr.ogame.gameforge.com</item>
-        <item>http://s113-fr.ogame.gameforge.com</item>
-        <item>http://s114-fr.ogame.gameforge.com</item>
-        <item>http://s115-fr.ogame.gameforge.com</item>
-        <item>http://s116-fr.ogame.gameforge.com</item>
-        <item>http://s117-fr.ogame.gameforge.com</item>
-        <item>http://s118-fr.ogame.gameforge.com</item>
-        <item>http://s119-fr.ogame.gameforge.com</item>
-        <item>http://s120-fr.ogame.gameforge.com</item>
-        <item>http://s121-fr.ogame.gameforge.com</item>
-        <item>http://s122-fr.ogame.gameforge.com</item>
-        <item>http://s123-fr.ogame.gameforge.com</item>
-        <item>http://s124-fr.ogame.gameforge.com</item>
-        <item>http://s125-fr.ogame.gameforge.com</item>
-        <item>http://s1-fr.ogame.gameforge.com</item>
-        <item>http://s10-fr.ogame.gameforge.com</item>
-        <item>http://s50-fr.ogame.gameforge.com</item>
-        <item>http://s60-fr.ogame.gameforge.com</item>
-        <item>http://s64-fr.ogame.gameforge.com</item>
-        <item>http://s65-fr.ogame.gameforge.com</item>
-        <item>http://s66-fr.ogame.gameforge.com</item>
-        <item>http://s67-fr.ogame.gameforge.com</item>
-        <item>http://s68-fr.ogame.gameforge.com</item>
-        <item></item>
+        <item>https://s205-fr.ogame.gameforge.com</item>
+        <item>https://s127-fr.ogame.gameforge.com</item>
+        <item>https://s128-fr.ogame.gameforge.com</item>
+        <item>https://s131-fr.ogame.gameforge.com</item>
+        <item>https://s133-fr.ogame.gameforge.com</item>
+        <item>https://s134-fr.ogame.gameforge.com</item>
+        <item>https://s135-fr.ogame.gameforge.com</item>
+        <item>https://s136-fr.ogame.gameforge.com</item>
+        <item>https://s132-fr.ogame.gameforge.com</item>
+        <item>https://s137-fr.ogame.gameforge.com</item>
+        <item>https://s138-fr.ogame.gameforge.com</item>
+        <item>https://s139-fr.ogame.gameforge.com</item>
+        <item>https://s140-fr.ogame.gameforge.com</item>
+        <item>https://s141-fr.ogame.gameforge.com</item>
+        <item>https://s142-fr.ogame.gameforge.com</item>
+        <item>https://s143-fr.ogame.gameforge.com</item>
+        <item>https://s106-fr.ogame.gameforge.com</item>
+        <item>https://s119-fr.ogame.gameforge.com</item>
+        <item>https://s120-fr.ogame.gameforge.com</item>
+        <item>https://s122-fr.ogame.gameforge.com</item>
+        <item>https://s123-fr.ogame.gameforge.com</item>
+        <item>https://s126-fr.ogame.gameforge.com</item>
+        <item>https://s1-fr.ogame.gameforge.com</item>
+        <item>https://s10-fr.ogame.gameforge.com</item>
+        <item>https://s67-fr.ogame.gameforge.com</item>
     </string-array>
-    <!--
-    serveurs.put("s10-fr.ogame.gameforge.com","10. univers");
-    serveurs.put("s50-fr.ogame.gameforge.com","50. univers");
-    serveurs.put("s60-fr.ogame.gameforge.com","60. univers");
-    serveurs.put("s64-fr.ogame.gameforge.com","64. univers");
-    serveurs.put("s65-fr.ogame.gameforge.com","65. univers");
-    serveurs.put("s66-fr.ogame.gameforge.com","66. univers");
-    serveurs.put("s67-fr.ogame.gameforge.com","67. univers");
-    serveurs.put("s68-fr.ogame.gameforge.com","68. univers");
-    serveurs.put("s101-fr.ogame.gameforge.com","Andromeda");
-    serveurs.put("s102-fr.ogame.gameforge.com", "Barym");
-    serveurs.put("s103-fr.ogame.gameforge.com", "Capella");
-    serveurs.put("s104-fr.ogame.gameforge.com", "Draco");
-    serveurs.put("s105-fr.ogame.gameforge.com", "Electra");
-    serveurs.put("s106-fr.ogame.gameforge.com","Fornax");
-    serveurs.put("s107-fr.ogame.gameforge.com","Gemini");
-    serveurs.put("s108-fr.ogame.gameforge.com","Hydra");
-    serveurs.put("s109-fr.ogame.gameforge.com","Io");
-    serveurs.put("s110-fr.ogame.gameforge.com","Jupiter");
-    serveurs.put("s111-fr.ogame.gameforge.com","Kassiopeia");
-    serveurs.put("s112-fr.ogame.gameforge.com","Leo");
-    serveurs.put("s113-fr.ogame.gameforge.com","Mizar");
-    serveurs.put("s114-fr.ogame.gameforge.com","Nekkar");
-    serveurs.put("s115-fr.ogame.gameforge.com","Orion");
-    serveurs.put("s116-fr.ogame.gameforge.com","Pegasus");
-    serveurs.put("s117-fr.ogame.gameforge.com","Quantum");
-    serveurs.put("s118-fr.ogame.gameforge.com","Rigel");
-    serveurs.put("s119-fr.ogame.gameforge.com","Sirius");
-    serveurs.put("s120-fr.ogame.gameforge.com","Taurus");
-    serveurs.put("s121-fr.ogame.gameforge.com","Ursa");
-    serveurs.put("s122-fr.ogame.gameforge.com","Vega");
-    serveurs.put("s123-fr.ogame.gameforge.com","Wasat");
-    serveurs.put("s124-fr.ogame.gameforge.com","Xalynth");
-    serveurs.put("s125-fr.ogame.gameforge.com","Yakini");
-    -->
-
 
     <!-- Notifs -->
     <string name="notification">Notification OGSPY</string>
