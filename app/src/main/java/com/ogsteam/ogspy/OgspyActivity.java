@@ -57,6 +57,7 @@ import butterknife.ButterKnife;
 public class OgspyActivity extends AppCompatActivity {
 
     public static final String TAG = OgspyActivity.class.getSimpleName();
+    public static String apiToken;
 
     @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @BindView(R.id.my_toolbar) Toolbar toolbar;
@@ -155,6 +156,8 @@ public class OgspyActivity extends AppCompatActivity {
                 showConnectivityProblem(true);
             }
         }
+
+        // TODO : get Token from api
     }
 
     @Override

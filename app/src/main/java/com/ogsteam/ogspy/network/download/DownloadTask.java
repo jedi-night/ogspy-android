@@ -4,6 +4,14 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ogsteam.ogspy.OgspyActivity;
+import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.network.responses.OgspyResponse;
+import com.ogsteam.ogspy.utils.OgspyUtils;
+import com.ogsteam.ogspy.utils.StringUtils;
+import com.ogsteam.ogspy.utils.helpers.Constants;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by jp.tessier on 11/10/13.
@@ -96,5 +104,33 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
             Log.d("DownloadTask", "Problème lors de la récupération des données de " + downloadTask.typeDownload.getLibelle() + "; annulation en cours !");
             if (!downloadTask.isCancelled()) downloadTask.cancel(true);
         }
+    }
+
+    UrlWithParameters prepareRequestForToken(String action) throws Exception{
+        Account account = OgspyActivity.getSelectedAccount();
+
+        UrlWithParameters urlWithParameters = new UrlWithParameters(StringUtils.formatPattern(Constants.URL_API_OGSPY, account.getServerUrl()));
+        urlWithParameters.addParameter("action", "api");
+        urlWithParameters.addParameter("login", account.getUsername());
+        urlWithParameters.addParameter("password", OgspyUtils.enryptPassword(account.getPassword()));
+
+        return urlWithParameters;
+    }
+
+    UrlWithParameters prepareRequestForApi(String data) throws Exception{
+        Account account = OgspyActivity.getSelectedAccount();
+
+        UrlWithParameters urlWithParameters = new UrlWithParameters(StringUtils.formatPattern(Constants.URL_API_OGSPY, account.getServerUrl()));
+        urlWithParameters.addParameter("action", "api");
+        urlWithParameters.addParameter("token", OgspyActivity.apiToken);
+        urlWithParameters.addParameter("data", data);
+
+        return urlWithParameters;
+    }
+
+    OgspyResponse getFromServer(UrlWithParameters request, Class<? extends OgspyResponse> ogspyResponse){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        return restTemplate.getForObject(request.getUrl(), ogspyResponse, request.getParameters());
     }
 }

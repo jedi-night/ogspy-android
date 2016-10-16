@@ -2,6 +2,8 @@ package com.ogsteam.ogspy.utils.helpers;
 
 public interface Constants {
     public static final String URL_GET_OGSPY_INFORMATION = "{0}/mod/xtense/xtense.php?toolbar_version=2.5.7&toolbar_type=FF&type=android&mod_min_version=2.5.1&user={1}&password={2}&univers={3}&versionAndroid={4}&versionOgspy={5}&device={6}&action={7}";
+    public static final String URL_API_OGSPY= "{0}/index.php";
+
     public static final int TIMER_DEFAULT_VALUE = 10;
 
     /* TYPE ENVOI XTENSE */

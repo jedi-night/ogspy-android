@@ -13,7 +13,6 @@ import com.ogsteam.ogspy.dialogs.DialogHighscores;
 import com.ogsteam.ogspy.fragments.tabs.SpysFragment;
 import com.ogsteam.ogspy.fragments.tabs.items.GeneralSpyItem;
 import com.ogsteam.ogspy.fragments.tabs.items.GeneralSpyListAdapter;
-import com.ogsteam.ogspy.utils.helpers.AllianceHelper;
 import com.ogsteam.ogspy.utils.helpers.Pair;
 import com.ogsteam.ogspy.utils.helpers.ServerHelper;
 import com.ogsteam.ogspy.utils.helpers.SpysHelper;
