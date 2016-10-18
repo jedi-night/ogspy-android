@@ -38,6 +38,7 @@ import com.ogsteam.ogspy.network.download.DownloadRentabilitesTask;
 import com.ogsteam.ogspy.network.download.DownloadServerTask;
 import com.ogsteam.ogspy.network.download.DownloadSpysTask;
 import com.ogsteam.ogspy.network.download.DownloadTask;
+import com.ogsteam.ogspy.network.responses.ApiToken;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
 import com.ogsteam.ogspy.sliding.menu.adapter.NavDrawerListAdapter;
@@ -57,7 +58,7 @@ import butterknife.ButterKnife;
 public class OgspyActivity extends AppCompatActivity {
 
     public static final String TAG = OgspyActivity.class.getSimpleName();
-    public static String apiToken;
+    public static ApiToken apiToken;
 
     @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @BindView(R.id.my_toolbar) Toolbar toolbar;

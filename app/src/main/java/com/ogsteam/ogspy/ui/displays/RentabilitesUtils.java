@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -105,7 +104,7 @@ public abstract class RentabilitesUtils {
             } else {
                 ArrayList<RentabilitesHelper.Rentabilite> rentas = helperRenta.getRentabilitesSortedByGains();
                 RentabilitesHelper.Rentabilite renta = rentas.get(seriesSelection.getPointIndex());
-                /*"Chart element in series index " + seriesSelection.getSeriesIndex() + " data point index " + seriesSelection.getPointIndex() + " was clicked" + " closest point value X=" + seriesSelection.getXValue() + ", Y=" + seriesSelection.getValue());*/
+                /*"Chart element in series index " + seriesSelection.getSeriesIndex() + " data point index " + seriesSelection.getPointIndex() + " was clicked" + " closest point value X=" + seriesSelection.getXValue() + ", Y=" + seriesSelection.getApi_token());*/
                 /*CommonUtilities.displayMessage(activity, "Détail de la rentabilité du joueur " + renta.getUser() + "\n\n" +
                         "Métal\t\t\t\t : " + NumberUtils.format(Float.parseFloat(renta.getMetal())) +
                         "\nCristal\t\t\t : " + NumberUtils.format(Float.parseFloat(renta.getCristal())) +

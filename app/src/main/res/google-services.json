@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "79591672831",
+    "project_id": "firebase-ogspy"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79591672831:android:e101dcda4ae4dce6",
+        "android_client_info": {
+          "package_name": "com.ogsteam.ogspy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK2ZkqdFugnDSx8pvgQ9VsfI5X4OtCnd0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-85947657-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

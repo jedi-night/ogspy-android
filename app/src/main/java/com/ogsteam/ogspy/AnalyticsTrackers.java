@@ -20,52 +20,54 @@ import java.util.Map;
  */
 public final class AnalyticsTrackers {
 
-  public enum Target {
-    APP,
-    // Add more trackers here if you need, and update the code in #get(Target) below
-  }
+    private static final String KEY = "UA-85947657-1";
 
-  private static AnalyticsTrackers sInstance;
-
-  public static synchronized void initialize(Context context) {
-    if (sInstance != null) {
-      throw new IllegalStateException("Extra call to initialize analytics trackers");
+    public enum Target {
+        APP,
+        // Add more trackers here if you need, and update the code in #get(Target) below
     }
 
-    sInstance = new AnalyticsTrackers(context);
-  }
+    private static AnalyticsTrackers sInstance;
 
-  public static synchronized AnalyticsTrackers getInstance() {
-    if (sInstance == null) {
-      throw new IllegalStateException("Call initialize() before getInstance()");
+    public static synchronized void initialize(Context context) {
+        if (sInstance != null) {
+            throw new IllegalStateException("Extra call to initialize analytics trackers");
+        }
+
+        sInstance = new AnalyticsTrackers(context);
     }
 
-    return sInstance;
-  }
+    public static synchronized AnalyticsTrackers getInstance() {
+        if (sInstance == null) {
+            throw new IllegalStateException("Call initialize() before getInstance()");
+        }
 
-  private final Map<Target, Tracker> mTrackers = new HashMap<Target, Tracker>();
-  private final Context mContext;
-
-  /**
-   * Don't instantiate directly - use {@link #getInstance()} instead.
-   */
-  private AnalyticsTrackers(Context context) {
-    mContext = context.getApplicationContext();
-  }
-
-  public synchronized Tracker get(Target target) {
-    if (!mTrackers.containsKey(target)) {
-      Tracker tracker;
-      switch (target) {
-        case APP:
-          tracker = GoogleAnalytics.getInstance(mContext).newTracker(R.xml.app_tracker);
-          break;
-        default:
-          throw new IllegalArgumentException("Unhandled analytics target " + target);
-      }
-      mTrackers.put(target, tracker);
+        return sInstance;
     }
 
-    return mTrackers.get(target);
-  }
+    private final Map<Target, Tracker> mTrackers = new HashMap<Target, Tracker>();
+    private final Context mContext;
+
+    /**
+     * Don't instantiate directly - use {@link #getInstance()} instead.
+     */
+    private AnalyticsTrackers(Context context) {
+        mContext = context.getApplicationContext();
+    }
+
+    public synchronized Tracker get(Target target) {
+        if (!mTrackers.containsKey(target)) {
+            Tracker tracker;
+            switch (target) {
+                case APP:
+                    tracker = GoogleAnalytics.getInstance(mContext).newTracker(R.xml.app_tracker);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unhandled analytics target " + target);
+            }
+            mTrackers.put(target, tracker);
+        }
+
+        return mTrackers.get(target);
+    }
 }
