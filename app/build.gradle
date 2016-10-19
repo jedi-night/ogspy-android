@@ -5,8 +5,8 @@ android {
         config {
         }
     }
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.3'
     defaultConfig {
         applicationId "com.ogsteam.ogspy"
         minSdkVersion 19
@@ -21,6 +21,8 @@ android {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
+        // Enabling multidex support.
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -44,25 +46,28 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.google.android.gms:play-services-analytics:9.4.0'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     // Network
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile('com.squareup.retrofit2:converter-gson:2.1.0') {
         exclude module: 'gson'
     }
-    compile 'com.google.code.gson:gson:2.7'
     compile group: 'joda-time', name: 'joda-time', version: '2.9.4'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     // REST
-    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.google.android.gms:play-services-analytics:9.4.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+    compile 'com.google.firebase:firebase-crash:9.4.0'
+    compile 'com.android.support:multidex:1.0.1'
     testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
+
 
 apply plugin: 'com.google.gms.google-services'

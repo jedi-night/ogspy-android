@@ -106,7 +106,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
         }
     }
 
-    UrlWithParameters prepareRequestForToken(String action) throws Exception{
+    UrlWithParameters prepareRequestForToken() throws Exception{
         Account account = OgspyActivity.getSelectedAccount();
 
         UrlWithParameters urlWithParameters = new UrlWithParameters(StringUtils.formatPattern(Constants.URL_API_OGSPY, account.getServerUrl()));
@@ -122,7 +122,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
 
         UrlWithParameters urlWithParameters = new UrlWithParameters(StringUtils.formatPattern(Constants.URL_API_OGSPY, account.getServerUrl()));
         urlWithParameters.addParameter("action", "api");
-        urlWithParameters.addParameter("token", OgspyActivity.apiToken);
+        urlWithParameters.addParameter("token", OgspyActivity.apiToken.getApi_token());
         urlWithParameters.addParameter("data", data);
 
         return urlWithParameters;

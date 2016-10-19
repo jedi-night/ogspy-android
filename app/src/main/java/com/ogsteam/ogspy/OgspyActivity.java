@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.ogsteam.ogspy.data.DatabaseAccountHandler;
 import com.ogsteam.ogspy.data.DatabaseMessagesHandler;
 import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
@@ -38,6 +39,7 @@ import com.ogsteam.ogspy.network.download.DownloadRentabilitesTask;
 import com.ogsteam.ogspy.network.download.DownloadServerTask;
 import com.ogsteam.ogspy.network.download.DownloadSpysTask;
 import com.ogsteam.ogspy.network.download.DownloadTask;
+import com.ogsteam.ogspy.network.download.DownloadTokenTask;
 import com.ogsteam.ogspy.network.responses.ApiToken;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.permission.ServerUtilities;
@@ -100,6 +102,7 @@ public class OgspyActivity extends AppCompatActivity {
 
     public static CommonUtilities commonUtilities;
 
+    public static DownloadTokenTask downloadTokenTask;
     public static DownloadServerTask downloadServerTask;
     public static DownloadHostilesTask downloadHostilesTask;
     public static DownloadAllianceTask downloadAllianceTask;
@@ -158,6 +161,8 @@ public class OgspyActivity extends AppCompatActivity {
             }
         }
 
+        FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
+        FirebaseCrash.report(new NullPointerException("Nullpointer"));
         // TODO : get Token from api
     }
 

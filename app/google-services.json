@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "79591672831",
-    "project_id": "firebase-ogspy"
+    "firebase_url": "https://fir-ogspy.firebaseio.com",
+    "project_id": "firebase-ogspy",
+    "storage_bucket": "firebase-ogspy.appspot.com"
   },
   "client": [
     {
@@ -11,7 +13,24 @@
           "package_name": "com.ogsteam.ogspy"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "79591672831-161hujrmh87vq0mjja4eb0al67iblcel.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ogsteam.ogspy",
+            "certificate_hash": "B8BD851DD237A30F1626466B0AD3B864E314C5E0"
+          }
+        },
+        {
+          "client_id": "79591672831-k1vleq6m4io6oricl40lt1h3i4u0bcmj.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "79591672831-15ub9crh9m61n3436b2bjophhj9mi273.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDK2ZkqdFugnDSx8pvgQ9VsfI5X4OtCnd0"
@@ -29,7 +48,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
