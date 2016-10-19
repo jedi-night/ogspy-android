@@ -10,4 +10,4 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - echo y | android update sdk --no-ui -a --filter "extra-android-m2repository" # Grab the Android Support Repo which isn't included in the container
-          - ./gradlew --stacktrace --debug assembleDebug
+          - ./gradlew --stacktrace --debug clean assembleDebug
