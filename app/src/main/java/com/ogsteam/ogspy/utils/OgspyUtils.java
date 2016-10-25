@@ -1,7 +1,13 @@
 package com.ogsteam.ogspy.utils;
 
+import android.preference.PreferenceActivity;
+import android.util.Log;
+
+import com.google.firebase.crash.FirebaseCrash;
 import com.ogsteam.ogspy.OgspyApplication;
+import com.ogsteam.ogspy.OgspyException;
 import com.ogsteam.ogspy.permission.CommonUtilities;
+import com.ogsteam.ogspy.utils.helpers.Constants;
 import com.ogsteam.ogspy.utils.security.MD5;
 import com.ogsteam.ogspy.utils.security.SHA1;
 
@@ -69,12 +75,14 @@ public class OgspyUtils {
             }
             sb.append("Le mot de passe est obligatoire !");
         }
-        if (serverUrl == null || !(serverUrl.matches("http://.*") && serverUrl.matches("https://.*"))) {
+        if (serverUrl == null || (!serverUrl.matches("http://.*") && !serverUrl.matches("https://.*"))) {
             status = false;
             if (sb.toString().length() > 0) {
                 sb.append("\n");
             }
-            sb.append("L'adresse du serveur OGSPY est obligatoire, doit être cohérente (http://monserveur/monogspy) !");
+            sb.append("L'adresse du serveur OGSPY est obligatoire, doit être cohérente (http(s)://monserveur/monogspy) !");
+            FirebaseCrash.logcat(Log.ERROR, getTagClass(PreferenceActivity.class),"Server account check failed Server failed");
+            FirebaseCrash.report(new OgspyException("Server account check failed Server failed", Constants.EXCEPTION_SAISIE));
         }
         if (sb.toString().length() > 0) {
             CommonUtilities.displayMessage(OgspyApplication.getContext(), sb.toString());
@@ -126,6 +134,11 @@ public class OgspyUtils {
         }
         return 0;
     }
+
+    public static String getTagClass(Class<? extends Object> classObject) {
+        return classObject.getSimpleName();
+    }
+
     /*
     public static int getTimerHostiles(Activity activity, DatabasePreferencesHandler handlerPrefs){
 		int timer = (Constants.TIMER_DEFAULT_VALUE * 60 * 1000);

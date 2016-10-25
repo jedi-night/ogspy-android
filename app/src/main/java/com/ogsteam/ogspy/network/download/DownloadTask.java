@@ -13,6 +13,8 @@ import com.ogsteam.ogspy.utils.helpers.Constants;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import retrofit2.Retrofit;
+
 /**
  * Created by jp.tessier on 11/10/13.
  */
@@ -106,7 +108,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
         }
     }
 
-    UrlWithParameters prepareRequestForToken() throws Exception{
+    UrlWithParameters prepareRequestForToken() throws Exception {
         Account account = OgspyActivity.getSelectedAccount();
 
         UrlWithParameters urlWithParameters = new UrlWithParameters(StringUtils.formatPattern(Constants.URL_API_OGSPY, account.getServerUrl()));
@@ -117,7 +119,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
         return urlWithParameters;
     }
 
-    UrlWithParameters prepareRequestForApi(String data) throws Exception{
+    UrlWithParameters prepareRequestForApi(String data) throws Exception {
         Account account = OgspyActivity.getSelectedAccount();
 
         UrlWithParameters urlWithParameters = new UrlWithParameters(StringUtils.formatPattern(Constants.URL_API_OGSPY, account.getServerUrl()));
@@ -128,9 +130,27 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
         return urlWithParameters;
     }
 
-    OgspyResponse getFromServer(UrlWithParameters request, Class<? extends OgspyResponse> ogspyResponse){
+    OgspyResponse getFromServer(UrlWithParameters request, Class<? extends OgspyResponse> ogspyResponse) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         return restTemplate.getForObject(request.getUrl(), ogspyResponse, request.getParameters());
+    }
+
+    DownloadInterface getRetrofit() {
+        Account account = OgspyActivity.getSelectedAccount();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(account.getServerUrl())
+                .build();
+
+        return retrofit.create(DownloadInterface.class);
+    }
+
+    DownloadInterface getRetrofit(Account account) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(account.getServerUrl())
+                .build();
+
+        return retrofit.create(DownloadInterface.class);
     }
 }

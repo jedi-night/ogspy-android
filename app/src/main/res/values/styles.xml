@@ -1,6 +1,6 @@
 <resources>
     <!-- Application theme. -->
-    <style name="OgspyTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="OgspyTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
     </style>

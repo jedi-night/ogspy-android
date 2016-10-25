@@ -1,18 +1,20 @@
 package com.ogsteam.ogspy.network.download;
 
 import android.preference.ListPreference;
+import android.util.Log;
 
+import com.google.firebase.crash.FirebaseCrash;
+import com.ogsteam.ogspy.BuildConfig;
 import com.ogsteam.ogspy.DialogActivity;
 import com.ogsteam.ogspy.OgspyActivity;
 import com.ogsteam.ogspy.OgspyApplication;
 import com.ogsteam.ogspy.OgspyPreferencesActivity;
 import com.ogsteam.ogspy.R;
 import com.ogsteam.ogspy.data.models.Account;
+import com.ogsteam.ogspy.network.responses.ServerOgspyResponse;
 import com.ogsteam.ogspy.permission.CommonUtilities;
 import com.ogsteam.ogspy.preferences.Accounts;
-import com.ogsteam.ogspy.utils.HttpUtils;
 import com.ogsteam.ogspy.utils.OgspyUtils;
-import com.ogsteam.ogspy.utils.StringUtils;
 import com.ogsteam.ogspy.utils.helpers.Constants;
 import com.ogsteam.ogspy.utils.helpers.ServerHelper;
 
@@ -22,6 +24,7 @@ public class DownloadServerConnection extends DownloadTask {
 
     protected static JSONObject dataJsonFromAsyncTask;
     protected ServerHelper serverHelper;
+    protected ServerOgspyResponse serverDatas;
     protected Account account = null;
     protected String accountCreation;
 
@@ -45,18 +48,16 @@ public class DownloadServerConnection extends DownloadTask {
     protected String doInBackground(String... params) {
         try {
             if (account != null) {
-                CommonUtilities.displayMessageDebug(OgspyApplication.getContext(), this.getClass(), "Récupération des informations de connection du compte (" + account.getUsername() + ")");
-                String url = StringUtils.formatPattern(Constants.URL_GET_OGSPY_INFORMATION, account.getServerUrl(), account.getUsername(), OgspyUtils.enryptPassword(account.getPassword()), account.getServerUnivers(), OgspyActivity.versionAndroid, OgspyActivity.getVersionOgspy(), OgspyActivity.getDeviceName(), Constants.XTENSE_TYPE_SERVER) + "&gcmRegid=" + OgspyActivity.getRegId();
-                String data = HttpUtils.getUrlWithoutDisplayConnectivityProblem(url);
-                if (data != null) {
-                    dataJsonFromAsyncTask = new JSONObject(data.replaceAll("[(]", "").replaceAll("[)]", ""));
-                    serverHelper = new ServerHelper(dataJsonFromAsyncTask);
-                    CommonUtilities.displayMessageDebug(OgspyApplication.getContext(), this.getClass(), "Serveur Ogspy : " + serverHelper.getServerName());
+                if (BuildConfig.DEBUG) {
+                    DownloadInterface retrofit = getRetrofit(account);
+                    serverDatas = retrofit.getServerData();
                 } else {
-                    CommonUtilities.displayMessageDebug(OgspyApplication.getContext(), this.getClass(), "Aucune donnée récupérée concernant le compte (" + account.getUsername() + ")");
+                    UrlWithParameters request = prepareRequestForApi(Constants.XTENSE_TYPE_SERVER);
+                    serverDatas = (ServerOgspyResponse) getFromServer(request, ServerOgspyResponse.class);
                 }
             }
         } catch (Exception e) {
+            FirebaseCrash.logcat(Log.ERROR, OgspyUtils.getTagClass(this.getClass()), "Download server failded !".concat(" ").concat(e.getMessage()));
             CommonUtilities.displayMessageDebugAndLog(OgspyApplication.getContext(), this.getClass(), OgspyApplication.getApplication().getString(R.string.download_problem), e, " (" + typeDownload.getLibelle() + ")");
             if (!isCancelled()) this.cancel(true);
         }

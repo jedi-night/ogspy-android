@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.google.firebase.crash.FirebaseCrash;
 import com.ogsteam.ogspy.data.DatabaseAccountHandler;
 import com.ogsteam.ogspy.data.DatabaseMessagesHandler;
 import com.ogsteam.ogspy.data.DatabasePreferencesHandler;
@@ -124,7 +123,7 @@ public class OgspyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ogspy_tab_host);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 
         OgspyUtils.init();
 
@@ -161,8 +160,12 @@ public class OgspyActivity extends AppCompatActivity {
             }
         }
 
-        FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
-        FirebaseCrash.report(new NullPointerException("Nullpointer"));
+
+//        if (BuildConfig.DEBUG) {
+//
+//            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
+//            FirebaseCrash.report(new NullPointerException("Nullpointer"));
+//        }
         // TODO : get Token from api
     }
 

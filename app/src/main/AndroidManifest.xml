@@ -70,7 +70,7 @@
         <activity
             android:name=".DialogActivity"
             android:parentActivityName=".OgspyActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            android:theme="@android:style/Theme.Material.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ogsteam.ogspy.OgspyActivity" />
@@ -78,7 +78,7 @@
         <activity
             android:name=".dialogs.DialogAccount"
             android:parentActivityName=".OgspyActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            android:theme="@android:style/Theme.Material.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ogsteam.ogspy.OgspyActivity" />
@@ -86,7 +86,7 @@
         <activity
             android:name=".dialogs.DialogHighscores"
             android:parentActivityName=".OgspyActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            android:theme="@android:style/Theme.Material.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ogsteam.ogspy.OgspyActivity" />
@@ -94,7 +94,7 @@
         <activity
             android:name=".dialogs.DialogHostiles"
             android:parentActivityName=".OgspyActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            android:theme="@android:style/Theme.Material.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ogsteam.ogspy.OgspyActivity" />
@@ -102,7 +102,7 @@
         <activity
             android:name=".dialogs.DialogRentability"
             android:parentActivityName=".OgspyActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
+            android:theme="@android:style/Theme.Material.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ogsteam.ogspy.OgspyActivity" />
