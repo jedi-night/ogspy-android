@@ -1,4 +1,4 @@
-# Dépôt principal d'OGSPY Android #
+# Dépôt principal d'OGSPY Android # https://travis-ci.org/jedi-night/android-environement.svg?branch=master
 
 Le but de cet application est de récupérer l'ensemble des informations contenues sur des serveurs OGSPY afin de les consulter facilement depuis son mobile.
 
