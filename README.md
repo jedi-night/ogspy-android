@@ -1,6 +1,6 @@
 # Dépôt principal d'OGSPY Android #
 
-Le but de cet appli est de récupérer l'ensemble des informations contenues sur des serveurs OGSPY afin de les consulter facilement.
+Le but de cet application est de récupérer l'ensemble des informations contenues sur des serveurs OGSPY afin de les consulter facilement depuis son mobile.
 
 ### Contributeurs au projet ###
 
