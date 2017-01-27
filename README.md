@@ -4,11 +4,11 @@ Le but de cet application est de récupérer l'ensemble des informations contenu
 
 ### Contributeurs au projet ###
 
-Responsable équipe : [DarkNoon](https://bitbucket.org/darknoon29)
+Responsable équipe : [DarkNoon](https://github.com/darknoon29)
 
 ####Développement####
 
-* [Jedinight](https://bitbucket.org/Jedinight/)
+* [Jedinight](https://github.com/jedi-night)
 
 ####Tests####
 
