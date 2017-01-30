@@ -3,9 +3,8 @@ jdk: oraclejdk8
 android:
 components:
 - tools
-- tools
 - build-tools-25.0.0
-- platform-tools
+- platform-tools-25.0.0
 - android-25
 
 # Additional components
@@ -17,8 +16,8 @@ components:
 
 # Specify at least one system image,
 # if you need to run emulator(s) during your tests
-- sys-img-armeabi-v7a-android-22
-- sys-img-armeabi-v7a-android-17
+#- sys-img-armeabi-v7a-android-22
+#- sys-img-armeabi-v7a-android-17
 
 before_install:
 - chmod +x gradlew
