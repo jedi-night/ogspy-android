@@ -24,7 +24,7 @@ components:
 
 before_install:
 - chmod +x gradlew
-
+script: ./gradlew assembleDebug
 licenses:
 - 'android-sdk-preview-license-52d11cd2'
 - 'android-sdk-license-.+'
