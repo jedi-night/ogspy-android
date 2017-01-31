@@ -10,6 +10,7 @@ components:
 - extra-google-google_play_services
 - extra-google-m2repository
 - extra-android-m2repository
+
 before_install:
 - android list sdk -u --all --extended
 - echo yes | android update sdk --all --filter platform-tools-25.0.3 --no-ui --force > /dev/null
