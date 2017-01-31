@@ -5,16 +5,19 @@ android:
 components:
 - platform-tools
 - tools
-- build-tools-25.0.1
+- build-tools-25.0.0
 - android-25
 - extra-google-google_play_services
 - extra-google-m2repository
 - extra-android-m2repository
-- sys-img-armeabi-v7a-android-25
 before_install:
+- android list sdk -u --all --extended
+- echo yes | android update sdk --all --filter platform-tools-25.0.3 --no-ui --force > /dev/null
+- echo yes | android update sdk --all --filter tools-25.2.5 --no-ui --force > /dev/null
+- echo yes | android update sdk --all --filter build-tools-25.0.0 --no-ui --force > /dev/null
+- echo yes | android update sdk --all --filter android-25 --no-ui --force > /dev/null
+- echo yes | android update sdk --all --filter extra-android-support --no-ui --force > /dev/null
+- echo yes | android update sdk --all --filter extra-android-m2repository --no-ui --force > /dev/null
+- echo yes | android update sdk --all --filter extra-google-m2repository --no-ui --force > /dev/null
 - chmod +x gradlew
-script: ./gradlew assembleDebug
-licenses:
-- 'android-sdk-preview-license-52d11cd2'
-- 'android-sdk-license-.+'
-- 'google-gdk-license-.+'
+script: ./gradlew --stacktrace --debug clean assembleDebug
