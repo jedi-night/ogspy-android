@@ -1,24 +1,33 @@
 language: android
-sudo: required
-jdk: oraclejdk8
-android:
-components:
-- platform-tools
-- tools
-- build-tools-25.0.0
-- android-25
-- extra-google-google_play_services
-- extra-google-m2repository
-- extra-android-m2repository
 
-before_install:
-- android list sdk -u --all --extended
-- echo yes | /usr/local/android-sdk/tools/android update sdk --all --filter platform-tools-25.0.3 --no-ui --force > /dev/null
-- echo yes | /usr/local/android-sdk/tools/android update sdk --all --filter tools-25.2.5 --no-ui --force > /dev/null
-- echo yes | /usr/local/android-sdk/tools/android update sdk --all --filter build-tools-25.0.0 --no-ui --force > /dev/null
-- echo yes | /usr/local/android-sdk/tools/android update sdk --all --filter android-25 --no-ui --force > /dev/null
-- echo yes | /usr/local/android-sdk/tools/android update sdk --all --filter extra-android-support --no-ui --force > /dev/null
-- echo yes | /usr/local/android-sdk/tools/android update sdk --all --filter extra-android-m2repository --no-ui --force > /dev/null
-- echo yes | /usr/local/android-sdk/tools/android update sdk --all --filter extra-google-m2repository --no-ui --force > /dev/null
-- chmod +x gradlew
+jdk:
+ - oraclejdk8
+
+android:
+  components:
+    - tools
+    - tools
+    - platform-tools
+    - build-tools-25.0.2
+    - android-25
+    - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-19
+
+before_script:
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell settings put global window_animation_scale 0 &
+  - adb shell settings put global transition_animation_scale 0 &
+  - adb shell settings put global animator_duration_scale 0 &
+  - adb shell input keyevent 82 &
+
+env:
+  global:
+    - ADB_INSTALL_TIMEOUT=8
+
+notifications:
+  email: false
+
+sudo: false
 script: ./gradlew --stacktrace --debug clean assembleDebug
