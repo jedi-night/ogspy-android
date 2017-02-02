@@ -5,8 +5,31 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
-		classpath 'com.google.gms:google-services:3.0.0'
+	classpath 'com.google.gms:google-services:3.0.0'
+	classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.9.+"
     }
+}
+
+apply plugin: "build-time-tracker"
+
+buildtimetracker {
+  reporters {
+    csv {
+      output "build/times.csv"
+      append true
+      header false
+    }
+
+    summary {
+      ordered false
+      threshold 50
+      barstyle "unicode"
+    }
+
+    csvSummary {
+      csv "build/times.csv"
+    }
+  }
 }
 
 allprojects {
