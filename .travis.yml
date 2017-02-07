@@ -2,7 +2,6 @@ language: android
 
 jdk:
  - oraclejdk8
-
 android:
   components:
     - tools
@@ -31,4 +30,4 @@ notifications:
   email: false
 
 sudo: false
-script: gradle --stacktrace --no-daemon assembleDebug
+script: ./gradlew --stacktrace --no-daemon assembleDebug
