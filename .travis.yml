@@ -1,5 +1,5 @@
 language: android
-
+sudo: false
 jdk:
  - oraclejdk8
 android:
@@ -27,7 +27,8 @@ env:
     #- ADB_INSTALL_TIMEOUT=8
     - GRADLE_OPTS="-Xms128m -Xmx3072m -XX:MaxPermSize=768m"
 notifications:
-  email: false
+  email: true
+install:
+    - true
 
-sudo: false
-script: ./gradlew --stacktrace --no-daemon assembleDebug
+script: TERM=dumb ./gradlew --stacktrace assembleDebug
