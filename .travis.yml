@@ -1,5 +1,5 @@
 language: android
-sudo: false
+sudo: required
 jdk:
  - oraclejdk8
 android:
@@ -30,5 +30,4 @@ notifications:
   email: true
 install:
     - true
-
 script: TERM=dumb ./gradlew --stacktrace assembleDebug
