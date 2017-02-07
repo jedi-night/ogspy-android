@@ -1,5 +1,5 @@
 # Dépôt principal d'OGSPY Android # 
-###  Master ![alt tag](https://app.snap-ci.com/jedi-night/ogspy-android/branch/master/build_image) Dev ![alt tag](https://app.snap-ci.com/jedi-night/ogspy-android/branch/develop/build_image)###
+### Dev [![Build Status](https://travis-ci.org/jedi-night/ogspy-android.svg?branch=develop)](https://travis-ci.org/jedi-night/ogspy-android) Master [![Build Status](https://travis-ci.org/jedi-night/ogspy-android.svg?branch=master)](https://travis-ci.org/jedi-night/ogspy-android) ###
 
 Le but de cet application est de récupérer l'ensemble des informations contenues sur des serveurs OGSPY afin de les consulter facilement depuis son mobile.
 
