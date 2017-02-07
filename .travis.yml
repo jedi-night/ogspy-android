@@ -31,4 +31,4 @@ notifications:
   email: false
 
 sudo: false
-script: ./gradlew --stacktrace --no-daemon assembleDebug
+script: gradle --stacktrace --no-daemon assembleDebug
