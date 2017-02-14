@@ -118,14 +118,5 @@
             android:layout_alignStart="@+id/textView3"
             android:layout_marginTop="15dp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/avatar_jedinight"
-            android:layout_below="@+id/developerName"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp" />
-
     </RelativeLayout>
 </ScrollView>
