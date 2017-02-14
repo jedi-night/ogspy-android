@@ -26,7 +26,7 @@ public class OgspyAboutActivity extends Activity {
         link.setMovementMethod(LinkMovementMethod.getInstance());
 
         TextView linkBugs = (TextView) findViewById(R.id.bugsLink);
-        String linkBugsText = "<a href='https://bitbucket.org/Jedinight/ogspy-android/issues?status=new&status=open'>https://bitbucket.org</a>";
+        String linkBugsText = "<a href='https://github.com/jedi-night/ogspy-android/issues'>https://github.com</a>";
         linkBugs.setText(Html.fromHtml(linkBugsText));
         linkBugs.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -42,7 +42,7 @@ public class OgspyAboutActivity extends Activity {
 
         // 2) How to place email address
         TextView email = (TextView) findViewById(R.id.developerName);
-        String emailText = "Jedinight (<a href=\"mailto:jp.tessier.dev@gmail.com\">Jean-Philippe TESSIER</a>)";
+        String emailText = "<a href=\"https://github.com/jedi-night\">Jedinight</a>";
         email.setText(Html.fromHtml(emailText));
         email.setMovementMethod(LinkMovementMethod.getInstance());
     }
