@@ -91,10 +91,10 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:design:25.0.0'
-    compile 'com.google.android.gms:play-services-analytics:9.8.0'
+    compile 'com.android.support:design:25.1.1'
+    compile 'com.google.android.gms:play-services-analytics:10.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.1.1'
     // REST
     compile group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -111,3 +111,9 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'com.github.triplet.play'
+play {
+    serviceAccountEmail = 'ogspy.team@gmail.com'
+    pk12File = file('/var/go/ogspy-android.p12')
+}
