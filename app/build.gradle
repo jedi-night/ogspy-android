@@ -46,21 +46,28 @@ android {
         }
     }
 
-    if (project.hasProperty("AndroidProject.signing")
-            && new File(project.property("AndroidProject.signing").toString()).exists()) {
+    if (project.hasProperty("AndroidProject.signing") && new File(project.property("AndroidProject.signing").toString()).exists()) {
         def Properties props = new Properties()
         def propFile = new File(project.property("AndroidProject.signing").toString())
         if(propFile.canRead()) {
             props.load(new FileInputStream(propFile))
-            if (props!=null && props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
-                    props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+            // Signin properties
+            if (props!=null && props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') && props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
                 android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
                 android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
                 android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
                 android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
             } else {
-                println 'androidproject.properties found but some entries are missing'
+                println 'androidproject.properties found but some entries of sigin are missing'
                 android.buildTypes.release.signingConfig = null
+            }
+            // Deploy properties
+            if (props!=null && props.containsKey('SERVICE_ACCOUNT_EMAIL') && props.containsKey('PK12_FILE')) {
+                play.serviceAccountEmail = props['SERVICE_ACCOUNT_EMAIL']
+                play.pk12File = file(props['PK12_FILE'])
+            } else {
+                println 'androidproject.properties found but some entries of deploy are missing'
+                play = null
             }
         } else {
             println 'androidproject.properties file not found'
@@ -113,7 +120,4 @@ dependencies {
 apply plugin: 'com.google.gms.google-services'
 
 apply plugin: 'com.github.triplet.play'
-play {
-    serviceAccountEmail = 'ogspy.team@gmail.com'
-    pk12File = file('/var/go/ogspy-android.p12')
-}
+play {}
