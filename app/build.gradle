@@ -1,6 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.github.triplet.play'
-apply plugin: 'com.google.gms.google-services'
 
 android {
     lintOptions {
@@ -83,6 +81,8 @@ android {
     }
 }
 
+apply plugin: 'com.github.triplet.play'
+
 play {
     def Properties props = new Properties()
     def propFile = new File(project.property("AndroidProject.signing").toString())
@@ -121,3 +121,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
