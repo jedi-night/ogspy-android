@@ -61,14 +61,6 @@ android {
                 println 'androidproject.properties found but some entries of sigin are missing'
                 android.buildTypes.release.signingConfig = null
             }
-            // Deploy properties
-            if (props!=null && props.containsKey('SERVICE_ACCOUNT_EMAIL') && props.containsKey('PK12_FILE')) {
-                play.serviceAccountEmail = props['SERVICE_ACCOUNT_EMAIL']
-                play.pk12File = file(props['PK12_FILE'])
-            } else {
-                println 'androidproject.properties found but some entries of deploy are missing'
-                play = null
-            }
         } else {
             println 'androidproject.properties file not found'
             android.buildTypes.release.signingConfig = null
@@ -120,4 +112,23 @@ dependencies {
 apply plugin: 'com.google.gms.google-services'
 
 apply plugin: 'com.github.triplet.play'
-play {}
+play {
+    if (project.hasProperty("AndroidProject.signing") && new File(project.property("AndroidProject.signing").toString()).exists()) {
+        def Properties props = new Properties()
+        def propFile = new File(project.property("AndroidProject.signing").toString())
+        if(propFile.canRead()) {
+            props.load(new FileInputStream(propFile))
+            // Deploy properties
+            if (props!=null && props.containsKey('SERVICE_ACCOUNT_EMAIL') && props.containsKey('PK12_FILE')) {
+                play.serviceAccountEmail = props['SERVICE_ACCOUNT_EMAIL']
+                play.pk12File = file(props['PK12_FILE'])
+            } else {
+                println 'androidproject.properties found but some entries of deploy are missing'
+                play = null
+            }
+        } else {
+            println 'androidproject.properties file not found'
+            android.buildTypes.release.signingConfig = null
+        }
+    }
+}
