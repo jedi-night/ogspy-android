@@ -33,6 +33,16 @@ buildtimetracker {
   }
 }
 
+play {
+    def Properties props = new Properties()
+    def propFile = new File(project.property("AndroidProject.signing").toString())
+    if(propFile.canRead()) {
+        props.load(new FileInputStream(propFile))
+    }
+    serviceAccountEmail = props['SERVICE_ACCOUNT_EMAIL']
+    pk12File = file(props['PK12_FILE'])
+}
+
 allprojects {
     repositories {
         jcenter()
