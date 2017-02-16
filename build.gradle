@@ -33,6 +33,7 @@ buildtimetracker {
   }
 }
 
+apply plugin: 'com.github.triplet.play'
 play {
     def Properties props = new Properties()
     def propFile = new File(project.property("AndroidProject.signing").toString())
