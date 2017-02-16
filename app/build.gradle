@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
+apply plugin: 'com.google.gms.google-services'
+
 android {
     lintOptions {
           abortOnError false
@@ -12,8 +15,8 @@ android {
         applicationId "com.ogsteam.ogspy"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 22
-        versionName "1.6.5"
+        versionCode 23
+        versionName "1.6.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         jackOptions {
             enabled true
@@ -80,7 +83,6 @@ android {
     }
 }
 
-apply plugin: 'com.github.triplet.play'
 play {
     def Properties props = new Properties()
     def propFile = new File(project.property("AndroidProject.signing").toString())
@@ -119,5 +121,3 @@ dependencies {
     testCompile 'junit:junit:4.12'
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
-
-apply plugin: 'com.google.gms.google-services'
