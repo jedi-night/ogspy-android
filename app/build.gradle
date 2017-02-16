@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     lintOptions {
           abortOnError false
@@ -81,6 +80,7 @@ android {
     }
 }
 
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile('com.squareup.retrofit2:converter-gson:2.1.0') {
@@ -110,4 +110,3 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.github.triplet.play'
