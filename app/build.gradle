@@ -91,7 +91,7 @@ play {
     }
     serviceAccountEmail = props['SERVICE_ACCOUNT_EMAIL']
     pk12File = file(props['PK12_FILE'])
-    track = 'production'
+    track = 'beta'
 }
 
 
